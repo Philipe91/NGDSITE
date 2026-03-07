@@ -1,0 +1,23 @@
+# =========================================================
+# CONFIGURAÇÃO RÁPIDA - BACKEND E-COMMERCE NGD SITE
+# =========================================================
+# Siga estes passos no seu Terminal VSCode para rodar o site:
+
+# 1. Instale todas as Novas Dependências:
+pip install -r requirements.txt
+
+# 2. Registre as Models no DB:
+python manage.py makemigrations core catalog pages orders artwork customers seo
+python manage.py migrate
+
+# 3. Rode o Comando de SEED que criamos para gerar os produtos mockados:
+python create_cmd_dirs.py
+python manage.py seed_initial_data
+
+# 4. Crie um Usuário Admin para ver o Painel Avançado:
+python manage.py createsuperuser
+# (Digite login e senha que quiseres)
+
+# 5. Inicie o Servidor Moderno!
+# Acesse no seu navegador http://127.0.0.1:8000/
+python manage.py runserver

@@ -1,0 +1,45 @@
+<!-- templates/includes/footer.html -->
+<footer class="bg-[#f8f9fa] border-t border-[#eaeaea] py-12 mt-20">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+                <h3 class="font-bold text-gray-800 mb-4 uppercase text-sm tracking-widest">Sobre a NGD Site</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Referência em Comunicação Visual e painéis para o Ponto
+                    de Venda. Alta visibilidade com a melhor tecnologia gráfica web-to-print.</p>
+            </div>
+            <div>
+                <h3 class="font-bold text-gray-800 mb-4 uppercase text-sm tracking-widest">Suporte</h3>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="{% url 'pages:contact' %}" class="hover:text-primary transition-colors">Fale
+                            Conosco</a></li>
+                    <li><a href="{% url 'pages:page_detail' 'como-comprar' %}"
+                            class="hover:text-primary transition-colors">Como Comprar</a></li>
+                    <li><a href="{% url 'pages:page_detail' 'gabaritos' %}"
+                            class="hover:text-primary transition-colors">Gabaritos e Manuais</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold text-gray-800 mb-4 uppercase text-sm tracking-widest">Acesso Rápido</h3>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="{% url 'catalog:category_list' %}"
+                            class="hover:text-primary transition-colors">Produtos</a></li>
+                    <li><a href="{% url 'customers:dashboard' %}" class="hover:text-primary transition-colors">Minha
+                            Conta</a></li>
+                    <li><a href="{% url 'customers:orders' %}" class="hover:text-primary transition-colors">Meus
+                            Pedidos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold text-gray-800 mb-4 uppercase text-sm tracking-widest">Nossa Sede</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">
+                    Av. Exemplo Produtivo, 1234<br>
+                    São Paulo - SP<br>
+                    (11) 9999-9999
+                </p>
+            </div>
+        </div>
+        <div class="text-center text-xs text-gray-400 pt-8 border-t border-gray-200">
+            &copy; 2026 NGD SITE | O portal do Ponto de Venda Moderno
+        </div>
+    </div>
+</footer>

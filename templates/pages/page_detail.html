@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Conteúdo - NGD Site{% endblock %}
+
+{% block content %}
+<div class="bg-surface border-b border-gray-100 py-10">
+    <div class="container mx-auto px-4 lg:px-8">
+        <h1 class="text-3xl lg:text-4xl font-bold text-gray-900">{{ page.title }}</h1>
+    </div>
+</div>
+
+<div class="container mx-auto px-4 lg:px-8 py-16">
+    <div class="prose prose-blue max-w-4xl mx-auto text-gray-600 leading-loose">
+        {{ page.content|safe }}
+    </div>
+</div>
+{% endblock %}

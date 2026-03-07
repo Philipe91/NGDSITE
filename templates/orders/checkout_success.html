@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Pedido Recebido - NGD Site{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 lg:px-8 py-24 text-center max-w-2xl">
+    <div
+        class="w-24 h-24 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm">
+        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+    </div>
+
+    <h1 class="text-4xl font-black text-gray-900 mb-4 tracking-tight">Compra Efetuada!</h1>
+    <p class="text-xl text-gray-500 mb-10 leading-relaxed">Sua reserva foi processada. O próximo passo é enviar a arte
+        nos padrões do gabarito para a nossa pré-impressão.</p>
+
+    <div class="bg-surface rounded-3xl p-8 mb-10 border border-gray-100 shadow-sm text-left">
+        <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+            </svg>
+            Envio de Arquivo
+        </h3>
+        <p class="text-sm text-gray-600 mb-6">Acesse seu painel agora mesmo para subir seu arquivo PDF em alta resolução
+            ou vetores para aprovação.</p>
+        <a href="{% url 'customers:dashboard' %}" class="btn-primary w-full text-sm">Acessar Painel de Cliente</a>
+    </div>
+</div>
+{% endblock %}

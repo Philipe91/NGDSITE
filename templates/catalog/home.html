@@ -1,46 +1,121 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}NGD Site - Especialistas em PDV{% endblock %}
 
 {% block content %}
-<!-- HERO SECTION: Light with wavy background vibes -->
-<div class="relative bg-surface overflow-hidden py-20 lg:py-32 border-b border-gray-100">
-    <div class="absolute inset-0 opacity-10 pointer-events-none"
-        style="background-image: url('data:image/svg+xml,%3Csvg width=\'100%25\' height=\'100%25\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 200c50-50 150-100 250-50s200 150 300 100 200-150 300-100 200 100 300 50 150-100 250-50v400H0z\' fill=\'%23000\'/%3E%3C/svg%3E'); background-size: cover; background-position: center;">
-    </div>
+<!-- HERO SLIDER SECTION -->
+<div class="relative bg-surface overflow-hidden min-h-[500px] lg:min-h-[600px] border-b border-gray-100"
+    x-data="heroSlider()" x-init="start()">
 
-    <div class="container mx-auto px-4 lg:px-8 relative z-10">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-                <p class="text-xl text-gray-500 font-light mb-2">Personalize</p>
-                <h2 class="text-5xl md:text-7xl font-bold mb-4 tracking-tight text-black">
-                    Totem <span class="font-light">Elíptico</span>
-                </h2>
-                <p class="text-2xl text-gray-700 mb-8 font-medium">Marketing Inteligente para PDV!</p>
+    <template x-for="(slide, index) in slides" :key="index">
+        <div class="absolute inset-0 w-full h-full flex items-center bg-surface" x-show="active === index"
+            x-transition:enter="transition ease-out duration-[1200ms] transform"
+            x-transition:enter-start="opacity-0 scale-105 translate-x-12"
+            x-transition:enter-end="opacity-100 scale-100 translate-x-0"
+            x-transition:leave="transition ease-in duration-700 transform absolute inset-0 z-0"
+            x-transition:leave-start="opacity-100 scale-100 translate-x-0"
+            x-transition:leave-end="opacity-0 scale-95 -translate-x-12">
 
-                <p class="text-gray-600 mb-8 leading-relaxed max-w-lg">
-                    Totem Elíptico disponível em diversos formatos.<br>
-                    Impressão de alta resolução com cura UV, colorida frente.<br>
-                    Configure: formato, quantidade, envio de arquivo e prazo de entrega.
-                </p>
-                <a href="#catalogo" class="btn-primary inline-flex w-auto mt-4 px-10">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                    </svg>
-                    COMPRAR
-                </a>
+            <!-- Slide Background Pattern -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none"
+                :style="`background-image: url('${slide.bgPattern}'); background-size: cover; background-position: center;`">
             </div>
-            <div class="hidden lg:flex justify-center relative">
-                <!-- Imagem do Totem (Placeholder bonito) -->
-                <div
-                    class="w-2/3 aspect-[9/16] bg-gray-200 rounded-3xl overflow-hidden shadow-2xl transform rotate-3 relative border-8 border-white">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
-                        <span class="text-white font-bold text-2xl">Totem Lamã</span>
+
+            <div class="container mx-auto px-4 lg:px-8 relative z-10 w-full">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div x-show="active === index"
+                            x-transition:enter="transition ease-out duration-700 delay-300 transform"
+                            x-transition:enter-start="opacity-0 translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0">
+                            <p class="text-sm font-bold mb-3 tracking-widest uppercase text-primary"
+                                x-text="slide.subtitle"></p>
+                        </div>
+
+                        <div x-show="active === index"
+                            x-transition:enter="transition ease-out duration-700 delay-500 transform"
+                            x-transition:enter-start="opacity-0 translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0">
+                            <h2 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-black leading-[1.1]"
+                                x-html="slide.title"></h2>
+                        </div>
+
+                        <div x-show="active === index"
+                            x-transition:enter="transition ease-out duration-700 delay-700 transform"
+                            x-transition:enter-start="opacity-0 translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0">
+                            <p class="text-gray-600 mb-8 leading-relaxed max-w-lg text-lg" x-text="slide.description">
+                            </p>
+                        </div>
+
+                        <div x-show="active === index"
+                            x-transition:enter="transition ease-out duration-700 delay-900 transform"
+                            x-transition:enter-start="opacity-0 translate-y-8"
+                            x-transition:enter-end="opacity-100 translate-y-0">
+                            <a :href="slide.link"
+                                class="btn-primary inline-flex w-auto px-10 shadow-xl shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1 transition-all">
+                                <span x-text="slide.cta"></span>
+                                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="hidden lg:flex justify-center relative h-full min-h-[400px]">
+                        <!-- Produto Imagem -->
+                        <div class="relative w-full max-w-md flex items-center justify-center">
+                            <!-- Blob de fundo giratório/pulso -->
+                            <div x-show="active === index"
+                                x-transition:enter="transition ease-out duration-1000 delay-500"
+                                x-transition:enter-start="opacity-0 scale-50"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                class="absolute w-[120%] h-[120%] bg-gradient-to-tr from-primary/10 to-secondary/10 rounded-full blur-3xl animate-[pulse_4s_ease-in-out_infinite]">
+                            </div>
+
+                            <img :src="slide.image" :alt="slide.title"
+                                class="relative z-10 w-full h-[500px] object-contain drop-shadow-2xl mix-blend-multiply"
+                                x-show="active === index"
+                                x-transition:enter="transition ease-out duration-1000 delay-700 transform"
+                                x-transition:enter-start="opacity-0 scale-75 translate-y-16 rotate-[-5deg]"
+                                x-transition:enter-end="opacity-100 scale-100 translate-y-0 rotate-0">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </template>
+
+    <!-- Navegação em Barras (Moderno) -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-30">
+        <template x-for="(slide, index) in slides" :key="index">
+            <button @click="goTo(index)"
+                class="h-1.5 rounded-full transition-all duration-500 overflow-hidden relative cursor-pointer"
+                :class="active === index ? 'w-12 bg-gray-200' : 'w-4 bg-gray-300 hover:bg-gray-400'">
+                <!-- Progress bar dentro do botão ativo -->
+                <div x-show="active === index"
+                    class="absolute inset-y-0 left-0 bg-primary h-full transition-all duration-75"
+                    :style="`width: ${progress}%`"></div>
+            </button>
+        </template>
+    </div>
+
+    <!-- Controles Next/Prev flutuantes -->
+    <div class="absolute bottom-8 right-8 z-30 hidden md:flex items-center gap-2">
+        <button @click="prev()"
+            class="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-lg border border-gray-100 text-gray-700 hover:text-primary hover:scale-105 transition-all">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+        <button @click="next()"
+            class="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-lg border border-gray-100 text-gray-700 hover:text-primary hover:scale-105 transition-all">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
     </div>
 </div>
 
@@ -153,4 +228,73 @@
         </div>
     </div>
 </section>
+<script>
+    function heroSlider() {
+        return {
+            active: 0,
+            progress: 0,
+            interval: null,
+            progressInterval: null,
+            slides: [
+                {
+                    subtitle: 'Lançamento',
+                    title: 'Totem <span class="font-light">Elíptico</span>',
+                    description: 'Marketing Inteligente para PDV! Totem automontável em 3 segundos. Impressão de alta resolução com proteção UV.',
+                    image: "{% static 'img/totem_ptbr.png' %}",
+                    cta: 'PERSONALIZAR AGORA',
+                    link: '/produto/totem-eliptico/',
+                    bgPattern: "data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 200c50-50 150-100 250-50s200 150 300 100 200-150 300-100 200 100 300 50 150-100 250-50v400H0z' fill='%23000'/%3E%3C/svg%3E"
+                },
+                {
+                    subtitle: 'Destaque no PDV',
+                    title: 'Cubo <span class="font-light">Promocional</span>',
+                    description: 'Gere volume e chame atenção à distância. Caixas leves e resistentes. Ideal para vitrines, ilhas e ações promocionais.',
+                    image: "{% static 'img/cubo_ptbr.png' %}",
+                    cta: 'COMPRAR CUBO',
+                    link: '/produto/cubo-promocional/',
+                    bgPattern: "data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h10v10H0zm10 10h10v10H10z' fill='%23000' fill-opacity='0.1'/%3E%3C/svg%3E"
+                },
+                {
+                    subtitle: 'Novidade!',
+                    title: 'Wobbler <span class="font-light">Gôndola</span>',
+                    description: 'Material que salta aos olhos do cliente, ideal para anunciar lançamentos na gôndola. Fixação simples com haste transparente.',
+                    image: "{% static 'img/wobbler_ptbr.png' %}",
+                    cta: 'VER DETALHES',
+                    link: '/produto/wobbler/',
+                    bgPattern: "data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23000' stroke-width='2' opacity='0.1'/%3E%3C/svg%3E"
+                }
+            ],
+            start() {
+                this.resetInterval();
+            },
+            resetInterval() {
+                clearInterval(this.interval);
+                clearInterval(this.progressInterval);
+                this.progress = 0;
+
+                // 100% equals 6000ms. 6000/100 = 60ms tick.
+                this.progressInterval = setInterval(() => {
+                    this.progress += 1.5;
+                    if (this.progress > 100) this.progress = 100;
+                }, 90);
+
+                this.interval = setInterval(() => {
+                    this.next();
+                }, 6000);
+            },
+            next() {
+                this.active = (this.active + 1) % this.slides.length;
+                this.resetInterval();
+            },
+            prev() {
+                this.active = (this.active - 1 + this.slides.length) % this.slides.length;
+                this.resetInterval();
+            },
+            goTo(index) {
+                this.active = index;
+                this.resetInterval();
+            }
+        }
+    }
+</script>
 {% endblock %}

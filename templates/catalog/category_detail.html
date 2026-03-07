@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category.name }} - NGD Site{% endblock %}
+
+{% block content %}
+<div class="bg-surface border-b border-gray-100 py-10">
+    <div class="container mx-auto px-4 lg:px-8">
+        <h1 class="text-3xl lg:text-5xl font-bold text-gray-900 mb-4">{{ category.name }}</h1>
+        {% if category.description %}
+        <p class="text-gray-600 max-w-3xl text-lg">{{ category.description }}</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="container mx-auto px-4 lg:px-8 py-16">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {% for product in products %}
+        <a href="{% url 'catalog:product_detail' product.slug %}"
+            class="group block bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl hover:border-primary/20 transition-all duration-300">
+            <div class="aspect-square bg-gray-50 p-6 flex items-center justify-center relative">
+                {% if product.featured_image %}
+                <img src="{{ product.featured_image.url }}" alt="{{ product.name }}"
+                    class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500">
+                {% endif %}
+            </div>
+            <div class="p-6">
+                <h3 class="text-lg font-bold text-gray-900 mb-2 truncate group-hover:text-primary transition-colors">{{
+                    product.name }}</h3>
+                <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ product.short_description|default:"Personalize
+                    este produto para o seu Ponto de Venda." }}</p>
+
+                <span class="inline-flex items-center text-primary font-semibold text-sm">
+                    Configure agora
+                    <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </span>
+            </div>
+        </a>
+        {% empty %}
+        <div class="col-span-full text-center py-20 text-gray-500 text-lg">
+            Nenhum produto cadastrado nesta categoria ainda.
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
