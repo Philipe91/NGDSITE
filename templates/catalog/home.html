@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}NGD Site - Especialistas em PDV{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION: Light with wavy background vibes -->
+<div class="relative bg-surface overflow-hidden py-20 lg:py-32 border-b border-gray-100">
+    <div class="absolute inset-0 opacity-10 pointer-events-none"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'100%25\' height=\'100%25\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 200c50-50 150-100 250-50s200 150 300 100 200-150 300-100 200 100 300 50 150-100 250-50v400H0z\' fill=\'%23000\'/%3E%3C/svg%3E'); background-size: cover; background-position: center;">
+    </div>
+
+    <div class="container mx-auto px-4 lg:px-8 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <p class="text-xl text-gray-500 font-light mb-2">Personalize</p>
+                <h2 class="text-5xl md:text-7xl font-bold mb-4 tracking-tight text-black">
+                    Totem <span class="font-light">Elíptico</span>
+                </h2>
+                <p class="text-2xl text-gray-700 mb-8 font-medium">Marketing Inteligente para PDV!</p>
+
+                <p class="text-gray-600 mb-8 leading-relaxed max-w-lg">
+                    Totem Elíptico disponível em diversos formatos.<br>
+                    Impressão de alta resolução com cura UV, colorida frente.<br>
+                    Configure: formato, quantidade, envio de arquivo e prazo de entrega.
+                </p>
+                <a href="#catalogo" class="btn-primary inline-flex w-auto mt-4 px-10">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                    COMPRAR
+                </a>
+            </div>
+            <div class="hidden lg:flex justify-center relative">
+                <!-- Imagem do Totem (Placeholder bonito) -->
+                <div
+                    class="w-2/3 aspect-[9/16] bg-gray-200 rounded-3xl overflow-hidden shadow-2xl transform rotate-3 relative border-8 border-white">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                        <span class="text-white font-bold text-2xl">Totem Lamã</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FEATURES SECTION -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="text-center mb-16">
+            <h3 class="text-3xl md:text-4xl font-bold text-black mb-4">
+                Suporte <span class="gradient-text italic pr-1">Profissional</span> e Mais Vantagens!
+            </h3>
+            <p class="text-gray-500 font-light text-lg uppercase tracking-wide">Comodidade e Tecnologia de Conta com a
+                Melhor Impressão!</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="feature-card">
+                <svg class="w-16 h-16 text-black mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M9 12l2 2 4-4m6 2a9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h4 class="font-bold text-lg mb-4 uppercase tracking-widest text-[13px]">Checagem Profissional</h4>
+                <p class="text-gray-500 text-sm leading-relaxed">Um especialista em pré-impressão verificará seu arquivo
+                    cuidadosamente garantindo o melhor resultado final na impressão.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="w-16 h-16 text-black mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                    </path>
+                </svg>
+                <h4 class="font-bold text-lg mb-4 uppercase tracking-widest text-[13px]">Produção Integrada 360°</h4>
+                <p class="text-gray-500 text-sm leading-relaxed">Otimizamos tempo e custo no seu projeto integrando os
+                    processos de produção e logística de ponta a ponta.</p>
+            </div>
+            <div class="feature-card">
+                <svg class="w-16 h-16 text-black mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                    </path>
+                </svg>
+                <h4 class="font-bold text-lg mb-4 uppercase tracking-widest text-[13px]">Projetos Corporativos</h4>
+                <p class="text-gray-500 text-sm leading-relaxed">Flexibilidade com condições especiais de faturamento
+                    para grandes volumes e agências de marketing.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CATÁLOGO -->
+<section id="catalogo" class="py-20 bg-surface">
+    <div class="container mx-auto px-4 lg:px-8">
+        <h3 class="text-3xl font-bold mb-12 text-center text-black">Nosso Catálogo</h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {% for prod in featured_products %}
+            <div
+                class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 group flex flex-col">
+                <div class="relative overflow-hidden aspect-square bg-gray-50 p-6">
+                    <a href="{% url 'catalog:product_detail' prod.slug %}" class="block w-full h-full">
+                        {% if prod.featured_image %}
+                        <img src="{{ prod.featured_image.url }}" alt="{{ prod.name }}"
+                            class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
+                        {% else %}
+                        <div class="w-full h-full flex flex-col items-center justify-center text-gray-400">
+                            <svg class="w-12 h-12 mb-2 opacity-50" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        {% endif %}
+                    </a>
+                    {% if request.user.is_staff %}
+                    <a href="/admin/catalog/product/{{ prod.id }}/change/" target="_blank"
+                        title="Editar {{ prod.name }} no Admin"
+                        class="absolute top-2 right-2 bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center shadow-md hover:bg-black transition-colors opacity-0 group-hover:opacity-100 z-10">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                            </path>
+                        </svg>
+                    </a>
+                    {% endif %}
+                </div>
+
+                <div class="p-6 flex flex-col flex-grow text-center">
+                    <a href="{% url 'catalog:product_detail' prod.slug %}" class="flex-grow">
+                        <h4 class="text-lg font-bold mb-2 text-black">{{ prod.name }}</h4>
+                        <!-- Stars Dummy -->
+                        <div class="flex justify-center text-blue-600 mb-4 gap-1">
+                            ★★★★★ <span class="text-xs text-gray-400 font-normal ml-1">4.9</span>
+                        </div>
+                    </a>
+
+                    <div class="mt-auto">
+                        {% if prod.variants.exists %}
+                        <span class="text-xl font-bold text-black">R$ {{ prod.variants.first.price }}</span>
+                        {% else %}
+                        <span class="text-lg font-bold text-gray-500">Sob Consulta</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full py-20 text-center text-gray-500">
+                <p>Catálogo vazio por enquanto.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

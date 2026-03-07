@@ -1,0 +1,91 @@
+/* NGD Site - Custom Django Admin Styles */
+
+:root {
+    /* Cores principais NGD (Azul Profissional) */
+    --primary: #003366;
+    --primary-fg: #ffffff;
+
+    --header-bg: #002244;
+    --header-color: #ffffff;
+    --header-link-color: #e0e0e0;
+
+    --accent: #004080;
+    --secondary: #00509e;
+
+    /* Ajustes extras se necessário */
+    --button-bg: #004080;
+    --button-hover-bg: #003366;
+    --default-button-bg: #003366;
+    --default-button-hover-bg: #002244;
+}
+
+/* Ajustes no header para a logo */
+#header {
+    align-items: center;
+    padding: 10px 20px;
+}
+
+#branding {
+    display: flex;
+    align-items: center;
+}
+
+#branding img.ngd-logo,
+#branding svg.ngd-logo {
+    max-height: 40px !important;
+    height: auto;
+}
+
+.logo-box {
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+/* Forçar cores brancas no Header */
+#branding h1,
+#branding h1 a,
+#user-tools,
+#user-tools a,
+#user-tools a:link,
+#user-tools a:visited {
+    color: #ffffff !important;
+}
+
+#user-tools a:hover {
+    color: #e0e0e0 !important;
+    text-decoration: underline;
+}
+
+#branding h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+/* Ajustes gerais do painel */
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: var(--primary);
+}
+
+/* Rodapé customizado */
+#footer {
+    padding: 20px;
+    background: #001a33;
+    color: #e0e0e0;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 30px;
+    border-top: 1px solid #003366;
+}
+
+#footer p {
+    margin: 0;
+    color: #e0e0e0;
+}

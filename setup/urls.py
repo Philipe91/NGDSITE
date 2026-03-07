@@ -7,8 +7,15 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+admin.site.site_header = "NGD - Painel Administrativo"
+admin.site.site_title = "NGD Site Admin"
+admin.site.index_title = "Gerenciamento da Gráfica"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", include("apps.catalog.urls")),
+    path("carrinho/", include("apps.cart.urls")),
+    path("pedido/", include("apps.orders.urls")),
     # As rotas de cada app serão adicionadas aqui nas próximas fases.
     # Exemplo: path("", include("apps.pages.urls")),
 ]

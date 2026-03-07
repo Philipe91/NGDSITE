@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NGD Site - PDV{% endblock %}</title>
+    {% load static %}
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#ffffff",
+                        surface: "#f8f9fa",
+                        border: "#eaeaea",
+                        primary: "#003366",
+                        secondary: "#00509e",
+                        textMain: "#1a1a1a",
+                        textMuted: "#666666",
+                        success: "#00b300"
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .btn-primary {
+                @apply bg-primary text-white px-8 py-3 rounded-full font-semibold uppercase tracking-wider transition-colors hover:bg-secondary flex items-center justify-center gap-2;
+            }
+            .gradient-text {
+                @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+            }
+            .feature-card {
+                @apply bg-white p-8 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col items-center text-center transition-transform hover:-translate-y-1 hover:border-primary/20;
+            }
+        }
+        body {
+            @apply bg-background text-textMain font-sans min-h-screen selection:bg-gray-200 selection:text-black;
+        }
+    </style>
+    {% block extrahead %}{% endblock %}
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header Esfera Style -->
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="container mx-auto px-4 lg:px-8 h-24 lg:h-28 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="/" class="flex items-center shrink-0">
+                <img src="{% static 'img/LOGO NGD.png' %}" alt="NGD Site" class="h-12 lg:h-14 object-contain">
+            </a>
+
+            <!-- Center Nav -->
+            <nav
+                class="hidden lg:flex items-center gap-6 text-[13px] font-semibold tracking-wide text-gray-800 uppercase">
+                <a href="/" class="hover:text-primary transition-colors">Totens PDV</a>
+                <a href="#" class="hover:text-primary transition-colors">Cubo Promocional</a>
+                <a href="#" class="hover:text-primary transition-colors">Wobbler</a>
+                <a href="#" class="hover:text-primary transition-colors">Stopper</a>
+                <a href="#" class="hover:text-primary transition-colors">Faixa de Gôndola</a>
+            </nav>
+
+            <!-- Right Icons -->
+            <div class="flex items-center gap-5 text-gray-700">
+                <button class="hover:text-primary transition-colors"><svg class="w-6 h-6" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg></button>
+                <a href="{% url 'admin:index' %}" class="hover:text-primary transition-colors"><svg class="w-6 h-6"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg></a>
+                <a href="{% url 'cart:cart_detail' %}" class="hover:text-primary transition-colors relative">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                    {% if cart.count > 0 %}
+                    <span
+                        class="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                        {{ cart.count }}
+                    </span>
+                    {% endif %}
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-border py-12 mt-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-xl font-bold mb-4">ngdsite</h2>
+            <p class="text-sm text-textMuted max-w-md mx-auto mb-6">A revolução gráfica em materiais para PDV.
+                Qualidade, rapidez e impressão impecável.</p>
+            <div class="text-xs text-gray-400">
+                &copy; 2026 NGD SITE | Desenvolvido por Philipe Fernandes
+            </div>
+        </div>
+    </footer>
+
+    {% block extrascripts %}{% endblock %}
+</body>
+
+</html>

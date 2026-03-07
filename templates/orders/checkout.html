@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Checkout | NGD Site{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 lg:px-8 py-12 animate-in fade-in slide-in-from-bottom-5 duration-700">
+    <h1 class="text-3xl font-bold text-black mb-8">Finalizar Pedido</h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Esquerda: Formulário de Checkout -->
+        <div class="lg:col-span-7 bg-white p-8 border border-gray-100 shadow-sm rounded-2xl">
+            <h2 class="text-xl font-bold mb-6 text-black border-b border-gray-100 pb-4">Seus Dados Principais</h2>
+
+            <form method="POST" action="{% url 'orders:checkout' %}">
+                {% csrf_token %}
+                <div class="space-y-4 mb-8">
+                    <div>
+                        <label for="customer_name" class="block text-sm font-semibold text-gray-700 mb-1">Nome Completo
+                            (ou Razão Social)</label>
+                        <input type="text" name="customer_name" id="customer_name" required
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                            placeholder="Ex: João da Silva">
+                    </div>
+                    <div>
+                        <label for="customer_email" class="block text-sm font-semibold text-gray-700 mb-1">E-mail
+                            Profissional</label>
+                        <input type="email" name="customer_email" id="customer_email" required
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                            placeholder="contato@empresa.com.br">
+                    </div>
+                    <div>
+                        <label for="customer_phone" class="block text-sm font-semibold text-gray-700 mb-1">WhatsApp /
+                            Telefone</label>
+                        <input type="text" name="customer_phone" id="customer_phone" required
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                            placeholder="(11) 99999-9999">
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 text-blue-800 p-4 rounded-lg flex items-start gap-3 mb-8">
+                    <svg class="w-6 h-6 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div class="text-sm">
+                        <strong class="block mb-1">Próximos Passos:</strong>
+                        Após clicar em solicitar pedido, você receberá um contato direto do nosso especialista para
+                        enviar a sua arte (ex: a impressão para o totem ou display no poliondas) e formalizar a data de
+                        entrega.
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary w-full py-4 text-lg">SOLICITAR PEDIDO AGORA</button>
+            </form>
+        </div>
+
+        <!-- Direita: Resumo do Pedido -->
+        <div class="lg:col-span-5">
+            <div class="bg-surface rounded-2xl p-6 border border-gray-100 shadow-sm sticky top-28">
+                <h3 class="font-bold text-black text-xl mb-6">Resumo da Compra</h3>
+
+                <div class="space-y-4 mb-6 max-h-64 overflow-y-auto pr-2">
+                    {% for item in cart %}
+                    <div class="flex items-center gap-4 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
+                        <!-- Imagem -->
+                        {% if item.variant.product.featured_image %}
+                        <img src="{{ item.variant.product.featured_image.url }}"
+                            class="w-16 h-16 object-cover rounded-lg border border-gray-200" alt="">
+                        {% endif %}
+                        <div class="flex-grow">
+                            <h4 class="text-sm font-bold text-black leading-tight">{{ item.variant.product.name }}</h4>
+                            <div class="text-xs text-gray-500 mt-1">{{ item.variant.size_label }}</div>
+                            <div class="text-xs text-gray-400 mt-1">Qtd: {{ item.quantity }}</div>
+                        </div>
+                        <div class="text-sm font-bold text-primary">
+                            R$ {{ item.total_price }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div
+                    class="border-t border-gray-200 pt-4 flex justify-between items-center bg-gray-50 -mx-6 -mb-6 p-6 rounded-b-2xl">
+                    <span class="text-base font-bold text-black uppercase">Total a pagar</span>
+                    <div class="text-2xl font-bold text-black">
+                        R$ {{ cart.get_total_price }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

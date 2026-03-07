@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Meu Carrinho | NGD Site{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 lg:px-8 py-12 animate-in fade-in slide-in-from-bottom-5 duration-700">
+    <h1 class="text-3xl font-bold text-black mb-8">Meu Carrinho</h1>
+
+    {% if messages %}
+    <div class="mb-8">
+        {% for message in messages %}
+        <div class="bg-blue-50 text-blue-800 p-4 rounded-lg flex items-center gap-3">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if cart %}
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Tabela Carrinho -->
+        <div class="lg:col-span-8 bg-white border border-gray-100 shadow-sm rounded-2xl overflow-hidden">
+            <div
+                class="hidden md:grid grid-cols-12 gap-4 bg-gray-50 border-b border-gray-100 p-4 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <div class="col-span-6">Produto</div>
+                <div class="col-span-2 text-center">Valor</div>
+                <div class="col-span-2 text-center">Qtd</div>
+                <div class="col-span-2 text-right">Subtotal</div>
+            </div>
+
+            {% for item in cart %}
+            <div
+                class="group grid grid-cols-1 md:grid-cols-12 gap-4 md:items-center p-4 border-b border-gray-50 hover:bg-gray-50 transition-colors">
+                <!-- Produto e Foto -->
+                <div class="col-span-1 md:col-span-6 flex items-center gap-4">
+                    {% if item.variant.product.featured_image %}
+                    <img src="{{ item.variant.product.featured_image.url }}" alt="{{ item.variant.product.name }}"
+                        class="w-20 h-20 object-contain rounded-xl border border-gray-200 bg-white">
+                    {% else %}
+                    <div class="w-20 h-20 bg-gray-100 flex items-center justify-center rounded-xl text-gray-400">
+                        <svg class="w-8 h-8 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <a href="{% url 'catalog:product_detail' item.variant.product.slug %}"
+                            class="font-bold text-black hover:text-primary transition-colors text-lg">
+                            {{ item.variant.product.name }}
+                        </a>
+                        <div class="text-[13px] text-gray-500 font-medium">{{ item.variant.size_label }}</div>
+                        <div class="mt-2 text-xs">
+                            <a href="{% url 'cart:cart_remove' item.variant.id %}"
+                                class="text-red-500 hover:text-red-700 font-semibold uppercase flex items-center gap-1"><svg
+                                    class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                    </path>
+                                </svg> Remover</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preço / Mobile Header  -->
+                <div class="col-span-1 md:col-span-2 text-center font-medium text-gray-600">
+                    <span class="md:hidden text-xs text-gray-400 uppercase mr-2">Valor:</span>R$ {{ item.price }}
+                </div>
+
+                <!-- Qtd -->
+                <div
+                    class="col-span-1 md:col-span-2 text-center text-sm font-bold text-black bg-white md:bg-transparent border border-gray-200 md:border-none p-2 md:p-0 rounded-lg">
+                    <span class="md:hidden text-xs text-gray-400 uppercase mr-2 font-normal">Qtd:</span>
+                    {{ item.quantity }} un.
+                </div>
+
+                <!-- Subtotal -->
+                <div class="col-span-1 md:col-span-2 md:text-right font-bold text-primary">
+                    <span class="md:hidden text-xs text-gray-400 uppercase mr-2">Subtotal:</span>
+                    R$ {{ item.total_price }}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="p-6 bg-gray-50 flex justify-between items-center border-t border-gray-100">
+                <a href="{% url 'catalog:home' %}"
+                    class="text-sm font-semibold uppercase text-gray-600 hover:text-black hover:underline">&larr; Voltar
+                    às Compras</a>
+            </div>
+        </div>
+
+        <!-- Resumo Financeiro -->
+        <div class="lg:col-span-4">
+            <div class="bg-surface rounded-2xl p-6 border border-gray-100 shadow-sm sticky top-28">
+                <h3 class="font-bold text-black text-xl mb-6">Resumo do Pedido</h3>
+
+                <div class="space-y-4 text-sm text-gray-600 mb-6 border-b border-gray-200 pb-6">
+                    <div class="flex justify-between">
+                        <span>Subtotal ({{ cart|length }} itens)</span>
+                        <span>R$ {{ cart.get_total_price }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Desconto</span>
+                        <span class="text-green-600">--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Frete</span>
+                        <span class="text-xs text-primary bg-primary/10 px-2 py-0.5 rounded-full font-bold">A
+                            calcular</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center mb-8">
+                    <span class="text-base font-bold text-black uppercase">Total a pagar</span>
+                    <div class="text-2xl font-bold text-black">
+                        R$ {{ cart.get_total_price }}
+                    </div>
+                </div>
+
+                <a href="{% url 'orders:checkout' %}"
+                    class="btn-primary w-full text-center py-4 bg-primary hover:bg-black transition-colors">
+                    FINALIZAR PEDIDO
+                </a>
+
+                <div class="mt-6 flex flex-col items-center gap-2">
+                    <span
+                        class="text-xs text-gray-400 font-medium uppercase tracking-widest text-center block mb-2">Compra
+                        Segura NGD</span>
+                    <div class="flex gap-2">
+                        <span
+                            class="px-2 py-1 border border-gray-200 bg-white rounded text-[10px] font-bold text-gray-500">SSL</span>
+                        <span
+                            class="px-2 py-1 border border-gray-200 bg-white rounded text-[10px] font-bold text-gray-500">PIX</span>
+                        <span
+                            class="px-2 py-1 border border-gray-200 bg-white rounded text-[10px] font-bold text-gray-500">BOLETO</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm">
+        <svg class="w-24 h-24 mx-auto text-gray-200 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+        <h2 class="text-2xl font-bold text-black mb-4">Seu carrinho está vazio!</h2>
+        <p class="text-gray-500 mb-8 max-w-sm mx-auto">Adicione produtos de PDV ou comunicação visual com impressões
+            incríveis para configurar seu pedido.</p>
+        <a href="{% url 'catalog:home' %}" class="btn-primary inline-flex px-10">Voltar ao Catálogo</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

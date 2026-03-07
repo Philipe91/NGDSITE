@@ -42,6 +42,7 @@ LOCAL_APPS = [
     "apps.artwork",
     "apps.customers",
     "apps.seo",
+    "apps.cart",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
@@ -79,6 +80,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "apps.cart.context_processors.cart_processor",
             ],
         },
     },
@@ -133,3 +135,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 # CHAVE PADRÃO DE AUTO-CAMPO
 # =============================================================================
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# =============================================================================
+# CARRINHO
+# =============================================================================
+CART_SESSION_ID = "cart"

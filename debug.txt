@@ -1,0 +1,3 @@
+----- POST DATA -----
+<QueryDict: {'csrfmiddlewaretoken': ['G3wOR2Rh54FHHGX19G2PxPB6QFrXg5WPSj54kVu5A97xyp3Ur1RuXybgbas5VLwO'], 'material': ['poliondas'], 'acabamento': ['corte_vinco'], 'prazo': ['normal'], 'arquivo': ['depois'], 'quantity': ['1'], 'qty_selector': ['1']}>
+---------------------
