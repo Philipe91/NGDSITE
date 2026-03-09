@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Enviar Arte — Pedido #{{ order.id }} | NGD Site{% endblock %}
+{% block content %}
+<div class="bg-surface border-b border-gray-100 py-10">
+    <div class="container mx-auto px-4 lg:px-8">
+        <p class="text-[11px] font-bold tracking-widest uppercase text-primary mb-1">Área do Cliente</p>
+        <h1 class="text-3xl font-bold text-black tracking-tight">Enviar Arte — Pedido #{{ order.id }}</h1>
+    </div>
+</div>
+<div class="container mx-auto px-4 lg:px-8 py-12">
+    <div class="grid lg:grid-cols-[220px_1fr] gap-10">
+        <nav class="space-y-1">
+            <a href="{% url 'customers:dashboard' %}"
+                class="flex items-center gap-3 px-5 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium text-sm transition-colors"><svg
+                    class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                    </path>
+                </svg> Painel Geral</a>
+            <a href="{% url 'customers:orders' %}"
+                class="flex items-center gap-3 px-5 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium text-sm transition-colors"><svg
+                    class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                </svg> Meus Pedidos</a>
+        </nav>
+        <div class="space-y-8">
+            {% if messages %}{% for message in messages %}
+            <div
+                class="px-4 py-3 rounded-xl text-sm flex items-start gap-3 {% if 'success' in message.tags %}bg-green-50 border border-green-200 text-green-700{% else %}bg-red-50 border border-red-200 text-red-700{% endif %}">
+                <svg class="w-5 h-5 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                {{ message }}
+            </div>
+            {% endfor %}{% endif %}
+
+            <div class="bg-white border border-gray-100 rounded-2xl shadow-sm p-8">
+                <h2 class="text-lg font-bold text-black mb-6 pb-4 border-b border-gray-100">Enviar Arquivo de Arte</h2>
+                <form method="POST" action="" enctype="multipart/form-data" class="space-y-5">
+                    {% csrf_token %}
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Arquivo *</label>
+                        <input type="file" name="artwork_file" required
+                            class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary">
+                        <p class="text-xs text-gray-400 mt-2">Formatos aceitos: PDF, AI, EPS, PSD, PNG, JPG, TIF, ZIP.
+                            Máximo recomendado: 500 MB.</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Observações (opcional)</label>
+                        <textarea name="notes" rows="3" placeholder="Ex: logotipo na cor #003087, texto em negrito..."
+                            class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary w-full py-4">ENVIAR ARQUIVO DE ARTE</button>
+                </form>
+            </div>
+
+            {% if artworks %}
+            <div class="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+                <div class="px-6 py-4 bg-surface border-b border-gray-100">
+                    <h3 class="font-bold text-sm text-black uppercase tracking-wider">Arquivos já enviados para este
+                        pedido</h3>
+                </div>
+                <div class="divide-y divide-gray-50">
+                    {% for art in artworks %}
+                    <div class="flex items-center gap-4 px-6 py-4">
+                        <svg class="w-8 h-8 text-primary shrink-0" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        <div class="flex-grow min-w-0">
+                            <p class="font-semibold text-black text-sm truncate">{{ art.original_name }}</p>
+                            <p class="text-xs text-gray-400">Enviado em {{ art.uploaded_at|date:"d/m/Y" }}</p>
+                            {% if art.notes %}<p class="text-xs text-gray-500 mt-1 italic">{{ art.notes }}</p>{% endif
+                            %}
+                        </div>
+                        <a href="{{ art.file.url }}" target="_blank"
+                            class="text-sm font-semibold text-primary hover:underline shrink-0">Ver arquivo</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

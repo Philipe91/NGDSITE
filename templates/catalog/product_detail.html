@@ -3,7 +3,7 @@
 {% block title %}{{ product.name }} | NGD Site{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 lg:px-8 py-8 animate-in fade-in slide-in-from-bottom-5 duration-700">
+<div class="container mx-auto px-4 lg:px-8 py-8 animate-in fade-in slide-in-from-bottom-5 duration-700" x-data="productConfigurator()">
 
     <!-- Breadcrumb -->
     <nav class="flex text-gray-400 text-[11px] font-bold uppercase tracking-wider mb-8">
@@ -188,8 +188,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="step1-options">
                         {% for variant in variants %}
                         <label class="relative cursor-pointer group">
-                            <input type="radio" name="variant_id" value="{{ variant.id }}" class="peer sr-only" {% if forloop.first %}checked{% endif %} data-price="{{ variant.price }}"
-                                data-label="{{ variant.size_label }}" onchange="updateSidebar()">
+                            <input type="radio" name="variant_id" :value="{{ variant.id }}" class="peer sr-only" x-model.number="selectedVariantId" @change="updateSelectedVariant()">
                             <div
                                 class="h-full border-2 border-gray-200 rounded-xl p-5 hover:border-gray-300 transition-all peer-checked:border-primary peer-checked:bg-primary/5 flex flex-col justify-between">
                                 <!-- Radio Circle -->
@@ -414,7 +413,7 @@
                         </div>
                         <div class="hidden sm:block">
                             <!-- Input Number clássico, escondido mas funcionando como source de verdade -->
-                            <input type="number" id="real-quantity" name="quantity" class="hidden" value="1">
+                            <input type="number" id="real-quantity" name="quantity" class="hidden" x-model.number="quantity">
                             <span
                                 class="text-xs font-semibold text-gray-500 border border-gray-200 px-3 py-1.5 rounded-full flex items-center gap-1">
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -429,8 +428,7 @@
 
                     <div class="grid grid-cols-2 lg:grid-cols-3 gap-3">
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="qty_selector" value="1" class="peer sr-only" checked
-                                onchange="document.getElementById('real-quantity').value=this.value; updateSidebar();">
+                            <input type="radio" name="qty_selector" value="1" class="peer sr-only" x-model.number="quantity">
                             <div
                                 class="border-2 border-gray-200 rounded-xl p-4 peer-checked:border-primary peer-checked:bg-primary/5 flex flex-col items-center justify-center text-center h-24 hover:border-gray-300">
                                 <h3 class="font-bold text-black text-sm mb-1">1 unidade</h3>
@@ -440,8 +438,7 @@
                             </div>
                         </label>
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="qty_selector" value="2" class="peer sr-only"
-                                onchange="document.getElementById('real-quantity').value=this.value; updateSidebar();">
+                            <input type="radio" name="qty_selector" value="2" class="peer sr-only" x-model.number="quantity">
                             <div
                                 class="border-2 border-gray-200 rounded-xl p-4 peer-checked:border-primary peer-checked:bg-primary/5 flex flex-col items-center justify-center text-center h-24 hover:border-gray-300">
                                 <h3 class="font-bold text-black text-sm mb-1">2 unidades</h3>
@@ -451,8 +448,7 @@
                             </div>
                         </label>
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="qty_selector" value="5" class="peer sr-only"
-                                onchange="document.getElementById('real-quantity').value=this.value; updateSidebar();">
+                            <input type="radio" name="qty_selector" value="5" class="peer sr-only" x-model.number="quantity">
                             <div
                                 class="border-2 border-gray-200 rounded-xl p-4 peer-checked:border-primary peer-checked:bg-primary/5 flex flex-col items-center justify-center text-center h-24 hover:border-gray-300">
                                 <h3 class="font-bold text-black text-sm mb-1">5 unidades</h3>
@@ -462,8 +458,7 @@
                             </div>
                         </label>
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="qty_selector" value="10" class="peer sr-only"
-                                onchange="document.getElementById('real-quantity').value=this.value; updateSidebar();">
+                            <input type="radio" name="qty_selector" value="10" class="peer sr-only" x-model.number="quantity">
                             <div
                                 class="border-2 border-gray-200 rounded-xl p-4 peer-checked:border-primary peer-checked:bg-primary/5 flex flex-col items-center justify-center text-center h-24 hover:border-gray-300">
                                 <h3 class="font-bold text-black text-sm mb-1">10 unidades</h3>
@@ -520,12 +515,12 @@
                 <div class="space-y-4 text-[13px] text-gray-600 mb-6 border-b border-gray-100 pb-6">
                     <div class="flex justify-between">
                         <span>Quantidade</span>
-                        <span class="font-medium text-black" id="sidebar-qty">1</span>
+                        <span class="font-medium text-black" x-text="quantity">1</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Valor unitário</span>
                         <span class="font-medium text-black">
-                            R$ <span id="sidebar-unit-price">{{ variants.0.price }}</span>
+                            R$ <span x-text="formatMoney(unitPrice)"></span>
                         </span>
                     </div>
                     <div class="flex justify-between items-center mt-2">
@@ -537,7 +532,7 @@
 
                     <div class="flex justify-between items-center pt-2 font-bold text-black text-base">
                         <span>Valor Total</span>
-                        <span>R$ <span id="sidebar-total-price">{{ variants.0.price }}</span></span>
+                        <span>R$ <span x-text="formatMoney(totalPrice)"></span></span>
                     </div>
                 </div>
 
@@ -558,12 +553,22 @@
                 </div>
 
                 <div
-                    class="bg-gray-50 border border-gray-100 rounded-lg p-3 flex items-center gap-2 mb-6 text-xs text-gray-600 font-medium">
+                    class="bg-gray-50 border border-gray-100 rounded-lg p-3 flex items-center gap-2 mb-4 text-xs text-gray-600 font-medium">
                     <svg class="w-4 h-4 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    Formato: <span id="sidebar-format-label" class="font-bold">{{ variants.0.size_label }}</span>
+                    Formato: <span class="font-bold" x-text="selectedVariant ? selectedVariant.label : ''"></span>
+                </div>
+
+                <!-- Botão Baixar Gabarito -->
+                <div x-show="selectedVariant && selectedVariant.templateUrl !== 'null'" style="display: none;" class="mb-6">
+                    <a :href="selectedVariant?.templateUrl" target="_blank" class="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-xl px-4 py-3 hover:bg-gray-50 transition-colors text-sm font-semibold text-gray-700">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                        Baixar Gabarito
+                    </a>
                 </div>
 
                 <!-- Botão Real que submete o form da esquerda -->
@@ -603,41 +608,57 @@
         el.classList.add('border-black', 'border-2');
     }
 
-    // Função que atualiza toda a Sidebar (Resumo) baseada nas seleções do form
-    function updateSidebar() {
-        // Obter Elementos Selecionados
-        const formatRadio = document.querySelector('input[name="variant_id"]:checked');
-        const quantityInput = document.getElementById('real-quantity');
-
-        if (!formatRadio || !quantityInput) return;
-
-        // Extrair Dados
-        const unitPriceStr = formatRadio.getAttribute('data-price').replace(',', '.'); // ex: 139.90
-        const unitPrice = parseFloat(unitPriceStr);
-        const formatLabel = formatRadio.getAttribute('data-label');
-
-        let quantity = parseInt(quantityInput.value) || 1;
-
-        // Simular desconto por volume (apenas visual por enquanto, no futuro virá do backend)
-        let discountMultiplier = 1;
-        if (quantity === 2) discountMultiplier = 0.95; // 5%
-        if (quantity === 5) discountMultiplier = 0.90; // 10%
-        if (quantity >= 10) discountMultiplier = 0.85; // 15%
-
-        const finalUnitPrice = unitPrice * discountMultiplier;
-        const totalPrice = finalUnitPrice * quantity;
-
-        // Formatar Moeda (BR)
-        const formatMoney = (val) => val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-        // Atualizar DOM da Sidebar
-        document.getElementById('sidebar-qty').innerText = quantity;
-        document.getElementById('sidebar-unit-price').innerText = formatMoney(finalUnitPrice);
-        document.getElementById('sidebar-total-price').innerText = formatMoney(totalPrice);
-        document.getElementById('sidebar-format-label').innerText = formatLabel;
-    }
-
-    // Initialize sidebar
-    updateSidebar();
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('productConfigurator', () => ({
+            variants: [
+                {% for variant in variants %}
+                {
+                    id: {{ variant.id }},
+                    sku: '{{ variant.sku|escapejs }}',
+                    label: '{{ variant.size_label|escapejs }}',
+                    price: parseFloat('{{ variant.price|stringformat:"f" }}'),
+                    templateUrl: '{% if variant.template_file %}{{ variant.template_file.url }}{% else %}null{% endif %}',
+                    manualUrl: '{% if variant.manual_file %}{{ variant.manual_file.url }}{% else %}null{% endif %}'
+                }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ],
+            selectedVariantId: {% if variants %}{{ variants.0.id }}{% else %}null{% endif %},
+            selectedVariant: null,
+            quantity: 1,
+            discountMultiplier: 1,
+            
+            init() {
+                this.updateSelectedVariant();
+                this.$watch('quantity', () => this.calculateDiscount());
+                this.calculateDiscount();
+            },
+            
+            updateSelectedVariant() {
+                this.selectedVariant = this.variants.find(v => v.id == this.selectedVariantId) || this.variants[0];
+            },
+            
+            calculateDiscount() {
+                let q = parseInt(this.quantity) || 1;
+                this.discountMultiplier = 1;
+                if (q === 2) this.discountMultiplier = 0.95;
+                if (q === 5) this.discountMultiplier = 0.90;
+                if (q >= 10) this.discountMultiplier = 0.85;
+            },
+            
+            get unitPrice() {
+                if (!this.selectedVariant) return 0;
+                return this.selectedVariant.price * this.discountMultiplier;
+            },
+            
+            get totalPrice() {
+                let q = parseInt(this.quantity) || 1;
+                return this.unitPrice * q;
+            },
+            
+            formatMoney(value) {
+                return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+        }));
+    });
 </script>
 {% endblock %}

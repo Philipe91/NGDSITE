@@ -1,48 +1,53 @@
 {% extends 'base.html' %}
-
 {% block title %}{{ category.name }} - NGD Site{% endblock %}
-
 {% block content %}
-<div class="bg-surface border-b border-gray-100 py-10">
+<div class="bg-surface border-b border-gray-100 py-12">
     <div class="container mx-auto px-4 lg:px-8">
-        <h1 class="text-3xl lg:text-5xl font-bold text-gray-900 mb-4">{{ category.name }}</h1>
-        {% if category.description %}
-        <p class="text-gray-600 max-w-3xl text-lg">{{ category.description }}</p>
-        {% endif %}
+        <p class="text-[11px] font-bold tracking-widest uppercase text-primary mb-2">Catálogo</p>
+        <h1 class="text-3xl lg:text-5xl font-bold text-black mb-3">{{ category.name }}</h1>
+        {% if category.description %}<p class="text-gray-500 max-w-2xl text-lg">{{ category.description }}</p>{% endif
+        %}
     </div>
 </div>
-
 <div class="container mx-auto px-4 lg:px-8 py-16">
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+    {% if products %}
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {% for product in products %}
         <a href="{% url 'catalog:product_detail' product.slug %}"
-            class="group block bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl hover:border-primary/20 transition-all duration-300">
-            <div class="aspect-square bg-gray-50 p-6 flex items-center justify-center relative">
-                {% if product.featured_image %}
-                <img src="{{ product.featured_image.url }}" alt="{{ product.name }}"
-                    class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500">
-                {% endif %}
+            class="group block bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl hover:border-primary/20 hover:-translate-y-0.5 transition-all duration-300">
+            <div class="aspect-square bg-surface p-6 flex items-center justify-center relative overflow-hidden">
+                {% if product.featured_image %}<img src="{{ product.featured_image.url }}" alt="{{ product.name }}"
+                    class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500">{%
+                else %}<svg class="w-16 h-16 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
+                </svg>{% endif %}
             </div>
-            <div class="p-6">
-                <h3 class="text-lg font-bold text-gray-900 mb-2 truncate group-hover:text-primary transition-colors">{{
+            <div class="p-5 border-t border-gray-50">
+                <h3 class="text-base font-bold text-black mb-1 truncate group-hover:text-primary transition-colors">{{
                     product.name }}</h3>
-                <p class="text-gray-500 text-sm mb-4 line-clamp-2">{{ product.short_description|default:"Personalize
-                    este produto para o seu Ponto de Venda." }}</p>
-
-                <span class="inline-flex items-center text-primary font-semibold text-sm">
-                    Configure agora
-                    <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none"
+                {% if product.short_description %}<p class="text-gray-400 text-sm mb-3 line-clamp-2">{{
+                    product.short_description }}</p>{% endif %}
+                <span class="inline-flex items-center text-primary font-semibold text-sm">Configurar <svg
+                        class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </span>
+                    </svg></span>
             </div>
         </a>
-        {% empty %}
-        <div class="col-span-full text-center py-20 text-gray-500 text-lg">
-            Nenhum produto cadastrado nesta categoria ainda.
-        </div>
         {% endfor %}
     </div>
+    {% else %}
+    <div class="text-center py-24">
+        <svg class="w-16 h-16 mx-auto text-gray-200 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
+            </path>
+        </svg>
+        <p class="text-gray-400 font-medium">Nenhum produto cadastrado nesta categoria ainda.</p>
+        <a href="{% url 'catalog:home' %}" class="btn-primary inline-flex mt-6 px-8 text-sm">Voltar ao Catálogo</a>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

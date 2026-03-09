@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block title %}Pedido Confirmado | NGD Site{% endblock %}
-
 {% block content %}
 <div class="container mx-auto px-4 lg:px-8 py-16 text-center animate-in fade-in slide-in-from-bottom-5 duration-700">
     <div class="max-w-2xl mx-auto bg-white p-10 border border-gray-100 shadow-sm rounded-3xl">
@@ -11,11 +9,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
         </div>
-
         <h1 class="text-4xl font-bold text-black mb-4">Pedido #{{ order.id }} Recebido!</h1>
         <p class="text-gray-600 mb-8 text-lg">Olá <strong>{{ order.customer_name }}</strong>, recebemos sua solicitação
-            de compra com sucesso (Aguardando Pagamento / Arte).</p>
-
+            de compra com sucesso — Aguardando Pagamento / Arte.</p>
         <div class="bg-gray-50 border border-gray-100 rounded-xl p-6 mb-8 text-left space-y-3">
             <div class="flex justify-between border-b border-gray-200 pb-3">
                 <span class="text-gray-500 font-medium">Situação:</span>
@@ -30,17 +26,14 @@
                 <span class="font-bold text-primary text-xl">R$ {{ order.total }}</span>
             </div>
         </div>
-
-        <p class="text-sm text-gray-500 mb-8">
-            Um dos nossos consultores NGD entrará em contato via WhatsApp no número <strong>{{ order.customer_phone
-                }}</strong> nas próximas horas para enviar os prazos, o link de pagamento e validar os arquivos de
-            impressão (ex: detalhes da aplicação no poliondas).
-        </p>
-
+        <p class="text-sm text-gray-500 mb-6">Um dos nossos consultores NGD entrará em contato via WhatsApp no número
+            <strong>{{ order.customer_phone }}</strong> nas próximas horas para enviar os prazos, o link de pagamento e
+            validar os arquivos de impressão.</p>
+        <a href="{% url 'customers:login' %}"
+            class="btn-primary w-full py-4 text-base flex items-center justify-center gap-2 mb-3">Ver Meus Pedidos na
+            Área do Cliente</a>
         <a href="{% url 'catalog:home' %}"
-            class="btn-primary w-full py-4 text-lg flex items-center justify-center gap-2">
-            Voltar ao Catálogo
-        </a>
+            class="block text-sm text-gray-400 hover:text-black transition-colors mt-3">Voltar ao Catálogo</a>
     </div>
 </div>
 {% endblock %}

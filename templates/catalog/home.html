@@ -164,6 +164,41 @@
     </div>
 </section>
 
+<!-- CATEGORIES SECTION -->
+<section class="py-16 bg-white">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="text-center mb-12">
+            <p class="text-[11px] font-bold tracking-widest uppercase text-primary mb-2">O que produzimos</p>
+            <h3 class="text-3xl md:text-4xl font-bold text-black">Categorias em Destaque</h3>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {% for cat in categories %}
+            <a href="{% url 'catalog:category_detail' cat.slug %}"
+                class="group relative overflow-hidden rounded-2xl bg-surface border border-gray-100 p-8 flex items-center gap-6 hover:border-primary/30 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+                <div
+                    class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                    <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="flex-grow">
+                    <h4 class="font-bold text-black text-lg mb-1 group-hover:text-primary transition-colors">{{ cat.name
+                        }}</h4>
+                    <p class="text-sm text-gray-500">{{ cat.products.count }} produto(s) disponível</p>
+                </div>
+                <svg class="w-5 h-5 text-gray-300 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
 <!-- CATÁLOGO -->
 <section id="catalogo" class="py-20 bg-surface">
     <div class="container mx-auto px-4 lg:px-8">
@@ -228,6 +263,89 @@
         </div>
     </div>
 </section>
+
+<!-- COMO FUNCIONA -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="text-center mb-16">
+            <p class="text-[11px] font-bold tracking-widest uppercase text-primary mb-2">Simples e Rápido</p>
+            <h3 class="text-3xl md:text-4xl font-bold text-black">Como Funciona</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-start relative">
+            <!-- Linha conectora (desktop) -->
+            <div
+                class="hidden md:block absolute top-10 left-[10%] right-[10%] h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent z-0">
+            </div>
+
+            <!-- Passo 1 -->
+            <div class="flex flex-col items-center text-center relative z-10">
+                <div
+                    class="w-20 h-20 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold mb-6 shadow-lg shadow-primary/30">
+                    1</div>
+                <h4 class="font-bold text-black mb-2">Escolha o Produto</h4>
+                <p class="text-sm text-gray-500 leading-relaxed">Navegue pelo catálogo e selecione o material ideal para
+                    seu PDV.</p>
+            </div>
+
+            <!-- Passo 2 -->
+            <div class="flex flex-col items-center text-center relative z-10">
+                <div
+                    class="w-20 h-20 rounded-full bg-black text-white flex items-center justify-center text-2xl font-bold mb-6 shadow-lg">
+                    2</div>
+                <h4 class="font-bold text-black mb-2">Configure</h4>
+                <p class="text-sm text-gray-500 leading-relaxed">Defina tamanho, material, acabamento, prazo e
+                    quantidade.</p>
+            </div>
+
+            <!-- Passo 3 -->
+            <div class="flex flex-col items-center text-center relative z-10">
+                <div
+                    class="w-20 h-20 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold mb-6 shadow-lg shadow-primary/30">
+                    3</div>
+                <h4 class="font-bold text-black mb-2">Finalize o Pedido</h4>
+                <p class="text-sm text-gray-500 leading-relaxed">Adicione ao carrinho e realize o pagamento via Pix ou
+                    cartão.</p>
+            </div>
+
+            <!-- Passo 4 -->
+            <div class="flex flex-col items-center text-center relative z-10">
+                <div
+                    class="w-20 h-20 rounded-full bg-black text-white flex items-center justify-center text-2xl font-bold mb-6 shadow-lg">
+                    4</div>
+                <h4 class="font-bold text-black mb-2">Envie sua Arte</h4>
+                <p class="text-sm text-gray-500 leading-relaxed">Envie o arquivo conforme o gabarito. Revisamos
+                    gratuitamente.</p>
+            </div>
+
+            <!-- Passo 5 -->
+            <div class="flex flex-col items-center text-center relative z-10">
+                <div
+                    class="w-20 h-20 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold mb-6 shadow-lg shadow-primary/30">
+                    5</div>
+                <h4 class="font-bold text-black mb-2">Receba em Casa</h4>
+                <p class="text-sm text-gray-500 leading-relaxed">Produzimos e entregamos no prazo combinado. Garantia
+                    total.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="bg-primary py-16">
+    <div class="container mx-auto px-4 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div>
+            <h3 class="text-3xl font-bold text-white mb-2">Pronto para destacar seu ponto de venda?</h3>
+            <p class="text-white/70 text-lg">Peça agora e receba materiais de PDV impressos com qualidade gráfica
+                profissional.</p>
+        </div>
+        <a href="#catalogo"
+            class="shrink-0 bg-white text-primary font-bold uppercase tracking-wider px-10 py-4 rounded-full hover:bg-gray-100 hover:shadow-xl transition-all text-sm">
+            Ver Catálogo
+        </a>
+    </div>
+</section>
+
 <script>
     function heroSlider() {
         return {

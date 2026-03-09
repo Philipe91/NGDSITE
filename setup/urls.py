@@ -13,11 +13,11 @@ admin.site.index_title = "Gerenciamento da Gráfica"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("apps.catalog.urls")),
-    path("carrinho/", include("apps.cart.urls")),
-    path("pedido/", include("apps.orders.urls")),
-    # As rotas de cada app serão adicionadas aqui nas próximas fases.
-    # Exemplo: path("", include("apps.pages.urls")),
+    path("", include(("apps.catalog.urls", "catalog"))),
+    path("carrinho/", include(("apps.cart.urls", "cart"))),
+    path("pedido/", include(("apps.orders.urls", "orders"))),
+    path("cliente/", include(("apps.customers.urls", "customers"))),
+    path("arte/", include(("apps.artwork.urls", "artwork"))),
 ]
 
 # Serve arquivos estáticos e de mídia durante o desenvolvimento (DEBUG=True)
