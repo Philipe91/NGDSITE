@@ -119,10 +119,16 @@
                     </div>
                 </div>
 
-                <a href="#" class="hover:text-primary transition-colors py-8">Cubo Promocional</a>
-                <a href="#" class="hover:text-primary transition-colors py-8">Wobbler</a>
-                <a href="#" class="hover:text-primary transition-colors py-8">Stopper</a>
-                <a href="#" class="hover:text-primary transition-colors py-8">Faixa de Gôndola</a>
+                <a href="{% url 'catalog:product_detail' 'cubo-promocional-em-poliondas' %}"
+                    class="hover:text-primary transition-colors py-8">Cubo Promocional</a>
+                <a href="{% url 'catalog:product_detail' 'wobbler-de-gondola' %}"
+                    class="hover:text-primary transition-colors py-8">Wobbler</a>
+                <a href="{% url 'catalog:product_detail' 'stopper-de-prateleira' %}"
+                    class="hover:text-primary transition-colors py-8">Stopper</a>
+                <a href="{% url 'catalog:product_detail' 'faixa-de-gondola-regua' %}"
+                    class="hover:text-primary transition-colors py-8">Faixa de Gôndola</a>
+                <a href="{% url 'catalog:product_detail' 'banner-rollup' %}"
+                    class="hover:text-primary transition-colors py-8">Rollup</a>
             </nav>
 
             <!-- Right Icons -->
@@ -194,13 +200,16 @@
                 <div>
                     <h5 class="font-bold text-sm uppercase tracking-widest mb-6 text-gray-300">Produtos</h5>
                     <ul class="space-y-3 text-sm text-gray-400">
-                        <li><a href="/produto/totem-eliptico/" class="hover:text-white transition-colors">Totem
-                                Elíptico</a></li>
-                        <li><a href="/produto/cubo-promocional/" class="hover:text-white transition-colors">Cubo
-                                Promocional</a></li>
-                        <li><a href="/produto/wobbler/" class="hover:text-white transition-colors">Wobbler Gôndola</a>
-                        </li>
-                        <li><a href="/" class="hover:text-white transition-colors">Ver Catálogo Completo →</a></li>
+                        <li><a href="{% url 'catalog:product_detail' 'totem-eliptico-lama' %}"
+                                class="hover:text-white transition-colors">Totem Elíptico</a></li>
+                        <li><a href="{% url 'catalog:product_detail' 'cubo-promocional-em-poliondas' %}"
+                                class="hover:text-white transition-colors">Cubo Promocional</a></li>
+                        <li><a href="{% url 'catalog:product_detail' 'wobbler-de-gondola' %}"
+                                class="hover:text-white transition-colors">Wobbler Gôndola</a></li>
+                        <li><a href="{% url 'catalog:product_detail' 'banner-rollup' %}"
+                                class="hover:text-white transition-colors">Banner Rollup</a></li>
+                        <li><a href="{% url 'catalog:home' %}" class="hover:text-white transition-colors">Ver Catálogo
+                                Completo →</a></li>
                     </ul>
                 </div>
 

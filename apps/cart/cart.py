@@ -16,13 +16,19 @@ class Cart:
         variant_id = str(variant.id)
         if variant_id not in self.cart:
             self.cart[variant_id] = {'quantity': 0, 'price': str(variant.price)}
-        
         if update_quantity:
             self.cart[variant_id]['quantity'] = quantity
         else:
             self.cart[variant_id]['quantity'] += quantity
             
         self.save()
+
+    def update_price(self, variant, custom_price):
+        """Atualiza o preco customizado no carrinho"""
+        variant_id = str(variant.id)
+        if variant_id in self.cart:
+            self.cart[variant_id]['price'] = str(custom_price)
+            self.save()
 
     def save(self):
         # marca a sessão como modificada
