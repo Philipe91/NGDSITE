@@ -164,37 +164,162 @@
     </div>
 </section>
 
-<!-- CATEGORIES SECTION -->
-<section class="py-16 bg-white">
+<!-- DEPOIMENTOS SECTION -->
+<section class="py-16 bg-white overflow-hidden">
     <div class="container mx-auto px-4 lg:px-8">
-        <div class="text-center mb-12">
-            <p class="text-[11px] font-bold tracking-widest uppercase text-primary mb-2">O que produzimos</p>
-            <h3 class="text-3xl md:text-4xl font-bold text-black">Categorias em Destaque</h3>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {% for cat in categories %}
-            <a href="{% url 'catalog:category_detail' cat.slug %}"
-                class="group relative overflow-hidden rounded-2xl bg-surface border border-gray-100 p-8 flex items-center gap-6 hover:border-primary/30 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
-                <div
-                    class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                    <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
-                        </path>
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-extrabold text-black mb-4 tracking-tight">
+                Mais de <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 italic">4.300</span>
+                Clientes <span class="relative">Satisfeitos<svg
+                        class="absolute w-full h-3 -bottom-1 left-0 text-blue-600" viewBox="0 0 100 10"
+                        preserveAspectRatio="none">
+                        <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="3" fill="none" />
+                    </svg></span> em Todo o Brasil!
+            </h2>
+            <div class="flex flex-col items-center justify-center gap-2 mb-2">
+                <div class="flex items-center text-gray-400 font-light tracking-widest uppercase text-sm md:text-base">
+                    <span>EXCELENTE AVALIAÇÃO NO GOOGLE REVIEWS 4.9 / 5</span>
+                    <svg class="w-5 h-5 ml-2 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                     </svg>
                 </div>
-                <div class="flex-grow">
-                    <h4 class="font-bold text-black text-lg mb-1 group-hover:text-primary transition-colors">{{ cat.name
-                        }}</h4>
-                    <p class="text-sm text-gray-500">{{ cat.products.count }} produto(s) disponível</p>
-                </div>
-                <svg class="w-5 h-5 text-gray-300 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0"
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-            </a>
-            {% endfor %}
+            </div>
+            <p class="text-gray-500 text-sm md:text-base font-medium">Pessoas reais, histórias reais. Veja o que nossos
+                clientes estão falando!</p>
+        </div>
 
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Review 1 -->
+            <div
+                class="bg-white rounded-3xl p-8 shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col items-center text-center relative">
+                <svg class="w-16 h-16 text-gray-100 absolute top-6 left-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+
+                <div class="flex text-blue-500 mb-6 gap-1 relative z-10">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                </div>
+
+                <h4 class="text-black font-bold text-lg leading-tight mb-4 relative z-10">Produto de ótima
+                    qualidade...<br>Vamos voltar a fazer negócios.</h4>
+                <p class="text-gray-500 text-sm mb-10 leading-relaxed font-medium relative z-10">Produto de ótima
+                    qualidade. Destaco o atendimento, nos ajudou nos detalhes finais da arte. Muito obrigado.</p>
+
+                <div class="mt-auto relative z-10 text-center">
+                    <p class="text-xs font-bold text-gray-800 uppercase tracking-widest">JUSSARA MASSALAI / CFC CABERLON
+                    </p>
+                    <p class="text-xs text-gray-400 mt-1">Junho, 2025</p>
+                </div>
+            </div>
+
+            <!-- Review 2 -->
+            <div
+                class="bg-white rounded-3xl p-8 shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col items-center text-center relative">
+                <svg class="w-16 h-16 text-gray-100 absolute top-6 left-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+
+                <div class="flex text-blue-500 mb-6 gap-1 relative z-10">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                </div>
+
+                <h4 class="text-black font-bold text-lg leading-tight mb-4 relative z-10">Material de
+                    excelência,<br>...atendimento impecável.</h4>
+                <p class="text-gray-500 text-sm mb-10 leading-relaxed font-medium relative z-10">Material de excelência,
+                    prazo ótimo e atendimento impecável. Fizemos alguns trabalhos e todos supriram nossa expectativa.
+                </p>
+
+                <div class="mt-auto relative z-10 text-center">
+                    <p class="text-xs font-bold text-gray-800 uppercase tracking-widest">KAREN POMPEU / AGÊNCIA EIKA</p>
+                    <p class="text-xs text-gray-400 mt-1">Junho, 2025</p>
+                </div>
+            </div>
+
+            <!-- Review 3 -->
+            <div
+                class="bg-white rounded-3xl p-8 shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col items-center text-center relative hidden lg:flex">
+                <svg class="w-16 h-16 text-gray-100 absolute top-6 left-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+
+                <div class="flex text-blue-500 mb-6 gap-1 relative z-10">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                </div>
+
+                <h4 class="text-black font-bold text-lg leading-tight mb-4 relative z-10">Sempre foram atenciosos<br>e
+                    pontuais na entrega.</h4>
+                <p class="text-gray-500 text-sm mb-10 leading-relaxed font-medium relative z-10">Trabalho com eles há
+                    anos. Sempre foram atenciosos e pontuais na entrega dos materiais de comunicação visual para nossas
+                    campanhas.</p>
+
+                <div class="mt-auto relative z-10 text-center">
+                    <p class="text-xs font-bold text-gray-800 uppercase tracking-widest">MARCELO OLIVEIRA / VAREJO S.A.
+                    </p>
+                    <p class="text-xs text-gray-400 mt-1">Março, 2025</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
