@@ -54,8 +54,8 @@ def pay(request, order_id):
                 "failure": f"{base_url}/pagamento/{order.id}/",
                 "pending": f"{base_url}/pedidos/sucesso/{order.id}/",
             },
-            "auto_return": "approved",
-            "notification_url": f"{base_url}/pagamento/webhook/",
+            # "auto_return": "approved",
+            # "notification_url": f"{base_url}/pagamento/webhook/",
             "external_reference": str(order.id),
             "statement_descriptor": "NGD Grafica",
         }
