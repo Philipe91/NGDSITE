@@ -110,7 +110,7 @@
                     <span>{{ customer_email }}</span>
                     <div class="flex items-center gap-4">
                         <span class="font-semibold text-gray-600">{{ order.items.count }} item(ns)</span>
-                        <a href="{% url 'artwork:upload' order.id %}"
+                        <a href="{% url 'orders:checkout_success' order.id %}"
                             class="flex items-center gap-1.5 text-primary font-bold hover:underline text-xs uppercase tracking-wide">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -1,76 +1,288 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block title %}Pedido Confirmado | NGD{% endblock %}
+
 {% block content %}
-<div class="container mx-auto px-4 lg:px-8 py-16 text-center animate-in fade-in slide-in-from-bottom-5 duration-700">
-    <div class="max-w-2xl mx-auto bg-white p-10 border border-gray-100 shadow-sm rounded-3xl">
-
-        <!-- Ícone de status -->
-        {% if order.status == 'pago' %}
-        <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-        </div>
-        <h1 class="text-4xl font-bold text-black mb-4">Pagamento Confirmado!</h1>
-        <p class="text-gray-600 mb-8 text-lg">
-            Olá <strong>{{ order.customer_name }}</strong>, seu pagamento foi aprovado. Agora envie sua arte para
-            iniciarmos a produção.
-        </p>
-        {% else %}
-        <div class="w-20 h-20 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-        </div>
-        <h1 class="text-4xl font-bold text-black mb-4">Pedido #{{ order.id }} Recebido!</h1>
-        <p class="text-gray-600 mb-8 text-lg">
-            Olá <strong>{{ order.customer_name }}</strong>, seu pedido foi criado.
-            Aguardando a confirmação do pagamento para iniciar a produção.
-        </p>
-        {% endif %}
-
-        <!-- Dados do Pedido -->
-        <div class="bg-gray-50 border border-gray-100 rounded-xl p-6 mb-8 text-left space-y-3">
-            <div class="flex justify-between border-b border-gray-200 pb-3">
-                <span class="text-gray-500 font-medium">Situação:</span>
-                <span class="font-bold text-primary">{{ order.get_status_display }}</span>
+<div class="container mx-auto px-4 lg:px-8 py-16 animate-in fade-in slide-in-from-bottom-5 duration-700">
+    <div class="max-w-6xl mx-auto grid lg:grid-cols-[1.1fr_0.9fr] gap-8">
+        <section class="bg-white p-8 lg:p-10 border border-gray-100 shadow-sm rounded-[2rem]">
+            {% if order.status == 'pago' %}
+            <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
             </div>
-            <div class="flex justify-between border-b border-gray-200 pb-3">
-                <span class="text-gray-500 font-medium">Entrega:</span>
-                <span class="font-bold text-black">{{ order.get_shipping_method_display }}</span>
+            <p class="text-[11px] font-bold tracking-[0.3em] uppercase text-green-600 mb-3">Pagamento Confirmado</p>
+            <h1 class="text-4xl lg:text-5xl font-bold text-black mb-4">Sua produção está quase liberada.</h1>
+            <p class="text-gray-600 text-lg leading-relaxed max-w-2xl">
+                Olá <strong>{{ order.customer_name }}</strong>. Seu pagamento foi confirmado. Agora você já pode enviar
+                a arte de cada item para o nosso time iniciar a análise.
+            </p>
+            {% else %}
+            <div class="w-20 h-20 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center mb-6">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
             </div>
-            <div class="flex justify-between border-b border-gray-200 pb-3">
-                <span class="text-gray-500 font-medium">E-mail:</span>
-                <span class="font-bold text-black">{{ order.customer_email }}</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="text-gray-500 font-medium">Total:</span>
-                <span class="font-bold text-primary text-xl">R$ {{ order.total }}</span>
-            </div>
-        </div>
+            <p class="text-[11px] font-bold tracking-[0.3em] uppercase text-yellow-600 mb-3">Pedido Recebido</p>
+            <h1 class="text-4xl lg:text-5xl font-bold text-black mb-4">Pedido #{{ order.id }} criado com sucesso.</h1>
+            <p class="text-gray-600 text-lg leading-relaxed max-w-2xl">
+                O link de pagamento já está disponível. Se preferir, você também pode adiantar o envio das artes agora
+                e ganhar tempo na fila de produção.
+            </p>
+            {% endif %}
 
-        <!-- Ações -->
-        {% if order.status == 'pago' %}
-        <a href="{% url 'artwork:upload' order_id=order.id %}"
-            class="btn-primary w-full py-4 text-base flex items-center justify-center gap-2 mb-3">
-            Enviar Arte Agora
-        </a>
-        {% else %}
-        <a href="{% url 'payment:pay' order_id=order.id %}"
-            class="btn-primary w-full py-4 text-base flex items-center justify-center gap-2 mb-3">
-            Ir para Pagamento
-        </a>
-        {% endif %}
+            <div class="mt-10 grid sm:grid-cols-2 gap-4">
+                <div class="rounded-2xl border border-gray-100 bg-gray-50 px-5 py-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-2">Situação</p>
+                    <p class="text-lg font-bold text-primary">{{ order.get_status_display }}</p>
+                </div>
+                <div class="rounded-2xl border border-gray-100 bg-gray-50 px-5 py-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-2">Entrega</p>
+                    <p class="text-lg font-bold text-black">{{ order.get_shipping_method_display }}</p>
+                </div>
+                <div class="rounded-2xl border border-gray-100 bg-gray-50 px-5 py-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-2">E-mail</p>
+                    <p class="text-base font-semibold text-black break-all">{{ order.customer_email }}</p>
+                </div>
+                <div class="rounded-2xl border border-gray-100 bg-gray-50 px-5 py-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-2">Total</p>
+                    <p class="text-2xl font-bold text-primary">R$ {{ order.total }}</p>
+                </div>
+            </div>
 
-        <a href="{% url 'customers:login' %}"
-            class="block text-sm text-gray-500 hover:text-primary transition-colors mt-3">
-            Ver Meus Pedidos na Área do Cliente
-        </a>
-        <a href="{% url 'catalog:home' %}" class="block text-sm text-gray-400 hover:text-black transition-colors mt-2">
-            Voltar ao Catálogo
-        </a>
+            <div class="mt-10 flex flex-col sm:flex-row gap-3">
+                {% if order.status == 'pago' %}
+                <a href="{% url 'customers:orders' %}"
+                    class="btn-primary flex-1 py-4 text-sm flex items-center justify-center gap-2">
+                    Ver meus pedidos
+                </a>
+                {% else %}
+                <a href="{% url 'payment:pay' order_id=order.id %}"
+                    class="btn-primary flex-1 py-4 text-sm flex items-center justify-center gap-2">
+                    Ir para pagamento
+                </a>
+                {% endif %}
+                <a href="{% url 'catalog:home' %}"
+                    class="flex-1 py-4 px-6 rounded-full border border-gray-200 text-sm font-semibold text-gray-700 text-center hover:border-primary hover:text-primary transition-colors">
+                    Continuar comprando
+                </a>
+            </div>
+        </section>
+
+        <aside class="bg-gradient-to-br from-white to-gray-50 border border-gray-100 shadow-sm rounded-[2rem] p-8">
+            <div class="flex items-center justify-between gap-4 mb-6">
+                <div>
+                    <p class="text-[11px] font-bold tracking-[0.25em] uppercase text-primary mb-2">Upload de Arte</p>
+                    <h2 class="text-2xl font-bold text-black">Envie os arquivos por item</h2>
+                </div>
+                <div class="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                </div>
+            </div>
+
+            <p class="text-sm text-gray-500 leading-relaxed mb-6">
+                Formatos aceitos: PDF, CDR, AI, JPG e PNG. O envio da arte é complementar: ele não bloqueia o link de
+                pagamento e cada item pode receber seu próprio arquivo.
+            </p>
+
+            <div class="space-y-4">
+                {% for item in order.items.all %}
+                <article class="rounded-3xl border border-gray-100 bg-white p-5 shadow-[0_12px_35px_rgba(15,23,42,0.05)]"
+                    x-data="artUploader({
+                        uploadUrl: '{% url 'orders:upload_art' order.id item.id %}',
+                        currentStatus: '{{ item.get_art_status_display|escapejs }}'
+                    })">
+                    <div class="flex items-start gap-4">
+                        <div class="w-16 h-16 rounded-2xl bg-gray-50 border border-gray-100 overflow-hidden flex items-center justify-center shrink-0">
+                            {% if item.variant and item.variant.product.featured_image %}
+                            <img src="{{ item.variant.product.featured_image.url }}" alt="{{ item.variant.product.name }}"
+                                class="w-full h-full object-contain p-2">
+                            {% else %}
+                            <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            {% endif %}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex flex-wrap items-center gap-3 mb-2">
+                                <h3 class="text-base font-bold text-black">
+                                    {% if item.variant %}{{ item.variant.product.name }}{% else %}Item removido{% endif %}
+                                </h3>
+                                <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider"
+                                    :class="statusBadgeClass()"
+                                    x-text="statusLabel"></span>
+                            </div>
+                            <p class="text-sm text-gray-500">
+                                {% if item.variant %}
+                                {{ item.variant.size_label }} • {{ item.quantity }} unidade{{ item.quantity|pluralize }}
+                                {% else %}
+                                Produto sem variante vinculada
+                                {% endif %}
+                            </p>
+                            <p class="text-sm text-gray-400 mt-1">
+                                Valor do item: <span class="font-semibold text-gray-700">R$ {{ item.get_cost }}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 rounded-2xl border border-dashed border-gray-200 bg-gray-50/70 p-4">
+                        {% if item.art_file %}
+                        <div class="flex items-center justify-between gap-4 mb-4">
+                            <div>
+                                <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-1">Arquivo Atual</p>
+                                <p class="text-sm font-semibold text-black break-all">{{ item.art_file.name|cut:"uploads/artes/" }}</p>
+                            </div>
+                            <a href="{{ item.art_file.url }}" target="_blank"
+                                class="text-sm font-semibold text-primary hover:text-black transition-colors">
+                                Baixar
+                            </a>
+                        </div>
+                        {% endif %}
+
+                        <form @submit.prevent="submitUpload($event)" enctype="multipart/form-data" class="space-y-4">
+                            {% csrf_token %}
+                            <div>
+                                <label class="block text-xs uppercase tracking-[0.2em] text-gray-400 mb-2">Selecionar arte</label>
+                                <input type="file" name="art_file" x-ref="fileInput" @change="handleFileChange"
+                                    accept=".pdf,.cdr,.ai,.jpg,.jpeg,.png"
+                                    class="block w-full text-sm text-gray-600 file:mr-4 file:rounded-full file:border-0 file:bg-primary/10 file:px-4 file:py-3 file:text-sm file:font-semibold file:text-primary hover:file:bg-primary/15">
+                            </div>
+
+                            <template x-if="fileName">
+                                <div class="rounded-2xl bg-white border border-gray-200 px-4 py-3 text-sm text-gray-600">
+                                    <span class="font-semibold text-black" x-text="fileName"></span>
+                                </div>
+                            </template>
+
+                            <div x-show="uploading" class="space-y-2" style="display: none;">
+                                <div class="h-2 rounded-full bg-gray-200 overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-200"
+                                        :style="`width: ${progress}%`"></div>
+                                </div>
+                                <p class="text-xs font-semibold text-gray-500" x-text="`Enviando... ${progress}%`"></p>
+                            </div>
+
+                            <template x-if="message">
+                                <p class="text-sm font-medium"
+                                    :class="isError ? 'text-red-500' : 'text-green-600'"
+                                    x-text="message"></p>
+                            </template>
+
+                            <button type="submit"
+                                class="w-full rounded-full bg-black text-white py-3.5 text-sm font-bold uppercase tracking-wider hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                :disabled="uploading || !hasFile">
+                                <span x-show="!uploading">Enviar arte deste item</span>
+                                <span x-show="uploading" style="display: none;">Enviando arquivo...</span>
+                            </button>
+                        </form>
+                    </div>
+                </article>
+                {% empty %}
+                <div class="rounded-3xl border border-gray-100 bg-white p-6 text-center text-gray-500">
+                    Este pedido ainda não possui itens para upload.
+                </div>
+                {% endfor %}
+            </div>
+        </aside>
     </div>
 </div>
+{% endblock %}
+
+{% block extrascripts %}
+<script>
+    function artUploader({ uploadUrl, currentStatus }) {
+        return {
+            uploadUrl,
+            progress: 0,
+            uploading: false,
+            message: '',
+            isError: false,
+            fileName: '',
+            hasFile: false,
+            statusLabel: currentStatus || 'Pendente',
+
+            handleFileChange(event) {
+                const file = event.target.files[0];
+                this.fileName = file ? file.name : '';
+                this.hasFile = !!file;
+                this.message = '';
+                this.isError = false;
+                this.progress = 0;
+            },
+
+            statusBadgeClass() {
+                const label = this.statusLabel.toLowerCase();
+                if (label.includes('aprov')) return 'bg-green-100 text-green-700';
+                if (label.includes('reje')) return 'bg-red-100 text-red-600';
+                if (label.includes('análise') || label.includes('analise')) return 'bg-amber-100 text-amber-700';
+                return 'bg-gray-100 text-gray-600';
+            },
+
+            submitUpload(event) {
+                if (!this.$refs.fileInput.files.length) {
+                    this.message = 'Selecione um arquivo antes de enviar.';
+                    this.isError = true;
+                    return;
+                }
+
+                const form = event.target;
+                const formData = new FormData(form);
+                const csrf = form.querySelector('input[name="csrfmiddlewaretoken"]').value;
+                const request = new XMLHttpRequest();
+
+                this.uploading = true;
+                this.progress = 0;
+                this.message = '';
+                this.isError = false;
+
+                request.upload.addEventListener('progress', (e) => {
+                    if (e.lengthComputable) {
+                        this.progress = Math.round((e.loaded / e.total) * 100);
+                    }
+                });
+
+                request.addEventListener('load', () => {
+                    this.uploading = false;
+
+                    let payload = {};
+                    try {
+                        payload = JSON.parse(request.responseText || '{}');
+                    } catch (error) {
+                        payload = {};
+                    }
+
+                    if (request.status >= 200 && request.status < 300) {
+                        this.progress = 100;
+                        this.message = payload.message || 'Arte enviada com sucesso.';
+                        this.statusLabel = payload.art_status || 'Em Análise';
+                        this.fileName = payload.file_name || this.fileName;
+                        this.hasFile = false;
+                        form.reset();
+                    } else {
+                        this.message = payload.error || 'Não foi possível enviar a arte.';
+                        this.isError = true;
+                    }
+                });
+
+                request.addEventListener('error', () => {
+                    this.uploading = false;
+                    this.isError = true;
+                    this.message = 'Falha de conexão. Tente novamente.';
+                });
+
+                request.open('POST', this.uploadUrl, true);
+                request.setRequestHeader('X-CSRFToken', csrf);
+                request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                request.send(formData);
+            }
+        }
+    }
+</script>
 {% endblock %}

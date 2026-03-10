@@ -39,7 +39,6 @@ LOCAL_APPS = [
     "apps.catalog",
     "apps.pages",
     "apps.orders",
-    "apps.artwork",
     "apps.customers",
     "apps.seo",
     "apps.cart",

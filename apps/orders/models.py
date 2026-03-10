@@ -1,5 +1,11 @@
 from django.db import models
+from django.utils import timezone
 from apps.catalog.models import ProductVariant
+
+
+def order_item_art_upload_path(instance, filename):
+    created_at = instance.order.created_at if instance.order_id and instance.order.created_at else timezone.now()
+    return f"uploads/artes/{created_at:%Y/%m/%d}/{filename}"
 
 class Order(models.Model):
     SHIPPING_METHOD_CHOICES = (
@@ -55,10 +61,19 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    ART_STATUS_CHOICES = (
+        ('pendente', 'Pendente'),
+        ('em_analise', 'Em Análise'),
+        ('aprovado', 'Aprovado'),
+        ('rejeitado', 'Rejeitado'),
+    )
+
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     variant = models.ForeignKey(ProductVariant, related_name='order_items', on_delete=models.SET_NULL, null=True)
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Preço Unitário")
+    art_file = models.FileField(upload_to=order_item_art_upload_path, blank=True, null=True, verbose_name="Arquivo da Arte")
+    art_status = models.CharField(max_length=20, choices=ART_STATUS_CHOICES, default='pendente', verbose_name="Status da Arte")
 
     class Meta:
         verbose_name = "Item do Pedido"
@@ -69,3 +84,7 @@ class OrderItem(models.Model):
 
     def get_cost(self):
         return self.price * self.quantity
+
+    @property
+    def has_art_file(self):
+        return bool(self.art_file)
