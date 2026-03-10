@@ -15,9 +15,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include(("apps.catalog.urls", "catalog"))),
     path("carrinho/", include(("apps.cart.urls", "cart"))),
-    path("pedido/", include(("apps.orders.urls", "orders"))),
+    path("pedidos/", include(("apps.orders.urls", "orders"))),
     path("cliente/", include(("apps.customers.urls", "customers"))),
     path("arte/", include(("apps.artwork.urls", "artwork"))),
+    path("pagamento/", include(("apps.payment.urls", "payment"))),
 ]
 
 # Serve arquivos estáticos e de mídia durante o desenvolvimento (DEBUG=True)

@@ -43,6 +43,7 @@ LOCAL_APPS = [
     "apps.customers",
     "apps.seo",
     "apps.cart",
+    "apps.payment",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
@@ -141,3 +142,22 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # CARRINHO
 # =============================================================================
 CART_SESSION_ID = "cart"
+
+# =============================================================================
+# MERCADO PAGO
+# =============================================================================
+MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN", "")
+MP_PUBLIC_KEY = os.getenv("MP_PUBLIC_KEY", "")
+MP_SANDBOX = os.getenv("MP_SANDBOX", "True") == "True"
+
+# =============================================================================
+# FRETE
+# =============================================================================
+from decimal import Decimal
+SHIPPING_FIXED_COST = Decimal(os.getenv("SHIPPING_FIXED_COST", "25.00"))
+STORE_ADDRESS = os.getenv("STORE_ADDRESS", "Av. Principal, 1000 - Centro (confirmar por WhatsApp)")
+
+# =============================================================================
+# URL BASE DO SITE (para callbacks do MP)
+# =============================================================================
+SITE_URL = os.getenv("SITE_URL", "http://localhost:8000")

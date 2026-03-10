@@ -1,58 +1,110 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Checkout | NGD Site{% endblock %}
+{% block title %}Checkout | NGD{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 lg:px-8 py-12 animate-in fade-in slide-in-from-bottom-5 duration-700">
+<div class="container mx-auto px-4 lg:px-8 py-12 animate-in fade-in slide-in-from-bottom-5 duration-700"
+    x-data="checkoutApp()">
+
     <h1 class="text-3xl font-bold text-black mb-8">Finalizar Pedido</h1>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <!-- Esquerda: Formulário de Checkout -->
-        <div class="lg:col-span-7 bg-white p-8 border border-gray-100 shadow-sm rounded-2xl">
-            <h2 class="text-xl font-bold mb-6 text-black border-b border-gray-100 pb-4">Seus Dados Principais</h2>
 
-            <form method="POST" action="{% url 'orders:checkout' %}">
-                {% csrf_token %}
-                <div class="space-y-4 mb-8">
+        <!-- Esquerda: Formulário de Checkout -->
+        <div class="lg:col-span-7 space-y-6">
+
+            <!-- Dados Pessoais -->
+            <div class="bg-white p-8 border border-gray-100 shadow-sm rounded-2xl">
+                <h2 class="text-xl font-bold mb-6 text-black border-b border-gray-100 pb-4">
+                    1. Seus Dados
+                </h2>
+                <div class="space-y-4">
                     <div>
                         <label for="customer_name" class="block text-sm font-semibold text-gray-700 mb-1">Nome Completo
-                            (ou Razão Social)</label>
-                        <input type="text" name="customer_name" id="customer_name" required
+                            / Razão Social</label>
+                        <input type="text" name="customer_name" id="customer_name" required form="checkout-form"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                             placeholder="Ex: João da Silva">
                     </div>
                     <div>
-                        <label for="customer_email" class="block text-sm font-semibold text-gray-700 mb-1">E-mail
-                            Profissional</label>
-                        <input type="email" name="customer_email" id="customer_email" required
+                        <label for="customer_email"
+                            class="block text-sm font-semibold text-gray-700 mb-1">E-mail</label>
+                        <input type="email" name="customer_email" id="customer_email" required form="checkout-form"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                             placeholder="contato@empresa.com.br">
                     </div>
                     <div>
                         <label for="customer_phone" class="block text-sm font-semibold text-gray-700 mb-1">WhatsApp /
                             Telefone</label>
-                        <input type="text" name="customer_phone" id="customer_phone" required
+                        <input type="text" name="customer_phone" id="customer_phone" required form="checkout-form"
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                             placeholder="(11) 99999-9999">
                     </div>
                 </div>
+            </div>
 
-                <div class="bg-blue-50 text-blue-800 p-4 rounded-lg flex items-start gap-3 mb-8">
-                    <svg class="w-6 h-6 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <div class="text-sm">
-                        <strong class="block mb-1">Próximos Passos:</strong>
-                        Após clicar em solicitar pedido, você receberá um contato direto do nosso especialista para
-                        enviar a sua arte (ex: a impressão para o totem ou display no poliondas) e formalizar a data de
-                        entrega.
+            <!-- Entrega -->
+            <div class="bg-white p-8 border border-gray-100 shadow-sm rounded-2xl">
+                <h2 class="text-xl font-bold mb-6 text-black border-b border-gray-100 pb-4">
+                    2. Entrega
+                </h2>
+
+                <!-- Campo de CEP -->
+                <div class="flex gap-2 mb-4">
+                    <div class="flex-grow">
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">CEP (para entrega)</label>
+                        <input type="text" x-model="cep" id="cep-input" maxlength="9" @input="formatCep"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                            placeholder="00000-000">
+                    </div>
+                    <div class="flex items-end">
+                        <button type="button" @click="calcularFrete" :disabled="loadingFrete"
+                            class="btn-primary px-5 py-3 whitespace-nowrap disabled:opacity-60">
+                            <span x-show="!loadingFrete">Calcular Frete</span>
+                            <span x-show="loadingFrete">Calculando...</span>
+                        </button>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-primary w-full py-4 text-lg">SOLICITAR PEDIDO AGORA</button>
-            </form>
+                <!-- Erro de CEP -->
+                <p x-show="freteError" x-text="freteError" class="text-red-500 text-sm mb-4"></p>
+
+                <!-- Opções de frete -->
+                <div x-show="freteOptions.length > 0" class="space-y-3">
+                    <template x-for="option in freteOptions" :key="option.id">
+                        <label class="flex items-center gap-4 p-4 border-2 rounded-xl cursor-pointer transition-all"
+                            :class="selectedFrete === option.id ? 'border-primary bg-primary/5' : 'border-gray-200 hover:border-gray-300'">
+                            <input type="radio" :value="option.id" x-model="selectedFrete"
+                                @change="updateShipping(option)" class="sr-only">
+                            <div class="w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center"
+                                :class="selectedFrete === option.id ? 'border-primary' : 'border-gray-300'">
+                                <div class="w-2.5 h-2.5 rounded-full bg-primary" x-show="selectedFrete === option.id">
+                                </div>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="font-semibold text-sm text-black" x-text="option.label"></div>
+                                <div class="text-xs text-gray-500 mt-0.5" x-text="option.description"></div>
+                            </div>
+                            <div class="text-sm font-bold"
+                                :class="option.cost === 0 ? 'text-green-600' : 'text-primary'">
+                                <span x-show="option.cost === 0">Grátis</span>
+                                <span x-show="option.cost > 0"
+                                    x-text="'R$ ' + option.cost.toFixed(2).replace('.', ',')"></span>
+                            </div>
+                        </label>
+                    </template>
+                </div>
+
+                <!-- Endereço de entrega (apenas se não for retirada) -->
+                <div x-show="selectedFrete === 'frete_fixo'" class="mt-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Endereço Completo</label>
+                    <textarea x-model="shippingAddress" rows="3"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                        placeholder="Rua, número, complemento, bairro, cidade..."></textarea>
+                </div>
+            </div>
+
         </div>
 
         <!-- Direita: Resumo do Pedido -->
@@ -63,7 +115,6 @@
                 <div class="space-y-4 mb-6 max-h-64 overflow-y-auto pr-2">
                     {% for item in cart %}
                     <div class="flex items-center gap-4 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
-                        <!-- Imagem -->
                         {% if item.variant.product.featured_image %}
                         <img src="{{ item.variant.product.featured_image.url }}"
                             class="w-16 h-16 object-cover rounded-lg border border-gray-200" alt="">
@@ -80,15 +131,99 @@
                     {% endfor %}
                 </div>
 
+                <!-- Subtotal -->
+                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                    <span>Subtotal</span>
+                    <span>R$ {{ cart.get_total_price }}</span>
+                </div>
+
+                <!-- Frete -->
+                <div class="flex justify-between text-sm mb-4"
+                    :class="shippingCost === 0 ? 'text-green-600' : 'text-gray-600'">
+                    <span>Frete</span>
+                    <span x-show="selectedFrete === 'retirada'">Grátis (Retirada)</span>
+                    <span x-show="selectedFrete !== 'retirada'"
+                        x-text="'R$ ' + shippingCost.toFixed(2).replace('.', ',')"></span>
+                    <span x-show="selectedFrete === '' && freteOptions.length === 0" class="text-gray-400">—</span>
+                </div>
+
+                <!-- Total -->
                 <div
                     class="border-t border-gray-200 pt-4 flex justify-between items-center bg-gray-50 -mx-6 -mb-6 p-6 rounded-b-2xl">
-                    <span class="text-base font-bold text-black uppercase">Total a pagar</span>
-                    <div class="text-2xl font-bold text-black">
+                    <span class="text-base font-bold text-black uppercase">Total</span>
+                    <div class="text-2xl font-bold text-black" x-text="'R$ ' + total.toFixed(2).replace('.', ',')">
                         R$ {{ cart.get_total_price }}
                     </div>
                 </div>
             </div>
+
+            <!-- Botão de confirmar -->
+            <form method="POST" action="{% url 'orders:checkout' %}" id="checkout-form" class="mt-4">
+                {% csrf_token %}
+                <input type="hidden" name="shipping_method" :value="selectedFrete || 'retirada'">
+                <input type="hidden" name="shipping_cost" :value="shippingCost">
+                <input type="hidden" name="shipping_cep" :value="cep">
+                <input type="hidden" name="shipping_address" :value="shippingAddress">
+
+                <button type="submit" class="btn-primary w-full py-4 text-lg">
+                    CONTINUAR PARA PAGAMENTO →
+                </button>
+            </form>
         </div>
     </div>
 </div>
+
+<script>
+    function checkoutApp() {
+        const subtotal = parseFloat("{{ cart.get_total_price }}".replace(',', '.')) || 0;
+        return {
+            cep: '',
+            freteOptions: [],
+            freteError: '',
+            loadingFrete: false,
+            selectedFrete: '',
+            shippingCost: 0,
+            shippingAddress: '',
+            get total() {
+                return subtotal + this.shippingCost;
+            },
+            formatCep() {
+                let v = this.cep.replace(/\D/g, '').slice(0, 8);
+                if (v.length > 5) v = v.slice(0, 5) + '-' + v.slice(5);
+                this.cep = v;
+            },
+            async calcularFrete() {
+                const cepClean = this.cep.replace('-', '');
+                if (cepClean.length !== 8) {
+                    this.freteError = 'Informe um CEP válido com 8 dígitos.';
+                    return;
+                }
+                this.loadingFrete = true;
+                this.freteError = '';
+                this.freteOptions = [];
+                try {
+                    const res = await fetch(`{% url 'orders:calcular_frete' %}?cep=${cepClean}`);
+                    const data = await res.json();
+                    if (res.ok) {
+                        this.freteOptions = data.options;
+                        if (this.freteOptions.length > 0) {
+                            this.selectedFrete = this.freteOptions[0].id;
+                            this.shippingCost = this.freteOptions[0].cost;
+                        }
+                    } else {
+                        this.freteError = data.error || 'Erro ao calcular frete.';
+                    }
+                } catch (e) {
+                    this.freteError = 'Falha na conexão. Tente novamente.';
+                } finally {
+                    this.loadingFrete = false;
+                }
+            },
+            updateShipping(option) {
+                this.shippingCost = option.cost;
+                this.selectedFrete = option.id;
+            },
+        };
+    }
+</script>
 {% endblock %}
