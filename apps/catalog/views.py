@@ -3,9 +3,9 @@ from .models import Product, Category
 
 def home(request):
     categories = Category.objects.filter(is_active=True)
-    featured_products = Product.objects.filter(is_active=True, is_featured=True)[:20]
+    featured_products = Product.objects.filter(is_active=True, is_featured=True)
     if not featured_products:
-        featured_products = Product.objects.filter(is_active=True)[:20]
+        featured_products = Product.objects.filter(is_active=True)
         
     context = {
         'categories': categories,

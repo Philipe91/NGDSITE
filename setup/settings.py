@@ -22,6 +22,14 @@ SECRET_KEY = os.getenv("SECRET_KEY", "fallback-insecure-key-apenas-para-dev")
 DEBUG = os.getenv("DEBUG", "False") == "True"
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
 
+# Para permitir CSRF (adicionar ao carrinho, finalizar compra) via túneis
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.loca.lt",
+    "https://*.serveo.net",
+    "https://*.ngrok-free.app",
+    "https://*.pinggy.link"
+]
+
 # =============================================================================
 # APPS INSTALADOS
 # =============================================================================
