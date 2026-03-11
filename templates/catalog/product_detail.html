@@ -741,12 +741,12 @@
             variants: [
                 {% for variant in variants %}
         {
-            id: { { variant.id } },
-            sku: '{{ variant.sku|escapejs }}',
-                label: '{{ variant.size_label|escapejs }}',
-                    price: parseFloat('{{ variant.price|stringformat:"f" }}'.replace(',', '.')),
-                        templateUrl: '{% if variant.template_file %}{{ variant.template_file.url }}{% endif %}',
-                            manualUrl: '{% if variant.manual_file %}{{ variant.manual_file.url }}{% endif %}'
+            id: parseInt('{{ variant.id }}', 10),
+                sku: '{{ variant.sku|escapejs }}',
+                    label: '{{ variant.size_label|escapejs }}',
+                        price: parseFloat('{{ variant.price|stringformat:"f" }}'.replace(',', '.')),
+                            templateUrl: '{% if variant.template_file %}{{ variant.template_file.url }}{% endif %}',
+                                manualUrl: '{% if variant.manual_file %}{{ variant.manual_file.url }}{% endif %}'
         } {% if not forloop.last %}, {% endif %}
         {% endfor %}
             ],
