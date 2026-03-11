@@ -8,7 +8,12 @@ from django.contrib import messages
 def cart_add(request):
     cart = Cart(request)
     variant_id = request.POST.get('variant_id')
-    quantity = int(request.POST.get('quantity', 1))
+    
+    quantity_str = request.POST.get('quantity', '1')
+    try:
+        quantity = int(quantity_str) if quantity_str else 1
+    except ValueError:
+        quantity = 1
     
     # Process production time fee
     try:

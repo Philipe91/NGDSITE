@@ -2,8 +2,21 @@
 
 {% block title %}{{ product.name }} | NGD Site{% endblock %}
 
-{% block meta_title %}{% if product.meta_title %}{{ product.meta_title }}{% else %}{{ product.name }} - NGD Site{% endif %}{% endblock %}
-{% block meta_description %}{% if product.meta_description %}{{ product.meta_description }}{% else %}{{ product.short_description|truncatechars:160 }}{% endif %}{% endblock %}
+{% block meta_title %}
+{% if product.meta_title %}
+{{ product.meta_title }}
+{% else %}
+{{ product.name }} - NGD Site
+{% endif %}
+{% endblock %}
+
+{% block meta_description %}
+{% if product.meta_description %}
+{{ product.meta_description }}
+{% else %}
+{{ product.short_description|truncatechars:160 }}
+{% endif %}
+{% endblock %}
 
 {% block content %}
 <style>
@@ -208,13 +221,13 @@
                         <label class="relative cursor-pointer group">
                             <input type="radio" name="variant_id" :value="{{ variant.id }}" class="peer sr-only"
                                 x-model.number="selectedVariantId" @change="updateSelectedVariant()">
-                            <div
-                                class="h-full border-2 border-gray-200 rounded-xl p-5 hover:border-gray-300 transition-all peer-checked:border-primary peer-checked:bg-primary/5 flex flex-col justify-between">
+                            <div class="h-full border-2 rounded-xl p-5 hover:border-gray-300 transition-all flex flex-col justify-between"
+                                :class="selectedVariantId === {{ variant.id }} ? 'border-primary bg-primary/5' : 'border-gray-200'">
                                 <!-- Radio Circle -->
-                                <div
-                                    class="w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center shrink-0 absolute top-6 left-5 peer-checked:border-primary">
-                                    <div
-                                        class="w-2.5 h-2.5 bg-primary rounded-full opacity-0 peer-checked:opacity-100 transition-opacity">
+                                <div class="w-5 h-5 border-2 rounded-full flex items-center justify-center shrink-0 absolute top-6 left-5 transition-colors"
+                                    :class="selectedVariantId === {{ variant.id }} ? 'border-primary' : 'border-gray-300'">
+                                    <div class="w-2.5 h-2.5 bg-primary rounded-full transition-opacity"
+                                        :class="selectedVariantId === {{ variant.id }} ? 'opacity-100' : 'opacity-0'">
                                     </div>
                                 </div>
 
@@ -259,12 +272,14 @@
                     <div class="grid grid-cols-1 gap-4">
                         {% if product.slug == 'banner-rollup' %}
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="material" value="lona380" class="peer sr-only" checked>
-                            <div
-                                class="border-2 border-gray-200 rounded-xl p-5 peer-checked:border-primary peer-checked:bg-primary/5 flex items-center gap-4">
-                                <div
-                                    class="w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center shrink-0 peer-checked:border-primary">
-                                    <div class="w-2.5 h-2.5 bg-primary rounded-full opacity-100"></div>
+                            <input type="radio" name="material" value="lona380" class="peer sr-only" checked
+                                x-model="material">
+                            <div class="border-2 rounded-xl p-5 flex items-center gap-4 transition-colors"
+                                :class="material === 'lona380' ? 'border-primary bg-primary/5' : 'border-gray-200'">
+                                <div class="w-5 h-5 border-2 rounded-full flex items-center justify-center shrink-0 transition-colors"
+                                    :class="material === 'lona380' ? 'border-primary' : 'border-gray-300'">
+                                    <div class="w-2.5 h-2.5 bg-primary rounded-full transition-opacity"
+                                        :class="material === 'lona380' ? 'opacity-100' : 'opacity-0'"></div>
                                 </div>
                                 <div class="flex-grow">
                                     <h3 class="font-bold text-black text-sm mb-1">Lona 380g/m2</h3>
@@ -281,12 +296,14 @@
                         </label>
                         {% else %}
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="material" value="poliondas" class="peer sr-only" checked>
-                            <div
-                                class="border-2 border-gray-200 rounded-xl p-5 peer-checked:border-primary peer-checked:bg-primary/5 flex items-center gap-4">
-                                <div
-                                    class="w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center shrink-0 peer-checked:border-primary">
-                                    <div class="w-2.5 h-2.5 bg-primary rounded-full opacity-100"></div>
+                            <input type="radio" name="material" value="poliondas" class="peer sr-only" checked
+                                x-model="material">
+                            <div class="border-2 rounded-xl p-5 flex items-center gap-4 transition-colors"
+                                :class="material === 'poliondas' ? 'border-primary bg-primary/5' : 'border-gray-200'">
+                                <div class="w-5 h-5 border-2 rounded-full flex items-center justify-center shrink-0 transition-colors"
+                                    :class="material === 'poliondas' ? 'border-primary' : 'border-gray-300'">
+                                    <div class="w-2.5 h-2.5 bg-primary rounded-full transition-opacity"
+                                        :class="material === 'poliondas' ? 'opacity-100' : 'opacity-0'"></div>
                                 </div>
                                 <div class="flex-grow">
                                     <h3 class="font-bold text-black text-sm mb-1">Poliondas de 3mm</h3>
@@ -326,13 +343,15 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {% if product.slug == 'banner-rollup' %}
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="acabamento" value="refile_reto" class="peer sr-only" checked>
-                            <div
-                                class="h-full border-2 border-gray-200 rounded-xl p-5 peer-checked:border-primary peer-checked:bg-primary/5 flex flex-col">
+                            <input type="radio" name="acabamento" value="refile_reto" class="peer sr-only" checked
+                                x-model="acabamento">
+                            <div class="h-full border-2 rounded-xl p-5 flex flex-col transition-colors"
+                                :class="acabamento === 'refile_reto' ? 'border-primary bg-primary/5' : 'border-gray-200'">
                                 <div class="flex items-start gap-4 mb-4">
-                                    <div
-                                        class="w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center shrink-0 mt-0.5 peer-checked:border-primary">
-                                        <div class="w-2.5 h-2.5 bg-primary rounded-full opacity-100"></div>
+                                    <div class="w-5 h-5 border-2 rounded-full flex items-center justify-center shrink-0 mt-0.5 transition-colors"
+                                        :class="acabamento === 'refile_reto' ? 'border-primary' : 'border-gray-300'">
+                                        <div class="w-2.5 h-2.5 bg-primary rounded-full transition-opacity"
+                                            :class="acabamento === 'refile_reto' ? 'opacity-100' : 'opacity-0'"></div>
                                     </div>
                                     <div>
                                         <h3 class="font-bold text-black text-sm mb-1">Refile reto e montagem</h3>
@@ -346,13 +365,15 @@
                         </label>
                         {% else %}
                         <label class="relative cursor-pointer">
-                            <input type="radio" name="acabamento" value="corte_vinco" class="peer sr-only" checked>
-                            <div
-                                class="h-full border-2 border-gray-200 rounded-xl p-5 peer-checked:border-primary peer-checked:bg-primary/5 flex flex-col">
+                            <input type="radio" name="acabamento" value="corte_vinco" class="peer sr-only" checked
+                                x-model="acabamento">
+                            <div class="h-full border-2 rounded-xl p-5 flex flex-col transition-colors"
+                                :class="acabamento === 'corte_vinco' ? 'border-primary bg-primary/5' : 'border-gray-200'">
                                 <div class="flex items-start gap-4 mb-4">
-                                    <div
-                                        class="w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center shrink-0 mt-0.5 peer-checked:border-primary">
-                                        <div class="w-2.5 h-2.5 bg-primary rounded-full opacity-100"></div>
+                                    <div class="w-5 h-5 border-2 rounded-full flex items-center justify-center shrink-0 mt-0.5 transition-colors"
+                                        :class="acabamento === 'corte_vinco' ? 'border-primary' : 'border-gray-300'">
+                                        <div class="w-2.5 h-2.5 bg-primary rounded-full transition-opacity"
+                                            :class="acabamento === 'corte_vinco' ? 'opacity-100' : 'opacity-0'"></div>
                                     </div>
                                     <div>
                                         <h3 class="font-bold text-black text-sm mb-1">Corte especial e vinco</h3>
@@ -406,13 +427,13 @@
                                 @click="expressFee = option.fee; productionDays = option.days">
                                 <input type="radio" name="prazo" :value="option.days" class="peer sr-only"
                                     :checked="productionDays === option.days">
-                                <div
-                                    class="h-full border-2 border-gray-200 rounded-xl p-5 peer-checked:border-primary peer-checked:bg-primary/5 hover:border-gray-300 transition-colors">
+                                <div class="h-full border-2 rounded-xl p-5 hover:border-gray-300 transition-colors"
+                                    :class="productionDays === option.days ? 'border-primary bg-primary/5' : 'border-gray-200'">
                                     <div class="flex items-center gap-3 mb-2">
-                                        <div
-                                            class="w-5 h-5 border-2 border-gray-300 rounded-full flex items-center justify-center shrink-0 peer-checked:border-primary">
-                                            <div
-                                                class="w-2.5 h-2.5 bg-primary rounded-full opacity-0 peer-checked:opacity-100 transition-opacity">
+                                        <div class="w-5 h-5 border-2 rounded-full flex items-center justify-center shrink-0 transition-colors"
+                                            :class="productionDays === option.days ? 'border-primary' : 'border-gray-300'">
+                                            <div class="w-2.5 h-2.5 bg-primary rounded-full transition-opacity"
+                                                :class="productionDays === option.days ? 'opacity-100' : 'opacity-0'">
                                             </div>
                                         </div>
                                         <h3 class="font-bold text-black text-sm" x-text="option.label"></h3>
@@ -530,41 +551,41 @@
                         <label class="relative cursor-pointer">
                             <input type="radio" name="qty_selector" value="1" class="peer sr-only"
                                 x-model.number="quantity">
-                            <div
-                                class="border-2 border-gray-200 rounded-xl p-4 peer-checked:border-primary peer-checked:bg-primary/5 flex flex-col items-center justify-center text-center h-24 hover:border-gray-300">
+                            <div class="border-2 rounded-xl p-4 flex flex-col items-center justify-center text-center h-24 hover:border-gray-300 transition-all"
+                                :class="quantity === 1 ? 'border-primary bg-primary/5' : 'border-gray-200'">
                                 <h3 class="font-bold text-black text-sm mb-1">1 unidade</h3>
                                 <span
-                                    class="text-[10px] font-bold text-white bg-black px-2 py-0.5 rounded-full mb-1">preço
-                                    base</span>
+                                    class="text-[10px] font-bold text-white bg-black px-2 py-0.5 rounded-full mb-1 transition-colors"
+                                    :class="quantity === 1 ? 'bg-primary' : 'bg-black'">preço base</span>
                             </div>
                         </label>
                         <label class="relative cursor-pointer">
                             <input type="radio" name="qty_selector" value="2" class="peer sr-only"
                                 x-model.number="quantity">
-                            <div
-                                class="border-2 border-gray-200 rounded-xl p-4 peer-checked:border-primary peer-checked:bg-primary/5 flex flex-col items-center justify-center text-center h-24 hover:border-gray-300">
+                            <div class="border-2 rounded-xl p-4 flex flex-col items-center justify-center text-center h-24 hover:border-gray-300 transition-all"
+                                :class="quantity === 2 ? 'border-primary bg-primary/5' : 'border-gray-200'">
                                 <h3 class="font-bold text-black text-sm mb-1">2 unidades</h3>
                                 <span
-                                    class="text-[10px] font-bold text-white bg-black px-2 py-0.5 rounded-full mb-1">economize
-                                    5%</span>
+                                    class="text-[10px] font-bold text-white bg-black px-2 py-0.5 rounded-full mb-1 transition-colors"
+                                    :class="quantity === 2 ? 'bg-primary' : 'bg-black'">economize 5%</span>
                             </div>
                         </label>
                         <label class="relative cursor-pointer">
                             <input type="radio" name="qty_selector" value="5" class="peer sr-only"
                                 x-model.number="quantity">
-                            <div
-                                class="border-2 border-gray-200 rounded-xl p-4 peer-checked:border-primary peer-checked:bg-primary/5 flex flex-col items-center justify-center text-center h-24 hover:border-gray-300">
+                            <div class="border-2 rounded-xl p-4 flex flex-col items-center justify-center text-center h-24 hover:border-gray-300 transition-all"
+                                :class="quantity === 5 ? 'border-primary bg-primary/5' : 'border-gray-200'">
                                 <h3 class="font-bold text-black text-sm mb-1">5 unidades</h3>
                                 <span
-                                    class="text-[10px] font-bold text-white bg-black px-2 py-0.5 rounded-full mb-1">economize
-                                    10%</span>
+                                    class="text-[10px] font-bold text-white bg-black px-2 py-0.5 rounded-full mb-1 transition-colors"
+                                    :class="quantity === 5 ? 'bg-primary' : 'bg-black'">economize 10%</span>
                             </div>
                         </label>
                         <label class="relative cursor-pointer">
                             <input type="radio" name="qty_selector" value="10" class="peer sr-only"
                                 x-model.number="quantity">
-                            <div
-                                class="border-2 border-gray-200 rounded-xl p-4 peer-checked:border-primary peer-checked:bg-primary/5 flex flex-col items-center justify-center text-center h-24 hover:border-gray-300">
+                            <div class="border-2 rounded-xl p-4 flex flex-col items-center justify-center text-center h-24 hover:border-gray-300 transition-all"
+                                :class="quantity === 10 ? 'border-primary bg-primary/5' : 'border-gray-200'">
                                 <h3 class="font-bold text-black text-sm mb-1">10 unidades</h3>
                                 <span
                                     class="text-[10px] font-bold text-white bg-primary px-2 py-0.5 rounded-full mb-1">economize
@@ -715,59 +736,70 @@
         el.classList.add('border-black', 'border-2');
     }
 
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('productConfigurator', () => ({
+    function productConfigurator() {
+        return {
             variants: [
                 {% for variant in variants %}
-                {
-                id: {{ variant.id }},
-        sku: '{{ variant.sku|escapejs }}',
-        label: '{{ variant.size_label|escapejs }}',
-        price: parseFloat('{{ variant.price|stringformat:"f" }}'),
-        templateUrl: '{% if variant.template_file %}{{ variant.template_file.url }}{% else %}null{% endif %}',
-        manualUrl: '{% if variant.manual_file %}{{ variant.manual_file.url }}{% else %}null{% endif %}'
-                }{% if not forloop.last %}, {% endif %}
-    {% endfor %}
+        {
+            id: { { variant.id } },
+            sku: '{{ variant.sku|escapejs }}',
+                label: '{{ variant.size_label|escapejs }}',
+                    price: parseFloat('{{ variant.price|stringformat:"f" }}'.replace(',', '.')),
+                        templateUrl: '{% if variant.template_file %}{{ variant.template_file.url }}{% endif %}',
+                            manualUrl: '{% if variant.manual_file %}{{ variant.manual_file.url }}{% endif %}'
+        } {% if not forloop.last %}, {% endif %}
+        {% endfor %}
             ],
-    selectedVariantId: {% if variants %} { { variants.0.id } } {% else %} null{% endif %},
-    selectedVariant: null,
-        quantity: 1,
-            discountMultiplier: 1,
-                expressFee: 0,
-                    productionDays: 7,
+        selectedVariantId: {% if variants %} '{{ variants.0.id }}'{% else %} null{% endif %},
+        selectedVariant: null,
+            quantity: 1,
+                discountMultiplier: 1,
+                    expressFee: 0,
+                        productionDays: {% if product.slug == 'banner-rollup' %} 7{% else %} 'normal'{% endif %},
+        material: '{% if product.slug == "banner-rollup" %}lona380{% else %}poliondas{% endif %}',
+            acabamento: '{% if product.slug == "banner-rollup" %}refile_reto{% else %}corte_vinco{% endif %}',
 
-                        init() {
-        this.updateSelectedVariant();
-        this.$watch('quantity', () => this.calculateDiscount());
-        this.calculateDiscount();
-    },
+                init() {
+            this.updateSelectedVariant();
+            this.$watch('selectedVariantId', () => this.updateSelectedVariant());
+            this.$watch('quantity', () => this.calculateDiscount());
+            this.calculateDiscount();
+        },
 
-    updateSelectedVariant() {
-        this.selectedVariant = this.variants.find(v => v.id == this.selectedVariantId) || this.variants[0];
-    },
+        updateSelectedVariant() {
+            this.selectedVariant = this.variants.find(v => v.id == this.selectedVariantId) || this.variants[0];
+            if (this.selectedVariant) {
+                this.selectedVariantId = this.selectedVariant.id;
+            }
+        },
 
-    calculateDiscount() {
-        let q = parseInt(this.quantity) || 1;
-        this.discountMultiplier = 1;
-        if (q === 2) this.discountMultiplier = 0.95;
-        if (q === 5) this.discountMultiplier = 0.90;
-        if (q >= 10) this.discountMultiplier = 0.85;
-    },
-            
+        calculateDiscount() {
+            let q = parseInt(this.quantity) || 1;
+            if (q >= 10) {
+                this.discountMultiplier = 0.85;
+            } else if (q >= 5) {
+                this.discountMultiplier = 0.90;
+            } else if (q >= 2) {
+                this.discountMultiplier = 0.95;
+            } else {
+                this.discountMultiplier = 1.0;
+            }
+        },
+
             get unitPrice() {
-        if (!this.selectedVariant) return 0;
-        return (this.selectedVariant.price * this.discountMultiplier) + this.expressFee;
-    },
-            
-            get totalPrice() {
-        let q = parseInt(this.quantity) || 1;
-        return this.unitPrice * q;
-    },
+            if (!this.selectedVariant) return 0;
+            return (this.selectedVariant.price * this.discountMultiplier) + parseFloat(this.expressFee || 0);
+        },
 
-    formatMoney(value) {
-        return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            get totalPrice() {
+            let q = parseInt(this.quantity) || 1;
+            return this.unitPrice * q;
+        },
+
+        formatMoney(value) {
+            return parseFloat(value).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+    };
     }
-        }));
-    });
 </script>
 {% endblock %}

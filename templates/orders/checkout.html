@@ -175,8 +175,8 @@
 
 <script>
     function checkoutApp() {
-        const subtotal = parseFloat("{{ cart.get_total_price }}".replace(',', '.')) || 0;
         return {
+            subtotal: parseFloat("{{ cart.get_total_price }}".replace(',', '.')) || 0,
             cep: '',
             freteOptions: [],
             freteError: '',
@@ -185,7 +185,7 @@
             shippingCost: 0,
             shippingAddress: '',
             get total() {
-                return subtotal + this.shippingCost;
+                return this.subtotal + this.shippingCost;
             },
             formatCep() {
                 let v = this.cep.replace(/\D/g, '').slice(0, 8);

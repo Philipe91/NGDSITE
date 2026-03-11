@@ -43,16 +43,19 @@ class Cart:
 
     def __iter__(self):
         """Itera sobre os itens carregando do banco de dados quando necessário"""
+        import copy
+        
         variant_ids = self.cart.keys()
         variants = ProductVariant.objects.filter(id__in=variant_ids).select_related('product')
         
-        cart = self.cart.copy()
+        # Faz uma cópia profunda para não sujar o self.cart com objetos complexos
+        cart_copy = copy.deepcopy(self.cart)
         for variant in variants:
-            cart[str(variant.id)]['variant'] = variant
+            cart_copy[str(variant.id)]['variant'] = variant
             
-        for item in cart.values():
-            item['price'] = Decimal(item['price'])
-            item['total_price'] = item['price'] * item['quantity']
+        for item in cart_copy.values():
+            item['price'] = Decimal(str(item['price']))
+            item['total_price'] = item['price'] * int(item['quantity'])
             yield item
 
     def __len__(self):

@@ -29,10 +29,28 @@
                 {% endif %}
             </div>
             <div class="p-5 border-t border-gray-50">
-                <h3 class="text-base font-bold text-black mb-1 truncate group-hover:text-primary transition-colors">{{
-                    product.name }}</h3>
-                {% if product.short_description %}<p class="text-gray-400 text-sm mb-3 line-clamp-2">{{
-                    product.short_description }}</p>{% endif %}
+                <h3 class="text-base font-bold text-black mb-1 truncate group-hover:text-primary transition-colors">
+                    {{ product.name }}
+                </h3>
+                {% if product.short_description %}
+                <p class="text-gray-400 text-sm mb-3 line-clamp-2">
+                    {{ product.short_description }}
+                </p>
+                {% endif %}
+
+                {% with variant=product.variants.all|first %}
+                {% if variant %}
+                <div class="mt-2 mb-3">
+                    <div class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">A partir de</div>
+                    <span class="text-xl font-bold text-black group-hover:text-primary transition-colors">R$ {{
+                        variant.price }}</span>
+                </div>
+                {% else %}
+                <div class="mt-2 mb-3">
+                    <span class="text-sm font-bold text-gray-400">Sob Consulta</span>
+                </div>
+                {% endif %}
+                {% endwith %}
                 <span class="inline-flex items-center text-primary font-semibold text-sm">Configurar <svg
                         class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
