@@ -23,6 +23,7 @@
 #header {
     align-items: center;
     padding: 10px 20px;
+    background: var(--header-bg) !important;
 }
 
 #branding {
@@ -36,12 +37,6 @@
     height: auto;
 }
 
-.logo-box {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-}
 
 /* Forçar cores brancas no Header */
 #branding h1,
@@ -85,4 +80,13 @@
 #footer p {
     margin: 0;
     color: #e0e0e0;
+}
+
+/* Remover fundo branco no login especificamente */
+.login #header {
+    background: var(--header-bg) !important;
+}
+
+.login .logo-box {
+    background: transparent !important;
 }

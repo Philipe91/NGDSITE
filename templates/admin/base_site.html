@@ -1,22 +1,20 @@
 {% extends "admin/base.html" %}
 {% load static %}
-
-{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
-
+{% block branding %}
+<div id="branding">
+    <a href="{% url 'admin:index' %}"
+        style="background:none!important;display:inline-flex;align-items:center;margin-right:15px;">
+        <img src="{% static 'img/logobranca.png' %}" alt="Logo"
+            style="background:none!important;border:none!important;max-height:40px;">
+    </a>
+    <h1 id="site-name" style="color:white!important;"><a href="{% url 'admin:index' %}">NGD - Painel Administrativo</a>
+    </h1>
+</div>
+{% endblock %}
 {% block extrastyle %}
 {{ block.super }}
 <link rel="stylesheet" type="text/css" href="{% static 'css/custom_admin.css' %}">
 {% endblock %}
-
-{% block branding %}
-<div id="branding">
-    <a href="{% url 'admin:index' %}" class="logo-box">
-        <img src="{% static 'img/logobranca.png' %}" alt="NGD Logo" class="ngd-logo">
-    </a>
-    <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
-</div>
-{% endblock %}
-
 {% block footer %}
 <div id="footer">
     <p>NGD SITE | Sistema de Gestão Web-to-Print | Criado por Philipe Fernandes | Versão 1.2.0-stable</p>
