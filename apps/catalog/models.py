@@ -7,6 +7,8 @@ class Category(models.Model):
     description = models.TextField(blank=True, verbose_name="Descrição", help_text="Exemplo: Categoria para placas no poliondas")
     image = models.ImageField(upload_to="categories/", blank=True, null=True, verbose_name="Imagem")
     is_active = models.BooleanField(default=True, verbose_name="Ativo")
+    meta_title = models.CharField(max_length=255, blank=True, verbose_name="Meta Title")
+    meta_description = models.TextField(blank=True, verbose_name="Meta Description")
 
     class Meta:
         verbose_name = "Categoria"
@@ -29,6 +31,8 @@ class Product(models.Model):
     featured_image = models.ImageField(upload_to="products/featured/", blank=True, null=True, verbose_name="Imagem de Destaque")
     is_active = models.BooleanField(default=True, verbose_name="Ativo")
     is_featured = models.BooleanField(default=False, verbose_name="Destaque")
+    meta_title = models.CharField(max_length=255, blank=True, verbose_name="Meta Title")
+    meta_description = models.TextField(blank=True, verbose_name="Meta Description")
 
     class Meta:
         verbose_name = "Produto"

@@ -2,7 +2,26 @@
 
 {% block title %}{{ product.name }} | NGD Site{% endblock %}
 
+{% block meta_title %}{% if product.meta_title %}{{ product.meta_title }}{% else %}{{ product.name }} - NGD Site{% endif
+%}{% endblock %}
+{% block meta_description %}{% if product.meta_description %}{{ product.meta_description }}{% else %}{{
+product.short_description|truncatechars:160 }}{% endif %}{% endblock %}
+
 {% block content %}
+<style>
+    /* UX Phase 14: Zoom Effect */
+    #main-image-container {
+        cursor: zoom-in;
+    }
+
+    #main-image-container img {
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    #main-image-container:hover img {
+        transform: scale(1.1);
+    }
+</style>
 <div class="container mx-auto px-4 lg:px-8 py-8 animate-in fade-in slide-in-from-bottom-5 duration-700"
     x-data="productConfigurator()">
 
@@ -39,7 +58,7 @@
             {% endif %}
 
             <!-- Imagem Principal -->
-            <div class="flex-grow flex items-center justify-center bg-white p-4 relative">
+            <div class="flex-grow flex items-center justify-center bg-white p-4 relative" id="main-image-container">
                 {% if product.featured_image %}
                 <img src="{{ product.featured_image.url }}" alt="{{ product.name }}" id="main-image"
                     class="w-full max-w-lg object-contain mix-blend-multiply">
@@ -712,14 +731,14 @@
                 }{% if not forloop.last %}, {% endif %}
     {% endfor %}
             ],
-    selectedVariantId: {% if variants %}{{ variants.0.id }}{% else %}null{% endif %},
+    selectedVariantId: {% if variants %} { { variants.0.id } } {% else %} null{% endif %},
     selectedVariant: null,
         quantity: 1,
             discountMultiplier: 1,
                 expressFee: 0,
-            productionDays: 7,
+                    productionDays: 7,
 
-            init() {
+                        init() {
         this.updateSelectedVariant();
         this.$watch('quantity', () => this.calculateDiscount());
         this.calculateDiscount();

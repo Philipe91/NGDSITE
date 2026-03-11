@@ -7,6 +7,15 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     list_filter = ('is_active',)
     search_fields = ('name', 'description')
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'slug', 'description', 'image', 'is_active')
+        }),
+        ('SEO', {
+            'fields': ('meta_title', 'meta_description'),
+            'classes': ('collapse',),
+        }),
+    )
 
 class ProductVariantInline(admin.TabularInline):
     model = ProductVariant
@@ -22,6 +31,15 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     list_filter = ('is_active', 'is_featured', 'category')
     search_fields = ('name', 'short_description', 'description')
+    fieldsets = (
+        (None, {
+            'fields': ('category', 'name', 'slug', 'short_description', 'description', 'featured_image', 'is_active', 'is_featured')
+        }),
+        ('SEO', {
+            'fields': ('meta_title', 'meta_description'),
+            'classes': ('collapse',),
+        }),
+    )
     inlines = [ProductVariantInline, ProductImageInline]
 
 @admin.register(ProductVariant)
