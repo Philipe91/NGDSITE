@@ -16,12 +16,20 @@ class OrderItemInline(admin.TabularInline):
 
     art_download.short_description = "Arquivo da Arte"
 
+from django.template.response import TemplateResponse
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'customer_name', 'customer_email', 'status', 'total', 'created_at']
     list_filter = ['status', 'created_at']
     search_fields = ['customer_name', 'customer_email', 'customer_phone']
     inlines = [OrderItemInline]
+    actions = ['print_os']
+
+    @admin.action(description='🖨️ Imprimir Ordens de Serviço (Selecionadas)')
+    def print_os(self, request, queryset):
+        orders = queryset.prefetch_related('items__variant__product')
+        return TemplateResponse(request, 'admin/orders/order/os_print.html', {'orders': orders})
 
 
 @admin.register(OrderItem)
