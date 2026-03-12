@@ -26,7 +26,7 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline]
     actions = ['print_os']
 
-    @admin.action(description='🖨️ Imprimir Ordens de Serviço (Selecionadas)')
+    @admin.action(description='Imprimir Ordens de Serviço (Selecionadas)')
     def print_os(self, request, queryset):
         orders = queryset.prefetch_related('items__variant__product')
         return TemplateResponse(request, 'admin/orders/order/os_print.html', {'orders': orders})
