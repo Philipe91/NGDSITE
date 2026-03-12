@@ -90,6 +90,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "apps.cart.context_processors.cart_processor",
                 "apps.catalog.context_processors.totens_processor",
+                "apps.seo.context_processors.seo_settings",
             ],
         },
     },

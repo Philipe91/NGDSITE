@@ -18,6 +18,8 @@ urlpatterns = [
     path("pedidos/", include(("apps.orders.urls", "orders"))),
     path("cliente/", include(("apps.customers.urls", "customers"))),
     path("pagamento/", include(("apps.payment.urls", "payment"))),
+    path("institucional/", include(("apps.pages.urls", "pages"))),
+    path("", include(("apps.seo.urls", "seo"))),
 ]
 
 # Serve arquivos estáticos e de mídia durante o desenvolvimento (DEBUG=True)

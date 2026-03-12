@@ -4,11 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}NGD Site - PDV{% endblock %}</title>
+    <title>{% block title %}{{ seo.meta_title_default|default:"NGD Site - PDV" }}{% endblock %}</title>
     <meta name="title"
-        content="{% block meta_title %}NGD Site - Especialistas em Comunicação Visual e PDV{% endblock %}">
+        content="{% block meta_title %}{{ seo.meta_title_default|default:'NGD Site - Especialistas em Comunicação Visual e PDV' }}{% endblock %}">
     <meta name="description"
-        content="{% block meta_description %}A revolução gráfica em materiais para PDV. Qualidade premium, prazos ágeis e suporte profissional.{% endblock %}">
+        content="{% block meta_description %}{{ seo.meta_description_default|default:'A revolução gráfica em materiais para PDV.' }}{% endblock %}">
+    {% if seo.meta_keywords_default %}
+    <meta name="keywords" content="{{ seo.meta_keywords_default }}">
+    {% endif %}
+    {% if seo.og_image_default %}
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ seo.og_image_default.url }}">
+    {% endif %}
+
+    {% if seo.google_analytics_id %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ seo.google_analytics_id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ seo.google_analytics_id }}');
+    </script>
+    {% endif %}
+
+    {% if seo.facebook_pixel_id %}
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '{{ seo.facebook_pixel_id }}');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id={{ seo.facebook_pixel_id }}&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    {% endif %}
     {% load static %}
     <!-- Tailwind via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -221,10 +258,10 @@
                 <div>
                     <h5 class="font-bold text-sm uppercase tracking-widest mb-6 text-gray-300">Empresa</h5>
                     <ul class="space-y-3 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-white transition-colors">Quem Somos</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Como Funciona</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Gabaritos</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Contato</a></li>
+                        <li><a href="{% url 'pages:page_detail' 'sobre-nos' %}" class="hover:text-white transition-colors">Quem Somos</a></li>
+                        <li><a href="{% url 'pages:page_detail' 'como-comprar' %}" class="hover:text-white transition-colors">Como Funciona</a></li>
+                        <li><a href="{% url 'pages:page_detail' 'gabaritos' %}" class="hover:text-white transition-colors">Gabaritos</a></li>
+                        <li><a href="{% url 'pages:contact' %}" class="hover:text-white transition-colors">Contato</a></li>
                     </ul>
                 </div>
 
@@ -271,8 +308,8 @@
                 class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-500 gap-4">
                 <span>&copy; 2026 NGD | Desenvolvido por Philipe Fernandes</span>
                 <div class="flex gap-6">
-                    <a href="#" class="hover:text-white transition-colors">Termos de Uso</a>
-                    <a href="#" class="hover:text-white transition-colors">Privacidade</a>
+                    <a href="{% url 'pages:page_detail' 'termos-e-condicoes' %}" class="hover:text-white transition-colors">Termos de Uso</a>
+                    <a href="{% url 'pages:page_detail' 'privacidade' %}" class="hover:text-white transition-colors">Privacidade</a>
                 </div>
             </div>
         </div>
