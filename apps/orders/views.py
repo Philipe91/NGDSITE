@@ -30,7 +30,8 @@ def calcular_frete(request):
     if len(cep) != 8 or not cep.isdigit():
         return JsonResponse({'error': 'CEP inválido. Informe 8 dígitos.'}, status=400)
 
-    options = get_shipping_options(cep)
+    cart = Cart(request)
+    options = get_shipping_options(cep, cart)
     return JsonResponse({
         'options': [
             {

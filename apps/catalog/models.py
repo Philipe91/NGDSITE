@@ -50,6 +50,8 @@ class ProductVariant(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="variants", verbose_name="Produto")
     sku = models.CharField(max_length=100, unique=True, verbose_name="SKU")
     size_label = models.CharField(max_length=100, verbose_name="Tamanho (Rótulo)", help_text="Ex: 40x120")
+    weight_kg = models.DecimalField(max_digits=10, decimal_places=3, default=1.000, verbose_name="Peso (kg)")
+    length_cm = models.DecimalField(max_digits=10, decimal_places=2, default=15.00, verbose_name="Comprimento/Prof (cm)")
     width_cm = models.DecimalField(max_length=10, max_digits=10, decimal_places=2, verbose_name="Largura (cm)")
     height_cm = models.DecimalField(max_length=10, max_digits=10, decimal_places=2, verbose_name="Altura (cm)")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Preço")

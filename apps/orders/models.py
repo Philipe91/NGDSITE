@@ -30,8 +30,8 @@ class Order(models.Model):
 
     # Frete
     shipping_method = models.CharField(
-        max_length=20, choices=SHIPPING_METHOD_CHOICES,
-        default='retirada', verbose_name="Método de Entrega"
+        max_length=150,
+        default='Retirada na Loja', verbose_name="Método de Entrega"
     )
     shipping_cost = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00, verbose_name="Custo do Frete"
