@@ -1,111 +1,135 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Minha Conta - NGD Site{% endblock %}
+{% block title %}Minha Conta | NGD{% endblock %}
 
 {% block content %}
-<!-- Page Header -->
-<div class="bg-surface border-b border-gray-100 py-10">
+
+<!-- Header da área -->
+<div class="bg-white border-b border-gray-100 py-8">
     <div class="container mx-auto px-4 lg:px-8 flex items-center justify-between">
         <div>
-            <p class="text-[11px] font-bold tracking-widest uppercase text-primary mb-1">Área do Cliente</p>
-            <h1 class="text-3xl font-bold text-black tracking-tight">Olá, {{ customer_name }}!</h1>
+            <p class="text-xs font-bold tracking-widest uppercase text-primary mb-1">Portal do Cliente</p>
+            <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Olá, {{ customer_name|truncatechars:25 }}!</h1>
+            <p class="text-sm text-gray-500 mt-0.5">{{ customer_email }}</p>
         </div>
         <a href="{% url 'customers:logout' %}"
-            class="flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-gray-500 hover:text-black transition-colors">
+            class="flex items-center gap-2 text-sm text-gray-400 hover:text-red-500 transition-colors font-medium">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
-                </path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
             </svg>
             Sair
         </a>
     </div>
 </div>
 
-<div class="container mx-auto px-4 lg:px-8 py-12">
-    <div class="grid lg:grid-cols-[220px_1fr] gap-10">
+<div class="container mx-auto px-4 lg:px-8 py-10">
+    <div class="grid lg:grid-cols-[220px_1fr] gap-8">
 
         <!-- Sidebar -->
         <nav class="space-y-1">
             <a href="{% url 'customers:dashboard' %}"
-                class="flex items-center gap-3 px-5 py-3 rounded-xl bg-primary text-white font-bold text-sm transition-colors">
+                class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-bold text-sm">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                    </path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>
                 Painel Geral
             </a>
             <a href="{% url 'customers:orders' %}"
-                class="flex items-center gap-3 px-5 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium text-sm transition-colors">
+                class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium text-sm transition-colors">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                 </svg>
                 Meus Pedidos
+            </a>
+            <a href="{% url 'catalog:home' %}"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium text-sm transition-colors">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+                Novo Pedido
             </a>
         </nav>
 
         <!-- Content -->
         <div class="space-y-8">
 
-            <!-- Stats Cards -->
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div class="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm text-center">
-                    <div class="text-4xl font-black text-primary mb-2">{{ active_count }}</div>
-                    <div class="text-[11px] text-gray-500 uppercase font-bold tracking-wider">Pedidos Ativos</div>
+            <!-- Alertas de ação necessária -->
+            {% if pending_art_count > 0 %}
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-start gap-4">
+                <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
                 </div>
-                <div class="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm text-center">
-                    <div class="text-4xl font-black text-black mb-2">{{ total_count }}</div>
-                    <div class="text-[11px] text-gray-500 uppercase font-bold tracking-wider">Total de Pedidos</div>
-                </div>
-                <div
-                    class="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm text-center col-span-2 md:col-span-1 flex flex-col items-center justify-center">
-                    <a href="{% url 'customers:orders' %}" class="btn-primary w-full py-3 text-xs">
-                        Enviar Novas Artes
+                <div>
+                    <p class="font-bold text-amber-800 text-sm">{{ pending_art_count }} arte(s) pendente(s) de envio</p>
+                    <p class="text-xs text-amber-600 mt-1">Envie os arquivos de arte para não atrasar sua produção.</p>
+                    <a href="{% url 'customers:orders' %}" class="inline-flex items-center gap-1 text-xs font-bold text-amber-700 hover:text-amber-900 mt-2 underline">
+                        Ver pedidos →
                     </a>
                 </div>
             </div>
+            {% endif %}
 
-            <!-- Recent Orders Table -->
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div class="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm text-center">
+                    <div class="text-4xl font-black text-primary mb-2">{{ active_count }}</div>
+                    <div class="text-xs text-gray-500 uppercase font-bold tracking-wider">Em andamento</div>
+                </div>
+                <div class="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm text-center">
+                    <div class="text-4xl font-black text-gray-800 mb-2">{{ total_count }}</div>
+                    <div class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total de Pedidos</div>
+                </div>
+                <div class="bg-primary p-6 rounded-2xl shadow-sm text-center col-span-2 md:col-span-1 flex flex-col items-center justify-center">
+                    <a href="{% url 'catalog:home' %}" class="text-white font-bold text-sm uppercase tracking-widest hover:opacity-80 transition">
+                        + Novo Pedido
+                    </a>
+                    <p class="text-white/70 text-xs mt-1">Catálogo completo</p>
+                </div>
+            </div>
+
+            <!-- Pedidos Recentes -->
             <div>
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-lg font-bold text-black">Pedidos Recentes</h2>
-                    <a href="{% url 'customers:orders' %}"
-                        class="text-sm text-primary font-semibold hover:underline">Ver todos →</a>
+                    <h2 class="text-lg font-bold text-gray-900">Pedidos Recentes</h2>
+                    <a href="{% url 'customers:orders' %}" class="text-sm text-primary font-semibold hover:underline">Ver todos →</a>
                 </div>
 
                 <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
                     {% if orders %}
                     <table class="w-full text-left">
                         <thead>
-                            <tr class="bg-surface border-b border-gray-100">
-                                <th class="py-3 px-5 text-[11px] font-bold text-gray-500 uppercase tracking-wider">
-                                    Pedido</th>
-                                <th class="py-3 px-5 text-[11px] font-bold text-gray-500 uppercase tracking-wider">Data
-                                </th>
-                                <th class="py-3 px-5 text-[11px] font-bold text-gray-500 uppercase tracking-wider">Total
-                                </th>
-                                <th class="py-3 px-5 text-[11px] font-bold text-gray-500 uppercase tracking-wider">
-                                    Status</th>
+                            <tr class="bg-gray-50 border-b border-gray-100">
+                                <th class="py-3 px-5 text-xs font-bold text-gray-500 uppercase tracking-wider">Pedido</th>
+                                <th class="py-3 px-5 text-xs font-bold text-gray-500 uppercase tracking-wider">Data</th>
+                                <th class="py-3 px-5 text-xs font-bold text-gray-500 uppercase tracking-wider">Total</th>
+                                <th class="py-3 px-5 text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="py-3 px-5"></th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
                             {% for order in orders %}
                             <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="py-4 px-5 font-bold text-black">#{{ order.id }}</td>
+                                <td class="py-4 px-5 font-bold text-gray-900">#{{ order.id }}</td>
                                 <td class="py-4 px-5 text-sm text-gray-500">{{ order.created_at|date:"d/m/Y" }}</td>
-                                <td class="py-4 px-5 font-semibold text-black">R$ {{ order.total }}</td>
+                                <td class="py-4 px-5 font-semibold text-gray-900">R$ {{ order.total }}</td>
                                 <td class="py-4 px-5">
                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold
                                         {% if order.status == 'aguardando_pagamento' %}bg-yellow-100 text-yellow-800
                                         {% elif order.status == 'pago' %}bg-blue-100 text-blue-800
+                                        {% elif order.status == 'aguardando_arte' %}bg-amber-100 text-amber-800
+                                        {% elif order.status == 'arte_recebida' %}bg-indigo-100 text-indigo-800
                                         {% elif order.status == 'em_producao' %}bg-orange-100 text-orange-800
                                         {% elif order.status == 'enviado' %}bg-purple-100 text-purple-800
                                         {% elif order.status == 'entregue' %}bg-green-100 text-green-800
-                                        {% else %}bg-gray-100 text-gray-700{% endif %}">
+                                        {% else %}bg-gray-100 text-gray-600{% endif %}">
                                         {{ order.get_status_display }}
                                     </span>
+                                </td>
+                                <td class="py-4 px-5">
+                                    <a href="{% url 'customers:order_detail' order.id %}" class="text-xs text-primary font-bold hover:underline">Detalhes →</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -113,14 +137,11 @@
                     </table>
                     {% else %}
                     <div class="py-16 text-center">
-                        <svg class="w-12 h-12 mx-auto text-gray-200 mb-4" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
-                        <p class="text-sm text-gray-400 font-medium">Nenhum pedido encontrado.</p>
-                        <a href="{% url 'catalog:home' %}" class="btn-primary inline-flex mt-4 px-8 text-sm">Ver
-                            Catálogo</a>
+                        <div class="text-5xl mb-4">📦</div>
+                        <p class="text-sm text-gray-400 font-medium">Nenhum pedido ainda.</p>
+                        <a href="{% url 'catalog:home' %}" class="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-primary text-white font-bold rounded-xl text-sm hover:-translate-y-0.5 transition-all">
+                            Ver Catálogo
+                        </a>
                     </div>
                     {% endif %}
                 </div>
