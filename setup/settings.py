@@ -31,6 +31,29 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 # =============================================================================
+# SEGURANÇA EM PRODUÇÃO (ativada quando DEBUG=False)
+# =============================================================================
+if not DEBUG:
+    # Força HTTPS
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+    # Cookies seguros (apenas via HTTPS)
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    # HSTS — instrui o navegador a só acessar via HTTPS por 1 ano
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+    # Proteções extras
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = "DENY"
+    SECURE_BROWSER_XSS_FILTER = True
+
+
+# =============================================================================
 # APPS INSTALADOS
 # =============================================================================
 DJANGO_APPS = [
