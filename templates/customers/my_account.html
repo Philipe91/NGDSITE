@@ -136,8 +136,9 @@
                         </tbody>
                     </table>
                     {% else %}
-                    <div class="py-16 text-center">
-                        <div class="text-5xl mb-4">📦</div>
+                    <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="package-open" class="w-10 h-10 text-gray-300"></i>
+                    </div>
                         <p class="text-sm text-gray-400 font-medium">Nenhum pedido ainda.</p>
                         <a href="{% url 'catalog:home' %}" class="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-primary text-white font-bold rounded-xl text-sm hover:-translate-y-0.5 transition-all">
                             Ver Catálogo
