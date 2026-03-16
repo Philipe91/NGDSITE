@@ -1,0 +1,69 @@
+# APRESENTAÇÃO DO PROJETO: PLATAFORMA E-COMMERCE NGD
+
+Este documento detalha as funcionalidades e diferenciais técnicos da nova plataforma de e-commerce da NGD, desenvolvida para modernizar a experiência de compra, automatizar processos internos e otimizar a gestão de vendas.
+
+---
+
+## 1. EXPERIÊNCIA DO CLIENTE (FRONTEND)
+
+A interface foi projetada com foco em usabilidade, velocidade e conversão, oferecendo um fluxo de compra fluido e profissional.
+
+### A. Catálogo e Navegação
+- **Categorização Inteligente**: Produtos organizados por categorias (Placas, Banners, Adesivos, etc.) com slugs amigáveis para SEO.
+- **Busca e Filtros**: Navegação facilitada para encontrar produtos de comunicação visual específicos.
+- **Design Responsivo**: O site é 100% adaptado para celulares, tablets e computadores, garantindo compras em qualquer lugar.
+
+### B. Configurador de Produtos
+- **Variações Dinâmicas**: Opções de tamanho, material e acabamento que alteram o preço instantaneamente.
+- **Cálculo em Tempo Real**: O cliente visualiza o valor final antes mesmo de adicionar ao carrinho.
+- **Gabaritos e Manuais**: Disponibilidade de arquivos para download (gabaritos) ajudando o cliente na preparação dos arquivos.
+
+### C. Gestão de Carrinho e Frete
+- **Carrinho Persistente**: Itens salvos para conclusão posterior da compra.
+- **Integração com CEP**: Cálculo automático de frete baseado na localização do cliente.
+- **Opções de Entrega**: Flexibilidade para escolher entre "Retirada na Loja" (grátis) ou "Frete Fixo".
+
+### D. Pagamento e Finalização
+- **Integração Mercado Pago**: Pagamentos seguros via PIX (confirmação imediata) ou Cartão de Crédito.
+- **Segurança de Dados**: Processamento criptografado seguindo os padrões do Mercado Pago.
+- **Upload de Artes**: O cliente anexa seus arquivos de impressão diretamente no fluxo do pedido, eliminando a necessidade de envio manual por e-mail ou WhatsApp.
+
+### E. Comunicação e Status
+- **E-mails Transacionais**: O sistema envia notificações automáticas para:
+    - Confirmação de Novo Pedido.
+    - Aprovação de Pagamento.
+    - Notificação de Envio (com dados de rastreio/entrega).
+
+---
+
+## 2. PAINEL DE CONTROLE ADMINISTRATIVO (BACKEND)
+
+Uma central de comando robusta baseada em Django Admin, customizada para as necessidades operacionais da NGD.
+
+### A. Gestão de Pedidos e Produção
+- **Monitoramento de Status**: Controle total do ciclo de vida do pedido (Aguardando Pagamento -> Pago -> Em Produção -> Enviado -> Entregue).
+- **Filtros e Relatórios**: Facilidade para visualizar vendas do dia, pedidos pendentes de arte ou pagamentos atrasados.
+- **Ordens de Serviço (O.S.)**: Módulo exclusivo para geração de O.S. para impressão. Em um clique, o sistema gera um documento profissional com todas as especificações técnicas (material, tamanho, quantidade) para a equipe de produção.
+
+### B. Módulo de Verificação de Artes
+- **Repositório Centralizado**: Todas as artes enviadas pelos clientes ficam organizadas por número de pedido e data.
+- **Aprovação/Rejeição**: O administrador pode baixar o arquivo, conferir a qualidade e marcar o status como "Aprovado" ou "Rejeitado", comunicando o time comercial.
+
+### C. Gestão de Catálogo e Inventário
+- **Cadastro Simplificado**: Interface amigável para adicionar novos produtos, variantes de tamanhos e preços.
+- **Gestão de Imagens**: Galeria de fotos com ordenação personalizada e textos alternativos para acessibilidade.
+- **Controle de SKU**: Organização interna simplificada com códigos de referência únicos para cada variação de produto.
+
+### D. Otimização para Google (SEO)
+- **Campos Meta Gerenciáveis**: Controle direto sobre títulos e descrições para motores de busca (Google/Bing) em cada página do site.
+- **Slugs Automáticos**: URLs amigáveis criadas automaticamente a partir do nome do produto.
+
+### E. Automação de Fluxo
+- **Sincronização de Pagamento**: Webhooks que atualizam o status do pedido automaticamente assim que o Mercado Pago confirma o recebimento.
+- **Disparo de Mensagens**: Gatilhos que automatizam o fluxo de e-mails, reduzindo o trabalho manual da equipe de atendimento.
+
+---
+
+## CONCLUSÃO
+
+A plataforma não é apenas um site de vendas, mas uma ferramenta de gestão completa que integra desde a escolha do produto pelo cliente até a saída da mercadoria para entrega, garantindo produtividade para a NGD e confiança para o consumidor final.
