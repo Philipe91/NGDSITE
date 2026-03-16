@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import Order, OrderItem
+from .emails import send_order_shipped_email
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
@@ -30,6 +31,15 @@ class OrderAdmin(admin.ModelAdmin):
     def print_os(self, request, queryset):
         orders = queryset.prefetch_related('items__variant__product')
         return TemplateResponse(request, 'admin/orders/order/os_print.html', {'orders': orders})
+
+    def save_model(self, request, obj, form, change):
+        if change:
+            old = Order.objects.get(pk=obj.pk)
+            if old.status != 'enviado' and obj.status == 'enviado':
+                super().save_model(request, obj, form, change)
+                send_order_shipped_email(obj)
+                return
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(OrderItem)

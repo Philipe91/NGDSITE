@@ -4,6 +4,7 @@ from django.contrib import messages
 from apps.cart.cart import Cart
 from .models import Order, OrderItem
 from .shipping import get_shipping_options
+from .emails import send_order_created_email
 from decimal import Decimal
 
 CUSTOMER_SESSION_KEY = 'customer_email'
@@ -84,6 +85,9 @@ def checkout(request):
             )
 
         cart.clear()
+
+        # Envia e-mail de confirmação de pedido (Fase 14)
+        send_order_created_email(order)
 
         # Redireciona para pagamento (Fase 11)
         return redirect('payment:pay', order_id=order.id)

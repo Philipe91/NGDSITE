@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.conf import settings
 from apps.orders.models import Order
+from apps.orders.emails import send_payment_approved_email
 
 logger = logging.getLogger(__name__)
 
@@ -114,6 +115,8 @@ def webhook(request):
                     order.mp_payment_id = str(resource_id)
                     order.save(update_fields=["status", "mp_payment_id"])
                     logger.info(f"Pedido #{order_id} marcado como PAGO via webhook MP.")
+                    # Envia e-mail de pagamento aprovado (Fase 14)
+                    send_payment_approved_email(order)
 
     except Exception as e:
         logger.error(f"Erro no webhook MP: {e}")
