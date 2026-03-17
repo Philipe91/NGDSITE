@@ -224,6 +224,15 @@
                     <dd class="font-semibold text-gray-900 text-right max-w-[60%]">{{ order.shipping_address }}</dd>
                 </div>
                 {% endif %}
+                {% if order.tracking_code %}
+                <div class="flex justify-between border-t border-gray-100 pt-3">
+                    <dt class="text-gray-500 flex items-center gap-1">
+                        <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        Rastreio
+                    </dt>
+                    <dd class="font-bold text-primary">{{ order.tracking_code }}</dd>
+                </div>
+                {% endif %}
             </dl>
         </div>
 

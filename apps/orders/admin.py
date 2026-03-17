@@ -21,7 +21,7 @@ from django.template.response import TemplateResponse
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'customer_name', 'customer_email', 'status', 'total', 'created_at']
+    list_display = ['id', 'customer_name', 'customer_email', 'status', 'total', 'tracking_code', 'created_at']
     list_filter = ['status', 'created_at']
     search_fields = ['customer_name', 'customer_email', 'customer_phone']
     inlines = [OrderItemInline]

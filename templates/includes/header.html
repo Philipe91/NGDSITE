@@ -110,7 +110,7 @@
                     </div>
                     <div class="hidden sm:block">
                         <span class="block text-[10px] text-gray-500 uppercase font-bold">Carrinho</span>
-                        <span class="text-sm font-bold text-success">R$ {{ cart.get_total_price }}</span>
+                        <span class="text-sm font-bold text-success">R$ {{ cart.get_total_price|floatformat:"2" }}</span>
                     </div>
                 </a>
             </div>

@@ -70,7 +70,7 @@
 
                 <!-- Preço / Mobile Header  -->
                 <div class="col-span-1 md:col-span-2 text-center font-medium text-gray-600">
-                    <span class="md:hidden text-xs text-gray-400 uppercase mr-2">Valor:</span>R$ {{ item.price }}
+                    <span class="md:hidden text-xs text-gray-400 uppercase mr-2">Valor:</span>R$ {{ item.price|floatformat:"2" }}
                 </div>
 
                 <!-- Qtd -->
@@ -83,7 +83,7 @@
                 <!-- Subtotal -->
                 <div class="col-span-1 md:col-span-2 md:text-right font-bold text-primary">
                     <span class="md:hidden text-xs text-gray-400 uppercase mr-2">Subtotal:</span>
-                    R$ {{ item.total_price }}
+                    R$ {{ item.total_price|floatformat:"2" }}
                 </div>
             </div>
             {% endfor %}
@@ -102,7 +102,7 @@
                 <div class="space-y-4 text-sm text-gray-600 mb-6 border-b border-gray-200 pb-6">
                     <div class="flex justify-between">
                         <span>Subtotal ({{ cart|length }} itens)</span>
-                        <span>R$ {{ cart.get_total_price }}</span>
+                        <span>R$ {{ cart.get_total_price|floatformat:"2" }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Desconto</span>
@@ -118,7 +118,7 @@
                 <div class="flex justify-between items-center mb-8">
                     <span class="text-base font-bold text-black uppercase">Total a pagar</span>
                     <div class="text-2xl font-bold text-black">
-                        R$ {{ cart.get_total_price }}
+                        R$ {{ cart.get_total_price|floatformat:"2" }}
                     </div>
                 </div>
 

@@ -236,10 +236,10 @@
                                         {{ product.name }} {{ variant.size_label }}
                                     </h3>
                                     <div class="text-[11px] text-gray-400 line-through mb-1">
-                                        de R$ {{ variant.price|add:"30.00" }}
+                                        de R$ {{ variant.price|add:"30.00"|floatformat:"2" }}
                                     </div>
                                     <div class="text-[13px] font-bold text-black mb-3">
-                                        A partir de R$ {{ variant.price }}
+                                        A partir de R$ {{ variant.price|floatformat:"2" }}
                                     </div>
                                     <p class="text-xs text-gray-500 leading-relaxed max-w-[200px]">Pronto para uso.
                                         Ideal para pontos de venda e eventos.</p>

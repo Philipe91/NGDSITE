@@ -43,6 +43,8 @@ class Order(models.Model):
     mp_payment_id = models.CharField(max_length=100, blank=True, verbose_name="ID Pagamento MP")
     mp_preference_id = models.CharField(max_length=100, blank=True, verbose_name="ID Preferência MP")
 
+    tracking_code = models.CharField(max_length=100, blank=True, verbose_name="Código de Rastreio")
+
     status = models.CharField(max_length=30, choices=STATUS_CHOICES, default='aguardando_pagamento')
 
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)

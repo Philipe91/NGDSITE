@@ -24,7 +24,10 @@
     {% if order.shipping_method == 'Retirada na Loja' %}
     <p style="margin: 10px 0 0 0; font-size: 15px; line-height: 1.5;">Seu pedido está pronto! Por favor, entre em contato para alinhar a retirada ou venha até nossa unidade.</p>
     {% else %}
-    <p style="margin: 10px 0 0 0; font-size: 15px; line-height: 1.5;">O produto já foi expedido pela transportadora e chegará no endereço cadastrado em breve.</p>
+    <p style="margin: 10px 0 0 0; font-size: 15px; line-height: 1.5;">O produto já foi expedido e chegará no seu endereço em breve.</p>
+        {% if order.tracking_code %}
+        <p style="margin: 10px 0 0 0; font-size: 15px; line-height: 1.5;"><strong>Código de Rastreio:</strong> {{ order.tracking_code }}</p>
+        {% endif %}
     {% endif %}
 </div>
 
