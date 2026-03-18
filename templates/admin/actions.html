@@ -1,0 +1,96 @@
+{% load i18n %}
+<div class="actions" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+  <div style="display:none;" id="default-admin-actions">
+  {% block actions %}
+    {% block actions-form %}
+    {% for field in action_form %}{% if field.label %}<label>{{ field.label }} {{ field }}</label>{% else %}{{ field }}{% endif %}{% endfor %}
+    {% endblock %}
+    {% block actions-submit %}
+    <button type="submit" class="button default-action-btn" title="{% translate "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">{% translate "Go" %}</button>
+    {% endblock %}
+  {% endblock %}
+  </div>
+
+  <div id="custom-action-buttons" style="display: flex; flex-wrap: wrap; gap: 10px;">
+     <!-- JS vai renderizar aqui -->
+  </div>
+
+  <div style="margin-left:auto; display: flex; align-items: center; color: #6b7280; font-size: 13px;">
+    {% block actions-counter %}
+        {% if actions_selection_counter %}
+            <span class="action-counter" data-actions-icnt="{{ cl.result_list|length }}" style="margin-right:15px; font-weight: 500;">
+                <svg style="width:16px;height:16px;display:inline;vertical-align:text-bottom;margin-right:4px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                {{ selection_note }}
+            </span>
+            {% if cl.result_count != cl.result_list|length %}
+            <span class="all hidden">{{ selection_note_all }}</span>
+            <span class="question hidden">
+                <a role="button" href="#" style="color:#2563eb; font-weight: bold;" title="{% translate "Click here to select the objects across all pages" %}">{% blocktranslate with cl.result_count as total_count %}Selecionar todos {{ total_count }}{% endblocktranslate %}</a>
+            </span>
+            <span class="clear hidden"><a role="button" href="#" style="color:#dc2626; font-weight: bold; margin-left:10px;">{% translate "Clear selection" %}</a></span>
+            {% endif %}
+        {% endif %}
+    {% endblock %}
+  </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const select = document.querySelector('#default-admin-actions select[name="action"]');
+        const defaultBtn = document.querySelector('#default-admin-actions .default-action-btn');
+        const customContainer = document.getElementById('custom-action-buttons');
+        
+        if (select && customContainer) {
+            Array.from(select.options).forEach(opt => {
+                if(opt.value && opt.value !== '') {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.innerText = opt.innerText;
+                    
+                    // Style Button Moderno
+                    btn.style.padding = '8px 16px';
+                    btn.style.borderRadius = '8px';
+                    btn.style.border = '1px solid #e5e7eb';
+                    btn.style.backgroundColor = '#ffffff';
+                    btn.style.color = '#374151';
+                    btn.style.fontWeight = '600';
+                    btn.style.fontSize = '12px';
+                    btn.style.cursor = 'pointer';
+                    btn.style.boxShadow = '0 1px 2px 0 rgba(0, 0, 0, 0.05)';
+                    btn.style.transition = 'all 0.15s ease-in-out';
+                    
+                    // Destaca ações críticas ou especiais pelas palavras-chaves
+                    if (opt.value.includes('delete') || opt.innerText.toLowerCase().includes('excluir') || opt.innerText.toLowerCase().includes('deletar')) {
+                        btn.style.color = '#b91c1c';
+                        btn.style.borderColor = '#fecaca';
+                        btn.style.backgroundColor = '#fef2f2';
+                    } else if (opt.innerText.includes('🚀') || opt.value.includes('kanban')) {
+                        btn.style.backgroundColor = '#e0e7ff';
+                        btn.style.color = '#3730a3';
+                        btn.style.borderColor = '#c7d2fe';
+                    } else {
+                        // hover regular
+                        btn.onmouseover = () => { btn.style.backgroundColor = '#f9fafb'; btn.style.borderColor = '#d1d5db'; };
+                        btn.onmouseout = () => { btn.style.backgroundColor = '#ffffff'; btn.style.borderColor = '#e5e7eb'; };
+                    }
+                    
+                    btn.onclick = (e) => {
+                        e.preventDefault();
+                        const checkBoxes = document.querySelectorAll('.action-select:checked');
+                        if(checkBoxes.length === 0 && opt.value !== 'kanban') { // se não marcou ninguem
+                             // Deixa o Django mostrar o aviso nativo
+                             select.value = opt.value;
+                             defaultBtn.click();
+                        } else {
+                             // Clicar ativa a ação
+                             select.value = opt.value;
+                             defaultBtn.click();
+                        }
+                    };
+                    
+                    customContainer.appendChild(btn);
+                }
+            });
+        }
+    });
+</script>

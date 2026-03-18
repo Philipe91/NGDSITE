@@ -44,6 +44,7 @@ class Order(models.Model):
     mp_preference_id = models.CharField(max_length=100, blank=True, verbose_name="ID Preferência MP")
 
     tracking_code = models.CharField(max_length=100, blank=True, verbose_name="Código de Rastreio")
+    reviewed = models.BooleanField(default=False, verbose_name="Revisado")
 
     status = models.CharField(max_length=30, choices=STATUS_CHOICES, default='aguardando_pagamento')
 
@@ -90,3 +91,9 @@ class OrderItem(models.Model):
     @property
     def has_art_file(self):
         return bool(self.art_file)
+
+class PainelDeProducao(Order):
+    class Meta:
+        proxy = True
+        verbose_name = "Kanban de Producao"
+        verbose_name_plural = "Kanban de Producao"

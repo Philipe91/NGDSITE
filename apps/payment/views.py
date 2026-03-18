@@ -117,6 +117,13 @@ def webhook(request):
                     logger.info(f"Pedido #{order_id} marcado como PAGO via webhook MP.")
                     # Envia e-mail de pagamento aprovado (Fase 14)
                     send_payment_approved_email(order)
+                    
+                    # Notificar no Telegram
+                    try:
+                        from apps.orders.notifications import send_telegram_order_notification
+                        send_telegram_order_notification(order)
+                    except Exception as t_err:
+                        logger.error(f"Erro Telegram hook: {t_err}")
 
     except Exception as e:
         logger.error(f"Erro no webhook MP: {e}")

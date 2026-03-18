@@ -4,7 +4,7 @@ from django.contrib import messages
 from apps.cart.cart import Cart
 from .models import Order, OrderItem
 from .shipping import get_shipping_options
-from .emails import send_order_created_email
+from .emails import send_order_created_email, send_status_update_email, send_order_shipped_email
 from decimal import Decimal
 
 CUSTOMER_SESSION_KEY = 'customer_email'
@@ -136,3 +136,58 @@ def upload_art(request, order_id, item_id):
         'file_url': item.art_file.url,
         'art_status': item.get_art_status_display(),
     })
+
+
+import json
+from django.contrib.admin.views.decorators import staff_member_required
+from django.views.decorators.http import require_POST
+
+@staff_member_required
+def kanban_view(request):
+    """View do Kanban Board de Produção"""
+    # Vamos pegar todos os pedidos, menos os cancelados e aguardando_pagamento (ainda não entraram)
+    qs = Order.objects.exclude(status__in=['cancelado', 'aguardando_pagamento']).prefetch_related('items__variant__product').order_by('created_at')
+    
+    orders_data = []
+    for o in qs:
+        orders_data.append({
+            'id': o.id,
+            'status': o.status,
+            'customer': o.customer_name,
+            'date': o.created_at.isoformat(),
+            'total': float(o.total),
+            'items': [{'name': i.variant.product.name if i.variant else 'Produto Genérico', 'qtd': i.quantity} for i in o.items.all()]
+        })
+        
+    return render(request, 'admin/kanban.html', {'orders_data': orders_data})
+
+@staff_member_required
+@require_POST
+def update_order_status(request):
+    """Endpoint AJAX para atualizar status arrastando no Kanban"""
+    try:
+        data = json.loads(request.body)
+        order_id = data.get('order_id')
+        new_status = data.get('status')
+        
+        order = get_object_or_404(Order, id=order_id)
+        if new_status in dict(Order.STATUS_CHOICES):
+            # Only send email if status actually changed
+            if order.status != new_status:
+                order.status = new_status
+                order.save(update_fields=['status'])
+                
+                # Dispara emails baseado no novo status
+                if new_status == 'arte_recebida':
+                    send_status_update_email(order, "Sua arte foi Aprovada e o pedido está pronto para produção.")
+                elif new_status == 'em_producao':
+                    send_status_update_email(order, "Seu pedido entrou em Produção!")
+                elif new_status == 'enviado':
+                    send_order_shipped_email(order)
+                    
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'error': 'Status inválido.'}, status=400)
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)}, status=400)
+

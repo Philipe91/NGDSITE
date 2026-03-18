@@ -41,3 +41,12 @@ def send_order_shipped_email(order):
         'site_url': settings.SITE_URL,
     }
     return send_transactional_email(subject, 'emails/order_shipped.html', context, order.customer_email)
+
+def send_status_update_email(order, message):
+    subject = f"NGD - Atualização: Pedido #{order.id}"
+    context = {
+        'order': order,
+        'custom_message': message,
+        'site_url': settings.SITE_URL,
+    }
+    return send_transactional_email(subject, 'emails/order_status_update.html', context, order.customer_email)
