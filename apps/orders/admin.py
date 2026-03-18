@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.template.response import TemplateResponse
 from django.shortcuts import redirect
+from django.urls import reverse
 from .models import Order, OrderItem, PainelDeProducao
 from .emails import send_order_shipped_email
 
@@ -140,14 +141,27 @@ class OrderItemAdmin(admin.ModelAdmin):
     list_filter   = ['art_status', 'order__status']
     search_fields = ['order__customer_name', 'order__customer_email', 'variant__product__name', 'variant__sku']
     raw_id_fields = ['order', 'variant']
-    readonly_fields = ['art_download']
-    fields        = ['order', 'variant', 'quantity', 'price', 'art_file', 'art_download', 'art_status']
+    readonly_fields = ['art_download', 'art_approval_link', 'art_rejection_reason']
+    fields        = ['order', 'variant', 'quantity', 'price', 'art_file', 'art_download', 'art_status', 'art_rejection_reason', 'art_approval_link']
 
     def art_download(self, obj):
         if obj.art_file:
             return format_html('<a href="{}" target="_blank" style="color:#2563eb;font-weight:600;">Baixar arte</a>', obj.art_file.url)
         return "Sem arquivo"
     art_download.short_description = "Arquivo da Arte"
+
+    def art_approval_link(self, obj):
+        if not obj.pk:
+            return "Salve o item primeiro"
+        url = reverse('orders:art_approval', kwargs={'token': obj.art_approval_token})
+        send_url = reverse('orders:send_art_approval_email', kwargs={'item_id': obj.pk})
+        return format_html(
+            '<a href="{}" target="_blank" style="color:#4f46e5;font-weight:600;font-size:12px;">Abrir portal do cliente</a>'
+            ' &nbsp;|&nbsp; '
+            '<a href="{}" style="color:#16a34a;font-weight:600;font-size:12px;">Enviar por e-mail</a>',
+            url, send_url
+        )
+    art_approval_link.short_description = "Portal de Aprovacao"
 
 
 # ---------------------------------------------------------------------------
@@ -157,3 +171,24 @@ class OrderItemAdmin(admin.ModelAdmin):
 class PainelDeProducaoAdmin(admin.ModelAdmin):
     def changelist_view(self, request, extra_context=None):
         return redirect('orders:kanban')
+
+
+# Dashboard atalho
+from .models import PainelDeProducao
+from .dashboard import dashboard_view as _dbv
+
+class DashboardProxy(Order):
+    class Meta:
+        proxy = True
+        verbose_name = "Dashboard"
+        verbose_name_plural = "Dashboard"
+
+try:
+    admin.site.unregister(DashboardProxy)
+except admin.sites.NotRegistered:
+    pass
+
+@admin.register(DashboardProxy)
+class DashboardAdmin(admin.ModelAdmin):
+    def changelist_view(self, request, extra_context=None):
+        return redirect('orders:dashboard')

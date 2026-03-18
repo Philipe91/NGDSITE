@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #333; line-height: 1.6; margin: 0; padding: 0; background: #f8fafc; }
+  .wrap { max-width: 600px; margin: 0 auto; padding: 20px; }
+  .header { background: linear-gradient(135deg, #1e3a8a, #3b82f6); padding: 28px 32px; border-radius: 12px 12px 0 0; color: #fff; }
+  .body { background: #fff; padding: 28px 32px; border-radius: 0 0 12px 12px; border: 1px solid #e2e8f0; border-top: 0; }
+  .btn { display: inline-block; background: #1e3a8a; color: #fff; padding: 14px 28px; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 15px; margin: 16px 0; }
+  .footer { font-size: 12px; color: #94a3b8; margin-top: 24px; text-align: center; }
+  .art-box { background: #f1f5f9; border-radius: 10px; padding: 16px; margin: 16px 0; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <p style="font-size:12px;opacity:.8;margin:0 0 6px;text-transform:uppercase;letter-spacing:.06em;">NGD Gráfica</p>
+    <h2 style="margin:0;font-size:1.3rem;">Sua Arte Está Pronta para Revisão!</h2>
+    <p style="margin:6px 0 0;opacity:.9;font-size:13px;">Pedido #{{ order.id }}</p>
+  </div>
+  <div class="body">
+    <p>Olá, <strong>{{ order.customer_name }}</strong>!</p>
+    <p>Preparamos a arte do seu pedido e precisamos da sua aprovação para dar início à produção.</p>
+
+    <div class="art-box">
+      <p style="font-weight:700;font-size:15px;color:#1e3a8a;margin:0 0 4px;">{{ item.variant.product.name|default:"Seu produto" }}</p>
+      {% if item.variant.size_label %}
+      <p style="font-size:13px;color:#475569;margin:0;">Tamanho: {{ item.variant.size_label }}</p>
+      {% endif %}
+    </div>
+
+    <p>Clique no botão abaixo para visualizar sua arte e decidir:</p>
+
+    <div style="text-align:center;">
+      <a href="{{ approval_url }}" class="btn">Revisar e Aprovar Arte</a>
+    </div>
+
+    <p style="font-size:13px;color:#475569;margin-top:12px;">
+      <strong>O que você pode fazer no portal:</strong><br>
+      Visualizar a arte &middot; Aprovar &middot; Solicitar ajustes com comentários
+    </p>
+
+    <hr style="border:none;border-top:1px solid #f1f5f9;margin:20px 0;">
+    <p style="font-size:12px;color:#94a3b8;">Se o botão não funcionar, copie e cole este link no seu navegador:<br>
+    <a href="{{ approval_url }}" style="color:#3b82f6;word-break:break-all;">{{ approval_url }}</a></p>
+  </div>
+  <div class="footer">
+    Atenciosamente,<br><strong>Equipe NGD Gráfica</strong>
+  </div>
+</div>
+</body>
+</html>

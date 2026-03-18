@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
+import uuid
 from apps.catalog.models import ProductVariant
 
 
@@ -77,6 +79,8 @@ class OrderItem(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Preço Unitário")
     art_file = models.FileField(upload_to=order_item_art_upload_path, blank=True, null=True, verbose_name="Arquivo da Arte")
     art_status = models.CharField(max_length=20, choices=ART_STATUS_CHOICES, default='pendente', verbose_name="Status da Arte")
+    art_approval_token = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    art_rejection_reason = models.TextField(blank=True, verbose_name="Motivo de Rejeicao")
 
     class Meta:
         verbose_name = "Item do Pedido"
