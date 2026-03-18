@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django.template.response import TemplateResponse
 from django.shortcuts import redirect
 from django.urls import reverse
-from .models import Order, OrderItem, PainelDeProducao
+from .models import Order, OrderItem, PainelDeProducao, ShippingConfig
 from .emails import send_order_shipped_email
 
 
@@ -192,3 +192,25 @@ except admin.sites.NotRegistered:
 class DashboardAdmin(admin.ModelAdmin):
     def changelist_view(self, request, extra_context=None):
         return redirect('orders:dashboard')
+
+
+# ---------------------------------------------------------------------------
+# Configuração de Frete
+# ---------------------------------------------------------------------------
+@admin.register(ShippingConfig)
+class ShippingConfigAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ('Melhor Envio API', {
+            'fields': ('melhor_envio_token', 'is_sandbox', 'cep_origem', 'dias_adicionais')
+        }),
+        ('Frete Local / Motoboy (Plano B)', {
+            'fields': ('enable_local_delivery', 'local_city', 'local_price')
+        }),
+    )
+
+    def has_add_permission(self, request):
+        return not ShippingConfig.objects.exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+

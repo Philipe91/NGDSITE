@@ -5,6 +5,34 @@ import uuid
 from apps.catalog.models import ProductVariant
 
 
+class ShippingConfig(models.Model):
+    cep_origem = models.CharField(max_length=9, default="70000-000", verbose_name="CEP de Origem (Sua loja)")
+    dias_adicionais = models.PositiveIntegerField(default=1, verbose_name="Dias Adicionais (Prazo Extra)", help_text="Adicionado ao prazo da transportadora")
+    melhor_envio_token = models.TextField(blank=True, verbose_name="Token Melhor Envio", help_text="Se preenchido, ativa o cálculo real via API.")
+    is_sandbox = models.BooleanField(default=True, verbose_name="Modo Teste (Sandbox Melhor Envio)")
+
+    # Frete Fixo Local (Plano B / Complemento)
+    enable_local_delivery = models.BooleanField(default=True, verbose_name="Ativar Frete Motoboy/Local")
+    local_city = models.CharField(max_length=100, default="Brasília", verbose_name="Cidade Local")
+    local_price = models.DecimalField(max_digits=10, decimal_places=2, default=25.00, verbose_name="Preço Base (Local)")
+
+    class Meta:
+        verbose_name = "Configuração de Frete"
+        verbose_name_plural = "Configurações de Frete"
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def get_solo(cls):
+        obj, _ = cls.objects.get_or_create(pk=1)
+        return obj
+
+    def __str__(self):
+        return "Configurações de Frete e Melhor Envio"
+
+
 def order_item_art_upload_path(instance, filename):
     created_at = instance.order.created_at if instance.order_id and instance.order.created_at else timezone.now()
     return f"uploads/artes/{created_at:%Y/%m/%d}/{filename}"
