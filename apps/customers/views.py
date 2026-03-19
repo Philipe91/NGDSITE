@@ -4,38 +4,23 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.utils import timezone
 from apps.orders.models import Order, OrderItem
-
-CUSTOMER_SESSION_KEY = 'customer_email'
-
-
-def _require_customer(request):
-    """Retorna o email da sessão ou None se não logado."""
-    return request.session.get(CUSTOMER_SESSION_KEY)
-
+from django.contrib.auth.decorators import login_required
 
 def login_view(request):
-    """Login simples por e-mail (sem senha, baseado em pedidos existentes)."""
-    if request.method == 'POST':
-        email = request.POST.get('email', '').strip().lower()
-        if Order.objects.filter(customer_email__iexact=email).exists():
-            request.session[CUSTOMER_SESSION_KEY] = email
-            return redirect('customers:dashboard')
-        else:
-            messages.error(request, 'Nenhum pedido encontrado para este e-mail. Verifique o e-mail usado no checkout.')
-    return render(request, 'customers/login.html')
-
+    """Redireciona para o login do allauth."""
+    return redirect('account_login')
 
 def logout_view(request):
-    """Limpa a sessão do cliente."""
-    request.session.pop(CUSTOMER_SESSION_KEY, None)
-    return redirect('catalog:home')
+    """Redireciona para o logout do allauth."""
+    return redirect('account_logout')
 
-
+@login_required
 def my_account(request):
     """Painel do cliente — resumo dos pedidos."""
-    email = _require_customer(request)
+    email = request.user.email
     if not email:
-        return redirect('customers:login')
+        messages.error(request, "Sua conta não tem e-mail associado.")
+        return redirect('catalog:home')
 
     orders = Order.objects.filter(customer_email__iexact=email).prefetch_related('items__variant__product').order_by('-created_at')
     active_count = orders.exclude(status__in=['entregue', 'cancelado']).count()
@@ -45,9 +30,13 @@ def my_account(request):
         art_status='pendente'
     ).count()
 
+    name_display = request.user.first_name
+    if not name_display:
+        name_display = request.user.email.split('@')[0].capitalize()
+
     context = {
         'customer_email': email,
-        'customer_name': orders.first().customer_name if orders.exists() else email,
+        'customer_name': name_display,
         'orders': orders[:5],
         'active_count': active_count,
         'total_count': total_count,
@@ -55,32 +44,34 @@ def my_account(request):
     }
     return render(request, 'customers/my_account.html', context)
 
-
+@login_required
 def my_orders(request):
     """Lista completa de pedidos do cliente."""
-    email = _require_customer(request)
+    email = request.user.email
     if not email:
-        return redirect('customers:login')
+        return redirect('account_login')
 
-    orders = Order.objects.filter(
-        customer_email__iexact=email
-    ).prefetch_related('items__variant__product').order_by('-created_at')
+    orders = Order.objects.filter(customer_email__iexact=email).prefetch_related(
+        'items__variant__product'
+    ).order_by('-created_at')
 
-    context = {
-        'customer_email': email,
-        'customer_name': orders.first().customer_name if orders.exists() else email,
+    return render(request, 'customers/my_orders.html', {
         'orders': orders,
-    }
-    return render(request, 'customers/my_orders.html', context)
+        'customer_email': email
+    })
 
 
+@login_required
 def order_detail(request, order_id):
-    """Detalhe de um pedido específico com rastreamento e upload de arte."""
-    email = _require_customer(request)
+    """Detalhes de um pedido específico."""
+    email = request.user.email
     if not email:
-        return redirect('customers:login')
+        return redirect('account_login')
 
-    order = get_object_or_404(Order, id=order_id, customer_email__iexact=email)
+    order = get_object_or_404(Order, id=order_id)
+    if order.customer_email.strip().lower() != email.strip().lower():
+        messages.error(request, 'Acesso negado a este pedido.')
+        return redirect('customers:dashboard')
 
     # Define os passos do rastreamento
     STEPS = [
@@ -110,13 +101,17 @@ def order_detail(request, order_id):
     return render(request, 'customers/order_detail.html', context)
 
 
+@login_required
 def upload_art(request, item_id):
     """Re-upload de arte para um item de pedido pelo cliente."""
-    email = _require_customer(request)
+    email = request.user.email
     if not email:
-        return redirect('customers:login')
+        return redirect('account_login')
 
-    item = get_object_or_404(OrderItem, id=item_id, order__customer_email__iexact=email)
+    item = get_object_or_404(OrderItem, id=item_id)
+    if item.order.customer_email.strip().lower() != email.strip().lower():
+        messages.error(request, 'Acesso negado a este item.')
+        return redirect('customers:dashboard')
 
     # Só permite reenvio se a arte foi rejeitada ou ainda está pendente
     if item.art_status not in ['pendente', 'rejeitado']:

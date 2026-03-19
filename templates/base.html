@@ -121,6 +121,17 @@
         [data-lucide] {
             stroke-width: 1.75;
         }
+        /* gradient-bg para cabeçalhos globais e barras de ação */
+        .gradient-bg {
+            background: linear-gradient(135deg, #0b224e 0%, #153e8a 50%, #0070f3 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
     </style>
     {% block extrahead %}{% endblock %}
 </head>
@@ -128,23 +139,23 @@
 <body class="flex flex-col min-h-screen">
 
     <!-- Header Esfera Style -->
-    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <header class="gradient-bg sticky top-0 z-50 shadow-md">
         <div class="container mx-auto px-4 lg:px-8 h-24 lg:h-28 flex items-center justify-between">
             <!-- Logo -->
             <a href="/" class="flex items-center shrink-0">
-                <img src="{% static 'img/LOGO NGD.png' %}" alt="NGD Site" class="h-12 lg:h-14 object-contain">
+                <img src="{% static 'img/logobranca.png' %}" alt="NGD Site" class="h-12 lg:h-14 object-contain">
             </a>
 
             <!-- Center Nav -->
             <nav
-                class="hidden lg:flex items-center gap-6 text-[13px] font-semibold tracking-wide text-gray-800 uppercase">
+                class="hidden lg:flex items-center gap-6 text-[13px] font-bold tracking-wide text-white/90 uppercase">
                 <!-- Dropdown Totens -->
                 <div class="relative group" x-data="{ open: false }" @mouseenter="open = true"
                     @mouseleave="open = false">
-                    <button class="flex items-center gap-1 hover:text-primary transition-colors py-8">
+                    <button class="flex items-center gap-1 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">
                         Totens PDV
                         <svg class="w-4 h-4 transition-transform duration-200"
-                            :class="open ? 'rotate-180 text-primary' : ''" fill="none" stroke="currentColor"
+                            :class="open ? 'rotate-180 text-white' : ''" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
                             </path>
@@ -193,35 +204,35 @@
                 </div>
 
                 <a href="{% url 'catalog:product_detail' 'cubo-promocional-em-poliondas' %}"
-                    class="hover:text-primary transition-colors py-8">Cubo Promocional</a>
+                    class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Cubo Promocional</a>
                 <a href="{% url 'catalog:product_detail' 'wobbler-de-gondola' %}"
-                    class="hover:text-primary transition-colors py-8">Wobbler</a>
+                    class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Wobbler</a>
                 <a href="{% url 'catalog:product_detail' 'stopper-de-prateleira' %}"
-                    class="hover:text-primary transition-colors py-8">Stopper</a>
+                    class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Stopper</a>
                 <a href="{% url 'catalog:product_detail' 'faixa-de-gondola-regua' %}"
-                    class="hover:text-primary transition-colors py-8">Faixa de Gôndola</a>
+                    class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Faixa de Gôndola</a>
                 <a href="{% url 'catalog:product_detail' 'banner-rollup' %}"
-                    class="hover:text-primary transition-colors py-8">Rollup</a>
+                    class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Rollup</a>
                 <a href="{% url 'catalog:product_detail' 'placa-de-campo-poliondas' %}"
-                    class="hover:text-primary transition-colors py-8">Placa de Campo</a>
+                    class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Placa de Campo</a>
                 <a href="{% url 'catalog:product_detail' 'lixeira-personalizada-em-poliondas' %}"
-                    class="hover:text-primary transition-colors py-8">Lixeira PDV</a>
+                    class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Lixeira PDV</a>
             </nav>
 
             <!-- Right Icons -->
-            <div class="flex items-center gap-3 text-gray-600">
-                <button class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-gray-100 hover:text-primary transition-all" title="Buscar">
+            <div class="flex items-center gap-3 text-white">
+                <button class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/10 hover:text-white transition-all" title="Buscar">
                     <i data-lucide="search" class="w-[18px] h-[18px]"></i>
                 </button>
                 <a href="{% url 'customers:dashboard' %}"
-                   class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-gray-100 hover:text-primary transition-all"
+                   class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/10 hover:text-white transition-all"
                    title="Minha Conta">
                     <i data-lucide="user" class="w-[18px] h-[18px]"></i>
                 </a>
-                <a href="{% url 'cart:cart_detail' %}" class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-gray-100 hover:text-primary transition-all relative" title="Carrinho">
+                <a href="{% url 'cart:cart_detail' %}" class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/10 hover:text-white transition-all relative" title="Carrinho">
                     <i data-lucide="shopping-bag" class="w-[18px] h-[18px]"></i>
                     {% if cart.count > 0 %}
-                    <span class="absolute -top-0.5 -right-0.5 bg-primary text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center leading-none">
+                    <span class="absolute -top-0.5 -right-0.5 bg-green-500 text-white shadow-md text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center leading-none">
                         {{ cart.count }}
                     </span>
                     {% endif %}

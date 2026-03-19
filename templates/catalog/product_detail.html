@@ -19,6 +19,30 @@
 {% endblock %}
 
 {% block content %}
+<!-- SEO: Schema.org Product -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "{{ product.name|escapejs }}",
+  "image": [
+    {% if product.featured_image %}
+    "{{ request.scheme }}://{{ request.get_host }}{{ product.featured_image.url }}"
+    {% endif %}
+  ],
+  "description": "{{ product.short_description|escapejs }}",
+  {% if product.variants.first %}
+  "offers": {
+    "@type": "AggregateOffer",
+    "url": "{{ request.scheme }}://{{ request.get_host }}{{ product.get_absolute_url }}",
+    "priceCurrency": "BRL",
+    "lowPrice": "{{ product.variants.first.price|stringformat:'f' }}",
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition"
+  }
+  {% endif %}
+}
+</script>
 <style>
     /* UX Phase 14: Zoom Effect */
     #main-image-container {
