@@ -5,45 +5,46 @@
 
 {% block content %}
 
-<!-- Header da área -->
-<div class="bg-white border-b border-gray-100 py-8">
-    <div class="container mx-auto px-4 lg:px-8 flex items-center justify-between">
+<!-- Header Premium Style -->
+<div class="gradient-bg pt-16 pb-24 relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_50%)]"></div>
+    <div class="container mx-auto px-4 lg:px-8 relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
-            <p class="text-xs font-bold tracking-widest uppercase text-primary mb-1">Portal do Cliente</p>
-            <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Olá, {{ customer_name|truncatechars:25 }}!</h1>
-            <p class="text-sm text-gray-500 mt-0.5">{{ customer_email }}</p>
+            <p class="text-[10px] font-bold tracking-[0.2em] uppercase text-white/70 mb-2">Portal do Cliente</p>
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight text-white drop-shadow-sm">Olá, {% if request.user.first_name %}{{ request.user.first_name|title }}{% else %}Cliente{% endif %}!</h1>
+            <p class="text-sm text-white/80 mt-1 font-medium tracking-wide">{{ request.user.email }}</p>
         </div>
         <a href="{% url 'customers:logout' %}"
-            class="flex items-center gap-2 text-sm text-gray-400 hover:text-red-500 transition-colors font-medium">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="group flex items-center gap-2 py-2 px-6 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs uppercase tracking-widest transition-all hover:scale-105 backdrop-blur-sm shadow-lg">
+            Sair da Conta
+            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
             </svg>
-            Sair
         </a>
     </div>
 </div>
 
-<div class="container mx-auto px-4 lg:px-8 py-10">
+<div class="container mx-auto px-4 lg:px-8 -mt-12 relative z-20 pb-20">
     <div class="grid lg:grid-cols-[220px_1fr] gap-8">
 
         <!-- Sidebar -->
-        <nav class="space-y-1">
+        <nav class="bg-white rounded-2xl shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100 p-4 space-y-2 h-fit sticky top-36">
             <a href="{% url 'customers:dashboard' %}"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white font-bold text-sm">
+                class="flex items-center gap-3 px-5 py-3.5 rounded-xl bg-gradient-to-r from-[#153e8a] to-[#0070f3] text-white font-bold text-xs uppercase tracking-widest shadow-md">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>
                 Painel Geral
             </a>
             <a href="{% url 'customers:orders' %}"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium text-sm transition-colors">
+                class="flex items-center gap-3 px-5 py-3.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-[#153e8a] font-bold text-xs uppercase tracking-widest transition-all">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                 </svg>
                 Meus Pedidos
             </a>
             <a href="{% url 'catalog:home' %}"
-                class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 font-medium text-sm transition-colors">
+                class="flex items-center gap-3 px-5 py-3.5 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-[#153e8a] font-bold text-xs uppercase tracking-widest transition-all">
                 <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
@@ -56,38 +57,45 @@
 
             <!-- Alertas de ação necessária -->
             {% if pending_art_count > 0 %}
-            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-start gap-4">
-                <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center shrink-0">
-                    <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                    </svg>
-                </div>
-                <div>
-                    <p class="font-bold text-amber-800 text-sm">{{ pending_art_count }} arte(s) pendente(s) de envio</p>
-                    <p class="text-xs text-amber-600 mt-1">Envie os arquivos de arte para não atrasar sua produção.</p>
-                    <a href="{% url 'customers:orders' %}" class="inline-flex items-center gap-1 text-xs font-bold text-amber-700 hover:text-amber-900 mt-2 underline">
-                        Ver pedidos →
+            <div class="relative overflow-hidden rounded-[20px] p-[2px] shadow-[0_15px_40px_-15px_rgba(245,158,11,0.3)]">
+                <!-- Efeito de borda animada gradient -->
+                <div class="absolute inset-0 bg-gradient-to-r from-amber-300 via-orange-500 to-amber-300 animate-[gradientShift_4s_linear_infinite] background-size-[200%_200%]"></div>
+                <div class="relative bg-white rounded-[18px] p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+                    <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center shrink-0 shadow-inner">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-black text-gray-900 text-lg tracking-tight mb-1">Ação Necessária: <span class="text-orange-600 ml-1">{{ pending_art_count }} arte(s) pendente(s)</span></h3>
+                        <p class="text-sm text-gray-500 font-medium tracking-wide">A produção do seu pedido só iniciará após o envio dos arquivos finais.</p>
+                    </div>
+                    <a href="{% url 'customers:orders' %}" class="mt-4 sm:mt-0 w-full sm:w-auto text-center shrink-0 px-8 py-3.5 bg-gray-900 hover:bg-black text-white font-bold text-[11px] uppercase tracking-widest rounded-xl transition-transform hover:-translate-y-1 shadow-lg">
+                        Enviar Arquivos
                     </a>
                 </div>
             </div>
             {% endif %}
 
             <!-- Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div class="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm text-center">
-                    <div class="text-4xl font-black text-primary mb-2">{{ active_count }}</div>
-                    <div class="text-xs text-gray-500 uppercase font-bold tracking-wider">Em andamento</div>
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Status Box 1 -->
+                <div class="bg-white border-b-4 border-[#153e8a] p-6 lg:p-8 rounded-2xl shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] text-center transform hover:-translate-y-1 transition-transform duration-300">
+                    <div class="text-4xl lg:text-5xl font-black text-[#153e8a] mb-3 tracking-tighter">{{ active_count }}</div>
+                    <div class="text-[10px] text-gray-500 uppercase font-black tracking-widest">Em andamento</div>
                 </div>
-                <div class="bg-white border border-gray-100 p-6 rounded-2xl shadow-sm text-center">
-                    <div class="text-4xl font-black text-gray-800 mb-2">{{ total_count }}</div>
-                    <div class="text-xs text-gray-500 uppercase font-bold tracking-wider">Total de Pedidos</div>
+                <!-- Status Box 2 -->
+                <div class="bg-white border-b-4 border-gray-200 p-6 lg:p-8 rounded-2xl shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] text-center transform hover:-translate-y-1 transition-transform duration-300">
+                    <div class="text-4xl lg:text-5xl font-black text-gray-800 mb-3 tracking-tighter">{{ total_count }}</div>
+                    <div class="text-[10px] text-gray-500 uppercase font-black tracking-widest">Total de Pedidos</div>
                 </div>
-                <div class="bg-primary p-6 rounded-2xl shadow-sm text-center col-span-2 md:col-span-1 flex flex-col items-center justify-center">
-                    <a href="{% url 'catalog:home' %}" class="text-white font-bold text-sm uppercase tracking-widest hover:opacity-80 transition">
+                <!-- Call to Action Stats -->
+                <a href="{% url 'catalog:home' %}" class="gradient-bg p-6 lg:p-8 rounded-2xl shadow-[0_15px_40px_-15px_rgba(21,62,138,0.4)] text-center col-span-2 lg:col-span-1 flex flex-col items-center justify-center transform hover:scale-105 hover:shadow-2xl transition-all duration-300 relative overflow-hidden group">
+                    <span class="text-white font-black text-sm uppercase tracking-widest drop-shadow-md z-10 flex items-center gap-2">
                         + Novo Pedido
-                    </a>
-                    <p class="text-white/70 text-xs mt-1">Catálogo completo</p>
-                </div>
+                    </span>
+                    <p class="text-white/80 text-[10px] mt-2 font-bold tracking-widest uppercase z-10">Acessar Catálogo</p>
+                </a>
             </div>
 
             <!-- Pedidos Recentes -->
