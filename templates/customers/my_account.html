@@ -136,8 +136,11 @@
                                         {{ order.get_status_display }}
                                     </span>
                                 </td>
-                                <td class="py-4 px-5">
-                                    <a href="{% url 'customers:order_detail' order.id %}" class="text-xs text-primary font-bold hover:underline">Detalhes →</a>
+                                <td class="py-4 px-5 text-right">
+                                    <a href="{% url 'customers:order_detail' order.id %}" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 text-gray-700 rounded-lg text-xs font-bold hover:bg-gray-50 hover:border-gray-300 hover:text-primary transition-all shadow-sm">
+                                        Ver Detalhes
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                    </a>
                                 </td>
                             </tr>
                             {% endfor %}
