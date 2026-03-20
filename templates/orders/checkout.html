@@ -4,10 +4,20 @@
 {% block title %}Checkout | NGD{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 lg:px-8 py-12 animate-in fade-in slide-in-from-bottom-5 duration-700"
-    x-data="checkoutApp()">
+<div class="gradient-bg py-16 relative overflow-hidden mb-12 mt-0">
+    <!-- Efeito de Blur -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_50%)]"></div>
+    <div class="container mx-auto px-4 lg:px-8 relative z-10">
+        <div class="flex flex-col items-center text-center">
+            <span class="w-12 h-1 bg-white/70 mb-4 rounded-full"></span>
+            <h1 class="text-3xl md:text-5xl font-black text-white tracking-tight drop-shadow-md">Finalizar Pedido</h1>
+            <p class="text-white/80 mt-3 font-medium tracking-widest uppercase text-xs">Ambiente Criptografado &bull; Pagamento Seguro</p>
+        </div>
+    </div>
+</div>
 
-    <h1 class="text-3xl font-bold text-black mb-8">Finalizar Pedido</h1>
+<div class="container mx-auto px-4 lg:px-8 mb-20 animate-in fade-in slide-in-from-bottom-5 duration-700"
+    x-data="checkoutApp()">
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
