@@ -6,14 +6,21 @@
 {% block content %}
 
 <!-- Header -->
-<div class="bg-white border-b border-gray-100 py-8">
-    <div class="container mx-auto px-4 lg:px-8 flex items-center justify-between">
+<div class="relative bg-gradient-to-b from-[#153e8a]/5 to-transparent border-b border-gray-100 py-10 overflow-hidden">
+    <div class="absolute top-[-100px] left-1/4 w-[300px] h-[300px] bg-[#0070f3]/10 blur-[80px] rounded-full pointer-events-none"></div>
+    <div class="container mx-auto px-4 lg:px-8 flex items-center justify-between relative z-10">
         <div>
-            <p class="text-xs font-bold tracking-widest uppercase text-primary mb-1">Portal do Cliente</p>
-            <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">Pedido #{{ order.id }}</h1>
-            <p class="text-sm text-gray-500 mt-0.5">{{ order.created_at|date:"d \d\e F \d\e Y" }}</p>
+            <p class="text-[10px] font-black tracking-widest uppercase text-[#3b82f6] mb-2 flex items-center gap-2"><span class="w-4 h-px bg-[#3b82f6]"></span>PORTAL DO CLIENTE</p>
+            <h1 class="text-3xl font-black text-gray-900 tracking-tight">Pedido <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#153e8a] to-[#0070f3]">#{{ order.id }}</span></h1>
+            <p class="text-sm text-gray-500 mt-1 font-medium flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                {{ order.created_at|date:"d \d\e F \d\e Y" }}
+            </p>
         </div>
-        <a href="{% url 'customers:orders' %}" class="text-sm text-gray-500 hover:text-gray-900 transition-colors font-medium">← Meus Pedidos</a>
+        <a href="{% url 'customers:orders' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-sm text-gray-700 hover:text-[#153e8a] hover:border-[#153e8a]/30 hover:shadow-md transition-all font-bold rounded-xl">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Meus Pedidos
+        </a>
     </div>
 </div>
 
@@ -33,15 +40,18 @@
     <!-- ══════════════════════════════════════════
          RASTREAMENTO PASSO A PASSO
     ══════════════════════════════════════════ -->
-    <div class="bg-white border border-gray-100 shadow-sm rounded-3xl p-8">
-        <h2 class="text-lg font-extrabold text-gray-900 mb-8">Acompanhamento da Produção</h2>
+    <div class="bg-white border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[24px] p-8">
+        <h2 class="text-xl font-black text-gray-900 mb-8 flex items-center gap-2">
+            <svg class="w-5 h-5 text-[#3b82f6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            Acompanhamento da Produção
+        </h2>
 
-        <div class="relative">
+        <div class="relative mt-8">
             <!-- Linha de fundo (cinza) -->
-            <div class="absolute top-5 left-0 right-0 h-0.5 bg-gray-100 hidden md:block"></div>
+            <div class="absolute top-5 left-0 right-0 h-[3px] bg-gray-100 rounded-full hidden md:block"></div>
             <!-- Linha de progresso (colorida) -->
             {% if current_step > 0 %}
-            <div class="absolute top-5 left-0 h-0.5 bg-primary hidden md:block transition-all duration-1000"
+            <div class="absolute top-5 left-0 h-[3px] bg-gradient-to-r from-[#153e8a] to-[#0070f3] rounded-full hidden md:block transition-all duration-1000 shadow-[0_0_10px_rgba(0,112,243,0.5)]"
                  style="width: calc({{ current_step }} / {{ steps|length|add:'-1' }} * 100%)">
             </div>
             {% endif %}
@@ -51,11 +61,11 @@
                 {% with forloop.counter0 as step_index %}
                 <div class="flex flex-col items-center text-center gap-3">
                     <!-- Círculo do passo -->
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-extrabold border-2 transition-all duration-500
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-extrabold border-2 transition-all duration-500 z-10
                         {% if step_index < current_step %}
-                            bg-primary border-primary text-white shadow-lg shadow-primary/30
+                            bg-gradient-to-br from-[#153e8a] to-[#0070f3] border-transparent text-white shadow-[0_5px_15px_-3px_rgba(21,62,138,0.4)]
                         {% elif step_index == current_step %}
-                            bg-primary border-primary text-white shadow-xl shadow-primary/40 scale-110 ring-4 ring-primary/20
+                            bg-gradient-to-br from-[#153e8a] to-[#0070f3] border-transparent text-white shadow-[0_8px_25px_-5px_rgba(21,62,138,0.6)] scale-110 ring-4 ring-[#153e8a]/20
                         {% else %}
                             bg-white border-gray-200 text-gray-300
                         {% endif %}">
@@ -86,15 +96,17 @@
         {% for step_key, step_label, step_desc in steps %}
         {% with forloop.counter0 as step_index %}
         {% if step_index == current_step %}
-        <div class="mt-8 bg-primary/5 border border-primary/10 rounded-2xl p-5 flex items-start gap-4">
-            <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="mt-10 bg-gradient-to-r from-blue-50/80 to-indigo-50/30 border border-blue-100/60 rounded-2xl p-6 flex items-start gap-4 shadow-sm backdrop-blur-sm relative overflow-hidden">
+            <div class="absolute inset-0 bg-white/40 pointer-events-none"></div>
+            <div class="w-12 h-12 bg-white rounded-xl shadow-sm border border-blue-100 flex items-center justify-center shrink-0 relative z-10">
+                <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full animate-pulse"></span>
+                <svg class="w-6 h-6 text-[#153e8a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
             </div>
-            <div>
-                <p class="font-bold text-primary text-sm">Status atual: {{ step_label }}</p>
-                <p class="text-sm text-gray-600 mt-1">{{ step_desc }}</p>
+            <div class="relative z-10 pt-1">
+                <p class="font-extrabold text-[#153e8a] text-sm uppercase tracking-wide">Status atual: {{ step_label }}</p>
+                <p class="text-sm text-gray-600 mt-1 font-medium">{{ step_desc }}</p>
             </div>
         </div>
         {% endif %}
@@ -105,13 +117,16 @@
     <!-- ══════════════════════════════════════════
          ITENS DO PEDIDO + UPLOAD DE ARTE
     ══════════════════════════════════════════ -->
-    <div class="bg-white border border-gray-100 shadow-sm rounded-3xl p-8">
-        <h2 class="text-lg font-extrabold text-gray-900 mb-6">Itens do Pedido</h2>
+    <div class="bg-white border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[24px] p-8">
+        <h2 class="text-xl font-black text-gray-900 mb-6 flex items-center gap-2">
+            <svg class="w-5 h-5 text-[#3b82f6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            Itens do Pedido
+        </h2>
 
         <div class="space-y-6">
             {% for item in order.items.all %}
-            <div class="border border-gray-100 rounded-2xl p-5">
-                <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+            <div class="bg-gray-50/50 border border-gray-100 hover:border-[#153e8a]/20 hover:shadow-lg transition-all duration-300 rounded-[20px] p-6 group">
+                <div class="flex flex-col sm:flex-row sm:items-start gap-6">
                     <!-- Imagem -->
                     {% if item.variant.product.featured_image %}
                     <img src="{{ item.variant.product.featured_image.url }}" alt="{{ item.variant.product.name }}"
@@ -135,24 +150,42 @@
                         </div>
 
                         <!-- Status da Arte -->
-                        <div class="mt-4 p-4 rounded-xl {% if item.art_status == 'pendente' %}bg-red-50 border border-red-100{% elif item.art_status == 'em_analise' %}bg-blue-50 border border-blue-100{% elif item.art_status == 'aprovado' %}bg-green-50 border border-green-100{% elif item.art_status == 'rejeitado' %}bg-red-50 border border-red-200{% endif %}">
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
-                                <div>
-                                    <p class="text-xs font-bold uppercase tracking-wider
-                                        {% if item.art_status == 'pendente' %}text-red-600
-                                        {% elif item.art_status == 'em_analise' %}text-blue-600
-                                        {% elif item.art_status == 'aprovado' %}text-green-600
-                                        {% elif item.art_status == 'rejeitado' %}text-red-700
+                        <div class="mt-4 p-5 rounded-xl flex flex-col sm:flex-row shadow-inner border {% if item.art_status == 'pendente' %}bg-amber-50/50 border-amber-200/50{% elif item.art_status == 'em_analise' %}bg-blue-50/50 border-blue-200/50{% elif item.art_status == 'aprovado' %}bg-emerald-50/50 border-emerald-200/50{% elif item.art_status == 'rejeitado' %}bg-red-50/50 border-red-200/50{% endif %}">
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-4 justify-between w-full">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5
+                                        {% if item.art_status == 'pendente' %}bg-amber-100 text-amber-600
+                                        {% elif item.art_status == 'em_analise' %}bg-blue-100 text-[#153e8a]
+                                        {% elif item.art_status == 'aprovado' %}bg-emerald-100 text-emerald-600
+                                        {% elif item.art_status == 'rejeitado' %}bg-red-100 text-red-600
                                         {% endif %}">
-                                        Arte: {{ item.get_art_status_display }}
-                                    </p>
-                                    <p class="text-xs text-gray-500 mt-1">
-                                        {% if item.art_status == 'pendente' %}Necessário enviar o arquivo de arte para produção.
-                                        {% elif item.art_status == 'em_analise' %}Nossa equipe está revisando seu arquivo. Em breve daremos retorno.
-                                        {% elif item.art_status == 'aprovado' %}Arte aprovada! Seu material está seguindo para produção.
-                                        {% elif item.art_status == 'rejeitado' %}Arte rejeitada. Por favor, envie um novo arquivo conforme as especificações.
+                                        {% if item.art_status == 'pendente' %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                        {% elif item.art_status == 'em_analise' %}
+                                        <svg class="w-4 h-4 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                        {% elif item.art_status == 'aprovado' %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                        {% elif item.art_status == 'rejeitado' %}
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                                         {% endif %}
-                                    </p>
+                                    </div>
+                                    <div>
+                                        <p class="text-[11px] font-black uppercase tracking-widest
+                                            {% if item.art_status == 'pendente' %}text-amber-600
+                                            {% elif item.art_status == 'em_analise' %}text-[#153e8a]
+                                            {% elif item.art_status == 'aprovado' %}text-emerald-700
+                                            {% elif item.art_status == 'rejeitado' %}text-red-700
+                                            {% endif %}">
+                                            Arte: {{ item.get_art_status_display }}
+                                        </p>
+                                        <p class="text-xs text-gray-500 mt-0.5 font-medium leading-relaxed">
+                                            {% if item.art_status == 'pendente' %}Necessário enviar o arquivo em alta resolução.
+                                            {% elif item.art_status == 'em_analise' %}O time de pré-impressão está validando seu arquivo.
+                                            {% elif item.art_status == 'aprovado' %}Arte validada! Arquivo pronto para impressão.
+                                            {% elif item.art_status == 'rejeitado' %}Existem problemas no arquivo. Veja as orientações e envie novamente.
+                                            {% endif %}
+                                        </p>
+                                    </div>
                                 </div>
 
                                 <!-- Ação de upload -->
@@ -199,9 +232,12 @@
     <div class="grid md:grid-cols-2 gap-6">
 
         <!-- Dados de Entrega -->
-        <div class="bg-white border border-gray-100 shadow-sm rounded-3xl p-6">
-            <h2 class="text-base font-extrabold text-gray-900 mb-4">Dados de Entrega</h2>
-            <dl class="space-y-3 text-sm">
+        <div class="bg-white border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[24px] p-8">
+            <h2 class="text-lg font-black text-gray-900 mb-6 flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#3b82f6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                Dados de Entrega
+            </h2>
+            <dl class="space-y-4 text-[13px]">
                 <div class="flex justify-between">
                     <dt class="text-gray-500">Nome</dt>
                     <dd class="font-semibold text-gray-900">{{ order.customer_name }}</dd>
@@ -237,9 +273,12 @@
         </div>
 
         <!-- Resumo Financeiro -->
-        <div class="bg-white border border-gray-100 shadow-sm rounded-3xl p-6">
-            <h2 class="text-base font-extrabold text-gray-900 mb-4">Resumo do Pedido</h2>
-            <dl class="space-y-3 text-sm">
+        <div class="bg-white border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-[24px] p-8">
+            <h2 class="text-lg font-black text-gray-900 mb-6 flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#3b82f6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                Resumo do Pedido
+            </h2>
+            <dl class="space-y-4 text-[13px]">
                 <div class="flex justify-between">
                     <dt class="text-gray-500">Subtotal</dt>
                     <dd class="font-semibold text-gray-900">R$ {{ order.subtotal }}</dd>
