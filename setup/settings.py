@@ -27,7 +27,8 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.loca.lt",
     "https://*.serveo.net",
     "https://*.ngrok-free.app",
-    "https://*.pinggy.link"
+    "https://*.pinggy.link",
+    "https://*.trycloudflare.com",
 ]
 
 # =============================================================================
@@ -163,6 +164,7 @@ LANGUAGE_CODE = "pt-br"
 TIME_ZONE = "America/Sao_Paulo"
 USE_I18N = True
 USE_TZ = True
+USE_THOUSAND_SEPARATOR = True
 
 # =============================================================================
 # ARQUIVOS ESTÁTICOS
