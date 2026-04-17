@@ -124,6 +124,7 @@
 
 
 
+{% comment %}
 <!-- V3 HERO CLEAN & MINIMALIST START -->
 <div class="relative w-full h-[70vh] lg:h-[85vh] overflow-hidden bg-[#f4f7f6]" x-data="heroSliderV3()" x-init="start()">
 
@@ -231,6 +232,1007 @@
 
 </div>
 <!-- V3 HERO CLEAN & MINIMALIST END -->
+{% endcomment %}
+
+
+{% comment %}
+<!-- V4 HERO PREMIUM MOTION START -->
+<div class="relative w-full h-[75vh] lg:h-[90vh] overflow-hidden bg-black" x-data="heroSliderV4()" x-init="start()" @mousemove="onMouseMove($event)">
+
+    <!-- Animated Dynamic Gradient Background (Ultra Modern Canvas) -->
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-60">
+        <div class="absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full mix-blend-screen filter blur-[100px] animate-[pulse_8s_ease-in-out_infinite] transition-colors duration-[3000ms]"
+            :class="slides[active].glowTop"></div>
+        <div class="absolute bottom-[-20%] right-[-10%] w-[50vw] h-[50vw] rounded-full mix-blend-screen filter blur-[120px] animate-[pulse_10s_ease-in-out_infinite_reverse] transition-colors duration-[3000ms]"
+            :class="slides[active].glowBottom"></div>
+    </div>
+    
+    <!-- Grain Overlay for cinematic texture -->
+    <div class="absolute inset-0 z-[1] opacity-20 mix-blend-overlay pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E');"></div>
+
+    <div class="absolute inset-0 w-full h-full z-10 flex">
+        <template x-for="(slide, index) in slides" :key="index">
+            <div class="absolute inset-0 w-full h-full flex items-center justify-center pt-10"
+                 x-show="active === index"
+                 x-transition:enter="transition-all ease-[cubic-bezier(0.25,1,0.5,1)] duration-1000"
+                 x-transition:enter-start="opacity-0 scale-105"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition-all ease-in-out duration-700 z-0"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0">
+
+                <div class="container mx-auto px-4 lg:px-8 w-full h-full flex flex-col lg:flex-row items-center relative gap-10">
+                    
+                    <!-- Left Text Content -->
+                    <div class="lg:w-1/2 flex flex-col justify-center relative z-20 text-white mt-12 lg:mt-0">
+                        <!-- Subtitle (Eyebrow text) with tracking -->
+                        <div class="overflow-hidden mb-6 flex items-center gap-3">
+                            <span class="w-8 h-[2px] bg-white/50"
+                                x-show="active === index"
+                                x-transition:enter="transition-all duration-700 delay-300"
+                                x-transition:enter-start="opacity-0 -translate-x-full"
+                                x-transition:enter-end="opacity-100 translate-x-0"></span>
+                            <span class="uppercase tracking-[0.3em] text-sm md:text-sm font-semibold text-white/80"
+                                x-text="slide.subtitle"
+                                x-show="active === index"
+                                x-transition:enter="transition-all duration-700 delay-400"
+                                x-transition:enter-start="opacity-0 translate-y-full"
+                                x-transition:enter-end="opacity-100 translate-y-0"></span>
+                        </div>
+
+                        <!-- Main Title with split staggered effect -->
+                        <div class="mb-8">
+                            <h2 class="text-6xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tighter"
+                                x-show="active === index"
+                                x-transition:enter="transition-all duration-[900ms] delay-500 ease-out"
+                                x-transition:enter-start="opacity-0 translate-y-[50px] rotate-2"
+                                x-transition:enter-end="opacity-100 translate-y-0 rotate-0"
+                                x-html="slide.title"></h2>
+                        </div>
+
+                        <!-- Description Glass Card -->
+                        <div class="mb-10 w-full max-w-lg"
+                             x-show="active === index"
+                             x-transition:enter="transition-all duration-700 delay-700 ease-out"
+                             x-transition:enter-start="opacity-0 translate-y-8"
+                             x-transition:enter-end="opacity-100 translate-y-0">
+                            <p class="text-lg md:text-xl text-white/70 leading-relaxed font-light" x-text="slide.description"></p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex items-center gap-6"
+                             x-show="active === index"
+                             x-transition:enter="transition-all duration-700 delay-900 ease-out"
+                             x-transition:enter-start="opacity-0 translate-y-8"
+                             x-transition:enter-end="opacity-100 translate-y-0">
+                            <a :href="slide.link" class="relative group overflow-hidden rounded-full p-[1px]">
+                                <span class="absolute inset-0 bg-gradient-to-r from-white/40 to-white/10 rounded-full group-hover:block transition-all"></span>
+                                <div class="relative bg-white/10 backdrop-blur-xl border border-white/20 px-8 py-4 rounded-full flex items-center gap-3 transition-all duration-500 group-hover:bg-white group-hover:text-black">
+                                    <span class="font-bold tracking-widest uppercase text-xs" x-text="slide.cta"></span>
+                                    <svg class="w-4 h-4 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Image Content with Parallax Hover -->
+                    <div class="lg:w-1/2 relative z-20 flex justify-center items-center h-[50vh] lg:h-full perspective-1000">
+                        <img :src="slide.image"
+                             :alt="slide.title"
+                             class="relative w-[110%] max-w-2xl object-contain filter drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform-gpu transition-transform duration-700 ease-out"
+                             :style="`transform: translate3d(${mouseX * -30}px, ${mouseY * -30}px, 0) rotateX(${mouseY * 10}deg) rotateY(${mouseX * -10}deg)`"
+                             x-show="active === index"
+                             x-transition:enter="transition-all ease-[cubic-bezier(0.34,1.56,0.64,1)] duration-[1200ms] delay-500"
+                             x-transition:enter-start="opacity-0 scale-75 translate-x-20 rotate-[10deg]"
+                             x-transition:enter-end="opacity-100 scale-100 translate-x-0 rotate-0">
+                    </div>
+
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Minimalist Global Progress Bar Bottom Edge -->
+    <div class="absolute bottom-0 left-0 h-[3px] bg-white/10 w-full z-40">
+        <div class="h-full bg-gradient-to-r from-white/50 to-white relative"
+             :style="`width: ${progress}%`">
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full blur-[4px]"></div>     
+        </div>
+    </div>
+
+    <!-- Floating Navigation & Numbers -->
+    <div class="absolute right-8 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center gap-6">
+        <template x-for="(slide, idx) in slides" :key="idx">
+            <div class="relative flex items-center justify-center group cursor-pointer" @click="goTo(idx)">
+                <span class="absolute right-8 text-xs font-bold text-white/50 opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-300" 
+                      x-text="'0' + (idx + 1)"></span>
+                <div class="w-1.5 rounded-full transition-all duration-500 border border-white/20"
+                     :class="active === idx ? 'h-12 bg-white' : 'h-3 bg-white/20 hover:bg-white/50 hover:h-6'"></div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Socials / Small Text Left -->
+    <div class="absolute left-8 bottom-12 z-30 hidden md:block">
+        <p class="text-white/40 text-xs tracking-[0.3em] uppercase -rotate-90 origin-left translate-y-[200px]">Produção &bull; Qualidade &bull; PDV</p>
+    </div>
+</div>
+<!-- V4 HERO PREMIUM MOTION END -->
+{% endcomment %}
+
+
+{% comment %}
+<!-- V5 HERO LIGHT MOTION START -->
+<div class="relative w-full h-[75vh] lg:h-[90vh] overflow-hidden bg-[#f4f6f8]" x-data="heroSliderV5()" x-init="start()" @mousemove="onMouseMove($event)">
+
+    <!-- Animated Light Gradient Background (Clean Canvas) -->
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-80">
+        <div class="absolute top-[-10%] left-[0%] w-[60vw] h-[60vw] rounded-full mix-blend-multiply filter blur-[100px] animate-[pulse_8s_ease-in-out_infinite] transition-colors duration-[3000ms]"
+            :class="slides[active].glowTop"></div>
+        <div class="absolute bottom-[-10%] right-[0%] w-[50vw] h-[50vw] rounded-full mix-blend-multiply filter blur-[120px] animate-[pulse_10s_ease-in-out_infinite_reverse] transition-colors duration-[3000ms]"
+            :class="slides[active].glowBottom"></div>
+    </div>
+    
+    <!-- Grain/Grid Overlay for subtle depth -->
+    <div class="absolute inset-0 z-[1] pointer-events-none opacity-[0.05]" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+    <div class="absolute inset-0 w-full h-full z-10 flex">
+        <template x-for="(slide, index) in slides" :key="index">
+            <div class="absolute inset-0 w-full h-full flex items-center justify-center pt-10"
+                 x-show="active === index"
+                 x-transition:enter="transition-all ease-[cubic-bezier(0.25,1,0.5,1)] duration-1000"
+                 x-transition:enter-start="opacity-0 scale-105"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition-all ease-in-out duration-700 z-0"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0">
+
+                <div class="container mx-auto px-4 lg:px-8 w-full h-full flex flex-col lg:flex-row items-center relative gap-10">
+                    
+                    <!-- Left Text Content -->
+                    <div class="lg:w-1/2 flex flex-col justify-center relative z-20 text-gray-900 mt-12 lg:mt-0">
+                        <!-- Subtitle (Eyebrow text) with tracking -->
+                        <div class="overflow-hidden mb-6 flex items-center gap-3">
+                            <span class="w-8 h-[3px] bg-primary rounded-full shadow-[0_0_10px_rgba(37,99,235,0.4)]"
+                                x-show="active === index"
+                                x-transition:enter="transition-all duration-700 delay-300"
+                                x-transition:enter-start="opacity-0 -translate-x-full"
+                                x-transition:enter-end="opacity-100 translate-x-0"></span>
+                            <span class="uppercase tracking-[0.25em] text-sm md:text-[13px] font-extrabold text-primary"
+                                x-text="slide.subtitle"
+                                x-show="active === index"
+                                x-transition:enter="transition-all duration-700 delay-400"
+                                x-transition:enter-start="opacity-0 translate-y-full"
+                                x-transition:enter-end="opacity-100 translate-y-0"></span>
+                        </div>
+
+                        <!-- Main Title -->
+                        <div class="mb-8">
+                            <h2 class="text-6xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tighter text-gray-900"
+                                x-show="active === index"
+                                x-transition:enter="transition-all duration-[900ms] delay-500 ease-out"
+                                x-transition:enter-start="opacity-0 translate-y-[50px] rotate-2"
+                                x-transition:enter-end="opacity-100 translate-y-0 rotate-0"
+                                x-html="slide.title"></h2>
+                        </div>
+
+                        <!-- Description Box -->
+                        <div class="mb-10 w-full max-w-lg"
+                             x-show="active === index"
+                             x-transition:enter="transition-all duration-700 delay-700 ease-out"
+                             x-transition:enter-start="opacity-0 translate-y-8"
+                             x-transition:enter-end="opacity-100 translate-y-0">
+                            <p class="text-lg md:text-xl text-gray-600 leading-relaxed font-medium" x-text="slide.description"></p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex items-center gap-6"
+                             x-show="active === index"
+                             x-transition:enter="transition-all duration-700 delay-900 ease-out"
+                             x-transition:enter-start="opacity-0 translate-y-8"
+                             x-transition:enter-end="opacity-100 translate-y-0">
+                            <a :href="slide.link" class="group relative px-8 py-4 bg-gray-900 text-white rounded-full overflow-hidden shadow-xl shadow-gray-900/20 hover:shadow-gray-900/40 transition-all duration-300 transform hover:-translate-y-1 inline-flex items-center gap-3">
+                                <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-primary to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                                <span class="relative font-bold tracking-widest uppercase text-xs z-10" x-text="slide.cta"></span>
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Image Content with Parallax Hover -->
+                    <div class="lg:w-1/2 relative z-20 flex justify-center items-center h-[40vh] lg:h-full perspective-1000">
+                        <!-- Shadow floor -->
+                        <div class="absolute bottom-[10%] w-[60%] h-[20px] bg-black/20 blur-xl rounded-[100%] transform scale-y-50"></div>
+                        
+                        <img :src="slide.image"
+                             :alt="slide.title"
+                             class="relative w-[110%] max-w-2xl object-contain drop-shadow-2xl transform-gpu transition-transform duration-700 ease-out z-10"
+                             :style="`transform: translate3d(${mouseX * -30}px, ${mouseY * -30}px, 0) rotateX(${mouseY * 10}deg) rotateY(${mouseX * -10}deg)`"
+                             x-show="active === index"
+                             x-transition:enter="transition-all ease-[cubic-bezier(0.34,1.56,0.64,1)] duration-[1200ms] delay-500"
+                             x-transition:enter-start="opacity-0 scale-75 translate-x-20 rotate-[10deg]"
+                             x-transition:enter-end="opacity-100 scale-100 translate-x-0 rotate-0">
+                    </div>
+
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Minimalist Global Progress Bar Bottom Edge -->
+    <div class="absolute bottom-0 left-0 h-[4px] bg-gray-200 w-full z-40">
+        <div class="h-full bg-primary relative transition-all duration-75"
+             :style="`width: ${progress}%`">
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-white shadow-xl rounded-full border border-gray-100"></div>     
+        </div>
+    </div>
+
+    <!-- Floating Navigation & Numbers (Dark Version) -->
+    <div class="absolute right-8 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center gap-6">
+        <template x-for="(slide, idx) in slides" :key="idx">
+            <div class="relative flex items-center justify-center group cursor-pointer" @click="goTo(idx)">
+                <span class="absolute right-8 text-xs font-bold text-gray-400 opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-300" 
+                      x-text="'0' + (idx + 1)"></span>
+                <div class="w-1.5 rounded-full transition-all duration-500 border border-gray-300"
+                     :class="active === idx ? 'h-12 bg-gray-900 border-gray-900' : 'h-3 bg-white hover:bg-gray-400 hover:h-6'"></div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Socials / Small Text Left -->
+    <div class="absolute left-8 bottom-12 z-30 hidden md:block">
+        <p class="text-gray-400 font-bold text-[10px] tracking-[0.4em] uppercase -rotate-90 origin-left translate-y-[200px]">Produção &bull; Premium &bull; PDV</p>
+    </div>
+</div>
+<!-- V5 HERO LIGHT MOTION END -->
+{% endcomment %}
+
+
+{% comment %}
+<!-- V6 HERO CENTERPIECE DEPTH START -->
+<div class="relative w-full min-h-[85vh] lg:h-[95vh] overflow-hidden bg-gray-50 flex items-center justify-center" x-data="heroSliderV6()" x-init="start()" @mousemove="onMouseMove($event)">
+
+    <!-- Background Base with gentle radial focus -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white via-gray-50 to-gray-200 pointer-events-none z-0"></div>
+
+    <template x-for="(slide, index) in slides" :key="index">
+        <div class="absolute inset-0 w-full h-full flex flex-col items-center justify-center"
+             x-show="active === index"
+             x-transition:enter="transition-opacity duration-1000"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition-opacity duration-700"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0">
+
+            <!-- MASSIVE BACKGROUND TYPOGRAPHY (Behind the Product) -->
+            <div class="absolute inset-0 flex items-center justify-center z-0 overflow-hidden pointer-events-none"
+                 :style="`transform: translateX(${mouseX * 20}px)`">
+                <h1 class="text-[12rem] md:text-[20rem] lg:text-[28rem] font-black uppercase text-gray-900/[0.03] select-none whitespace-nowrap tracking-tighter"
+                    x-show="active === index"
+                    x-transition:enter="transition-all duration-[1500ms] ease-out"
+                    x-transition:enter-start="opacity-0 scale-90 translate-y-20"
+                    x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                    x-text="slide.bigBgText"></h1>
+            </div>
+
+            <!-- Foreground Content Container -->
+            <div class="container relative z-20 flex flex-col items-center justify-center h-full pt-10">
+                
+                <!-- Top Section: Badges & Title -->
+                <div class="text-center mb-0 relative z-30 pt-10 lg:pt-0"
+                     x-show="active === index"
+                     x-transition:enter="transition-all duration-700 delay-300 ease-out"
+                     x-transition:enter-start="opacity-0 -translate-y-10"
+                     x-transition:enter-end="opacity-100 translate-y-0">
+                    
+                    <span class="inline-flex py-1.5 px-4 rounded-full bg-white border border-gray-200 text-gray-800 text-xs font-bold tracking-[0.2em] uppercase mb-6 shadow-sm">
+                        <span class="w-1.5 h-1.5 rounded-full bg-primary mr-2 animate-ping inline-block"></span>
+                        <span x-text="slide.subtitle"></span>
+                    </span>
+
+                    <h2 class="text-5xl md:text-7xl font-extrabold text-gray-900 tracking-tight leading-none mb-4" x-html="slide.title"></h2>
+                    <p class="text-lg text-gray-500 font-medium max-w-lg mx-auto" x-text="slide.description"></p>
+                </div>
+
+                <!-- Center Product with Floating Badges -->
+                <div class="relative w-full max-w-4xl flex justify-center items-center flex-grow min-h-[45vh] lg:min-h-[55vh] z-20 perspective-1000">
+                    <!-- Glow behind image -->
+                    <div class="absolute w-[300px] h-[300px] rounded-full blur-[80px] -z-10 transition-colors duration-1000 mix-blend-multiply" :class="slide.glowColor"></div>
+
+                    <!-- Floating Left Badge -->
+                    <div class="absolute left-[10%] lg:left-[5%] top-[30%] bg-white/80 backdrop-blur-md px-4 py-3 rounded-2xl shadow-xl shadow-gray-200/50 border border-white z-30 hidden md:flex items-center gap-3 animate-[floating_5s_ease-in-out_infinite]"
+                         x-show="active === index"
+                         x-transition:enter="transition-all duration-500 delay-[800ms]"
+                         x-transition:enter-start="opacity-0 scale-50"
+                         x-transition:enter-end="opacity-100 scale-100">
+                        <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div class="text-left">
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Qualidade</p>
+                            <p class="text-sm font-bold text-gray-800">Premium HD</p>
+                        </div>
+                    </div>
+
+                    <!-- Floating Right Badge -->
+                    <div class="absolute right-[10%] lg:right-[5%] bottom-[20%] bg-white/80 backdrop-blur-md px-4 py-3 rounded-2xl shadow-xl shadow-gray-200/50 border border-white z-30 hidden md:flex items-center gap-3 animate-[floating_6s_ease-in-out_infinite_reverse]"
+                         x-show="active === index"
+                         x-transition:enter="transition-all duration-500 delay-[900ms]"
+                         x-transition:enter-start="opacity-0 scale-50"
+                         x-transition:enter-end="opacity-100 scale-100">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div class="text-left">
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Produção</p>
+                            <p class="text-sm font-bold text-gray-800">Ultra Rápida</p>
+                        </div>
+                    </div>
+
+                    <!-- The Product Image -->
+                    <img :src="slide.image"
+                         :alt="slide.title"
+                         class="relative w-[120%] lg:w-[130%] max-w-[500px] lg:max-w-[700px] object-contain drop-shadow-[0_40px_40px_rgba(0,0,0,0.15)] transform-gpu transition-transform duration-500 ease-out z-20"
+                         :style="`transform: translate3d(${mouseX * -40}px, ${mouseY * -40}px, 0) scale(1.05)`"
+                         x-show="active === index"
+                         x-transition:enter="transition-all ease-[cubic-bezier(0.34,1.56,0.64,1)] duration-[1200ms] delay-500"
+                         x-transition:enter-start="opacity-0 scale-90 translate-y-32"
+                         x-transition:enter-end="opacity-100 scale-100 translate-y-0">
+                </div>
+
+                <!-- Bottom CTA -->
+                <div class="w-full flex justify-center pb-12 lg:pb-8 relative z-30"
+                     x-show="active === index"
+                     x-transition:enter="transition-all duration-700 delay-1000 ease-out"
+                     x-transition:enter-start="opacity-0 translate-y-10"
+                     x-transition:enter-end="opacity-100 translate-y-0">
+                    <a :href="slide.link" class="group relative px-10 py-5 bg-primary text-white rounded-2xl overflow-hidden shadow-[0_20px_40px_rgba(37,99,235,0.3)] hover:shadow-[0_20px_40px_rgba(37,99,235,0.5)] transition-all duration-300 transform hover:-translate-y-2 inline-flex items-center gap-4">
+                        <span class="absolute inset-0 w-full h-full bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                        <span class="relative font-extrabold tracking-[0.1em] uppercase text-sm z-10" x-text="slide.cta"></span>
+                        <span class="relative z-10 bg-white/20 p-2 rounded-xl group-hover:bg-white group-hover:text-primary transition-colors">
+                            <svg class="w-5 h-5 line-height-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </template>
+
+    <!-- Side Navigation Points (Vertical dots) -->
+    <div class="absolute right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-4">
+        <template x-for="(slide, idx) in slides" :key="idx">
+            <button @click="goTo(idx)" 
+                    class="w-3 h-3 rounded-full transition-all duration-500 relative"
+                    :class="active === idx ? 'bg-primary scale-125' : 'bg-gray-300 hover:bg-gray-400'">
+                 <!-- Subtle ring on active -->
+                 <div x-show="active === idx" class="absolute inset-[-4px] border border-primary rounded-full animate-ping opacity-25"></div>
+            </button>
+        </template>
+    </div>
+
+    <!-- Minimalist Slide Counter (Left) -->
+    <div class="absolute left-8 lg:left-12 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center">
+        <span class="text-2xl font-black text-gray-900 align-top leading-none" x-text="'0' + (active + 1)"></span>
+        <div class="w-px h-12 bg-gray-300 my-2"></div>
+        <span class="text-sm font-bold text-gray-400" x-text="'0' + slides.length"></span>
+    </div>
+
+</div>
+
+<style>
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+</style>
+<!-- V6 HERO CENTERPIECE DEPTH END -->
+{% endcomment %}
+
+
+{% comment %}
+<!-- V7 HERO EDITORIAL SPLIT START -->
+<div class="relative w-full h-[80vh] lg:h-[90vh] overflow-hidden bg-white flex" x-data="heroSliderV7()" x-init="start()">
+
+    <template x-for="(slide, index) in slides" :key="index">
+        <div class="absolute inset-0 w-full h-full flex flex-col lg:flex-row"
+             x-show="active === index"
+             x-transition:enter="transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+             x-transition:enter-start="opacity-0 translate-x-32"
+             x-transition:enter-end="opacity-100 translate-x-0"
+             x-transition:leave="transition-transform duration-[800ms] ease-in"
+             x-transition:leave-start="opacity-100 translate-x-0"
+             x-transition:leave-end="opacity-0 -translate-x-32">
+
+            <!-- LEFT SIDE: Text Editorial -->
+            <div class="lg:w-1/2 w-full h-full flex flex-col justify-center px-8 lg:px-24 bg-white relative z-20">
+                
+                <div x-show="active === index"
+                     x-transition:enter="transition-all duration-700 delay-[400ms] ease-out"
+                     x-transition:enter-start="opacity-0 translate-y-8"
+                     x-transition:enter-end="opacity-100 translate-y-0">
+                    <p class="text-[11px] font-bold tracking-[0.3em] uppercase text-gray-400 mb-8 flex items-center gap-4">
+                        <span class="w-10 h-px bg-gray-300"></span>
+                        <span x-text="slide.subtitle"></span>
+                    </p>
+                </div>
+
+                <div x-show="active === index"
+                     x-transition:enter="transition-all duration-700 delay-[550ms] ease-out"
+                     x-transition:enter-start="opacity-0 translate-y-8"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     class="mb-8">
+                    <h2 class="text-5xl md:text-6xl lg:text-[5rem] font-black leading-[1.05] tracking-tight text-gray-900" x-html="slide.title"></h2>
+                </div>
+
+                <div x-show="active === index"
+                     x-transition:enter="transition-all duration-700 delay-[700ms] ease-out"
+                     x-transition:enter-start="opacity-0 translate-y-8"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     class="mb-12 max-w-md">
+                    <p class="text-base text-gray-500 font-normal leading-loose" x-text="slide.description"></p>
+                </div>
+
+                <div x-show="active === index"
+                     x-transition:enter="transition-all duration-700 delay-[850ms] ease-out"
+                     x-transition:enter-start="opacity-0 translate-y-8"
+                     x-transition:enter-end="opacity-100 translate-y-0">
+                    <a :href="slide.link" class="group relative inline-flex items-center justify-center px-10 py-5 bg-black text-white overflow-hidden rounded-sm hover:-translate-y-1 transition-transform duration-300">
+                        <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-primary rounded-full group-hover:w-72 group-hover:h-56"></span>
+                        <span class="relative text-xs font-bold tracking-[0.2em] uppercase z-10 flex items-center gap-3">
+                            <span x-text="slide.cta"></span>
+                            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE: Product Studio (Soft Color Block Split) -->
+            <div class="lg:w-1/2 w-full h-[50vh] lg:h-full relative flex items-center justify-center overflow-hidden" :class="slide.bgColor">
+                
+                <!-- Floating Ambient Circle back element -->
+                <div class="absolute w-[80%] h-[80%] rounded-full bg-white/40 blur-3xl mix-blend-overlay"></div>
+
+                <!-- Product Image -->
+                <img :src="slide.image"
+                     :alt="slide.title"
+                     class="relative z-10 w-[90%] lg:w-[100%] max-w-[650px] object-contain drop-shadow-[0_30px_30px_rgba(0,0,0,0.1)]"
+                     x-show="active === index"
+                     x-transition:enter="transition-all duration-[1200ms] delay-[500ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                     x-transition:enter-start="opacity-0 translate-y-16 scale-95"
+                     x-transition:enter-end="opacity-100 translate-y-0 scale-100">
+            </div>
+
+        </div>
+    </template>
+
+    <!-- Bottom Left Minimal Nav / Controller -->
+    <div class="absolute bottom-0 left-0 w-full lg:w-1/2 px-8 lg:px-24 pb-12 z-30 flex items-center justify-between border-t border-gray-100 bg-white/80 backdrop-blur-sm lg:bg-transparent lg:border-t-0 lg:backdrop-blur-none">
+        <!-- Lines Progress -->
+        <div class="flex items-center gap-4">
+            <template x-for="(slide, idx) in slides" :key="idx">
+                <button @click="goTo(idx)" class="group cursor-pointer py-4 flex items-center">
+                    <div class="h-[2px] transition-all duration-500 rounded-none relative overflow-hidden"
+                         :class="active === idx ? 'w-16 bg-gray-200' : 'w-8 bg-gray-200 group-hover:bg-gray-300'">
+                        <div x-show="active === idx" class="absolute inset-y-0 left-0 bg-black h-full transition-all duration-75" :style="`width: ${progress}%`"></div>
+                    </div>
+                </button>
+            </template>
+        </div>
+
+        <div class="flex items-center gap-1">
+            <button @click="prev()" class="w-12 h-12 flex items-center justify-center text-gray-400 hover:text-black border border-transparent hover:border-gray-200 transition-all duration-300 rounded-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button @click="next()" class="w-12 h-12 flex items-center justify-center text-gray-400 hover:text-black border border-transparent hover:border-gray-200 transition-all duration-300 rounded-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+        </div>
+    </div>
+
+</div>
+<!-- V7 HERO EDITORIAL SPLIT END -->
+{% endcomment %}
+
+
+{% comment %}
+<!-- V8 HERO GLAZED MESH START -->
+<div class="relative w-full h-[85vh] lg:h-[95vh] flex items-center justify-center overflow-hidden bg-white" x-data="heroSliderV8()" x-init="start()">
+
+    <!-- Fluid Mesh Gradient Background -->
+    <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        
+        <!-- Base light canvas -->
+        <div class="absolute inset-0 bg-[#f8fafc]"></div>
+        
+        <!-- Smooth drifting color orbs -->
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-pink-100 rounded-full mix-blend-multiply filter blur-[150px] opacity-70 animate-[pulse_10s_ease-in-out_infinite_reverse]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-blue-100 rounded-full mix-blend-multiply filter blur-[150px] opacity-70 animate-[pulse_12s_ease-in-out_infinite]"></div>
+        <div class="absolute top-[20%] right-[20%] w-[40vw] h-[40vw] bg-purple-100 rounded-full mix-blend-multiply filter blur-[120px] opacity-50 animate-[pulse_8s_ease-in-out_infinite]"></div>
+        
+        <!-- Grid Pattern Overlay -->
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px); background-size: 40px 40px;"></div>
+    </div>
+
+    <!-- The Huge Glass Card Container -->
+    <div class="container mx-auto px-4 relative z-20 h-full flex items-center max-w-7xl">
+        <div class="w-full relative bg-white/40 backdrop-blur-3xl border border-white/60 shadow-[0_30px_60px_rgba(0,0,0,0.05)] rounded-[2.5rem] md:rounded-[3rem] px-8 py-12 md:p-16 lg:p-20 overflow-hidden h-[85%] flex flex-col justify-center">
+            
+            <template x-for="(slide, index) in slides" :key="index">
+                <div class="absolute inset-0 w-full h-full p-8 md:p-16 lg:p-20"
+                     x-show="active === index"
+                     x-transition:enter="transition-all duration-[1000ms] ease-out"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     x-transition:leave="transition-all duration-[600ms] ease-in"
+                     x-transition:leave-start="opacity-100 scale-100"
+                     x-transition:leave-end="opacity-0 scale-105">
+
+                    <div class="flex flex-col lg:flex-row items-center h-full w-full gap-8 lg:gap-16">
+                        
+                        <!-- Left Content -->
+                        <div class="lg:w-1/2 w-full flex flex-col justify-center z-20">
+                            <!-- Premium Pill Badge -->
+                            <div class="mb-6"
+                                 x-show="active === index"
+                                 x-transition:enter="transition-all duration-700 delay-300"
+                                 x-transition:enter-start="opacity-0 -translate-y-4"
+                                 x-transition:enter-end="opacity-100 translate-y-0">
+                                <span class="inline-flex items-center gap-2 bg-white/80 rounded-full px-4 py-2 border border-white shadow-sm">
+                                    <span class="w-2 h-2 rounded-full animate-pulse" :class="slide.badgeDotColor"></span>
+                                    <span class="text-[10px] font-extrabold uppercase tracking-widest text-gray-700" x-text="slide.subtitle"></span>
+                                </span>
+                            </div>
+
+                            <!-- Typography -->
+                            <div class="mb-6"
+                                 x-show="active === index"
+                                 x-transition:enter="transition-all duration-[800ms] delay-500 ease-out"
+                                 x-transition:enter-start="opacity-0 translate-y-8"
+                                 x-transition:enter-end="opacity-100 translate-y-0">
+                                <h2 class="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight text-gray-900 drop-shadow-sm" x-html="slide.title"></h2>
+                            </div>
+
+                            <div class="mb-10 max-w-md"
+                                 x-show="active === index"
+                                 x-transition:enter="transition-all duration-700 delay-700 ease-out"
+                                 x-transition:enter-start="opacity-0 translate-y-8"
+                                 x-transition:enter-end="opacity-100 translate-y-0">
+                                <p class="text-lg md:text-xl text-gray-600 font-medium leading-relaxed drop-shadow-sm" x-text="slide.description"></p>
+                            </div>
+
+                            <!-- CTA Glass Button -->
+                            <div class=""
+                                 x-show="active === index"
+                                 x-transition:enter="transition-all duration-700 delay-900 ease-out"
+                                 x-transition:enter-start="opacity-0 translate-y-8"
+                                 x-transition:enter-end="opacity-100 translate-y-0">
+                                <a :href="slide.link" class="group relative px-8 py-4 bg-gray-900 text-white rounded-full overflow-hidden shadow-lg shadow-gray-900/20 hover:shadow-gray-900/40 transition-all duration-300 transform hover:-translate-y-1 inline-flex items-center gap-3">
+                                    <span class="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" :class="slide.buttonGradient"></span>
+                                    <span class="relative font-bold tracking-wider uppercase text-xs z-10" x-text="slide.cta"></span>
+                                    <svg class="w-4 h-4 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Right Image Content -->
+                        <div class="lg:w-1/2 w-full h-[40vh] lg:h-full relative flex items-center justify-center z-10 perspective-1000">
+                            <!-- Soft floor shadow under product -->
+                            <div class="absolute bottom-[10%] w-[50%] h-[15px] bg-black/15 blur-xl rounded-[100%]"></div>
+                            
+                            <!-- Gentle Float Animation Frame -->
+                            <div class="w-full h-full flex items-center justify-center animate-[floating_6s_ease-in-out_infinite]">
+                                <img :src="slide.image"
+                                     :alt="slide.title"
+                                     class="relative z-10 w-[100%] max-w-[550px] object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.15)]"
+                                     x-show="active === index"
+                                     x-transition:enter="transition-all duration-[1500ms] delay-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+                                     x-transition:enter-start="opacity-0 scale-75 translate-x-16 rotate-[5deg]"
+                                     x-transition:enter-end="opacity-100 scale-100 translate-x-0 rotate-0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Bottom Center Dots inside the glass card -->
+            <div class="absolute bottom-8 lg:bottom-10 left-1/2 -translate-x-1/2 z-30 flex items-center gap-4 bg-white/50 backdrop-blur-md px-6 py-3 rounded-full border border-white/50 shadow-sm">
+                <template x-for="(slide, idx) in slides" :key="idx">
+                    <button @click="goTo(idx)" 
+                            class="w-2.5 h-2.5 rounded-full transition-all duration-500 relative overflow-hidden ring-2 ring-transparent focus:outline-none"
+                            :class="active === idx ? 'bg-gray-900 w-8 ring-offset-1' : 'bg-gray-400 hover:bg-gray-600'">
+                        <div x-show="active === idx" class="absolute inset-x-0 h-full bg-white opacity-20" :style="`width: ${progress}%`"></div>
+                    </button>
+                </template>
+            </div>
+            
+            <!-- Sleek Next/Prev internal buttons -->
+            <button @click="prev()" class="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/70 hover:bg-white text-gray-800 rounded-full flex items-center justify-center shadow-sm border border-white transition-all hover:scale-105 z-30">
+                <svg class="w-4 h-4 mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button @click="next()" class="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/70 hover:bg-white text-gray-800 rounded-full flex items-center justify-center shadow-sm border border-white transition-all hover:scale-105 z-30">
+                <svg class="w-4 h-4 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes floating {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(1deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+</style>
+<!-- V8 HERO GLAZED MESH END -->
+{% endcomment %}
+
+
+{% comment %}
+<!-- V9 HERO MUSEUM SHOWCASE START -->
+<div class="relative w-full h-[85vh] lg:h-[95vh] overflow-hidden bg-gray-50 font-sans" x-data="heroSliderV9()" x-init="start()">
+
+    <!-- Studio Lighting Background -->
+    <!-- Top Spotlight -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[50%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/90 via-transparent to-transparent pointer-events-none z-0"></div>
+    
+    <!-- Floor Horizon Line & Floor Gradient -->
+    <div class="absolute bottom-0 left-0 w-full h-[35%] bg-gradient-to-t from-gray-200/50 to-transparent border-t border-gray-100/50 pointer-events-none z-0"></div>
+
+    <div class="absolute inset-0 w-full h-full z-10 flex">
+        <template x-for="(slide, index) in slides" :key="index">
+            <div class="absolute inset-0 w-full h-full flex items-center justify-center pt-10"
+                 x-show="active === index"
+                 x-transition:enter="transition-all ease-[cubic-bezier(0.22,1,0.36,1)] duration-[1200ms]"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition-all ease-in-out duration-[800ms] z-0"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0">
+
+                <div class="container mx-auto px-4 lg:px-8 xl:px-16 w-full h-full flex flex-col md:flex-row items-center relative gap-8">
+                    
+                    <!-- Left Content: Editorial Plaque -->
+                    <div class="md:w-[45%] lg:w-[40%] flex flex-col justify-center relative z-30 pt-16 md:pt-0">
+                        
+                        <!-- Museum Plaque Line -->
+                        <div class="flex items-center gap-4 mb-8"
+                             x-show="active === index"
+                             x-transition:enter="transition-all duration-700 delay-300"
+                             x-transition:enter-start="opacity-0 translate-x-[-20px]"
+                             x-transition:enter-end="opacity-100 translate-x-0">
+                            <span class="w-12 h-0.5 bg-gray-900"></span>
+                            <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-500" x-text="'Artigo ' + ('0'+(index+1))"></span>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="mb-6 relative">
+                            <!-- Subtle large number behind title -->
+                            <div class="absolute -top-16 -left-8 text-[12rem] font-black text-gray-900/5 select-none pointer-events-none leading-none z-[-1]"
+                                 x-text="'0' + (index+1)"
+                                 x-show="active === index"
+                                 x-transition:enter="transition-all duration-[1500ms] delay-100 ease-out"
+                                 x-transition:enter-start="opacity-0 -translate-x-12"
+                                 x-transition:enter-end="opacity-100 translate-x-0"></div>
+                            
+                            <h2 class="text-5xl md:text-6xl lg:text-[5.5rem] font-black leading-[1.05] tracking-tight text-gray-900 drop-shadow-sm"
+                                x-show="active === index"
+                                x-transition:enter="transition-all duration-[900ms] delay-400 ease-out"
+                                x-transition:enter-start="opacity-0 translate-y-8"
+                                x-transition:enter-end="opacity-100 translate-y-0"
+                                x-html="slide.title"></h2>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-12 max-w-sm"
+                             x-show="active === index"
+                             x-transition:enter="transition-all duration-700 delay-600 ease-out"
+                             x-transition:enter-start="opacity-0 translate-y-8"
+                             x-transition:enter-end="opacity-100 translate-y-0">
+                            <p class="text-base text-gray-500 leading-relaxed" x-text="slide.description"></p>
+                        </div>
+
+                        <!-- Add to Cart / Action -->
+                        <div class="flex items-center gap-8"
+                             x-show="active === index"
+                             x-transition:enter="transition-all duration-700 delay-800 ease-out"
+                             x-transition:enter-start="opacity-0 translate-y-8"
+                             x-transition:enter-end="opacity-100 translate-y-0">
+                            <a :href="slide.link" class="group relative flex items-center justify-center bg-gray-900 text-white rounded-full w-14 h-14 hover:w-48 transition-all duration-500 overflow-hidden shadow-xl hover:shadow-2xl">
+                                <!-- The Arrow (always visible initially) -->
+                                <svg class="w-5 h-5 absolute group-hover:opacity-0 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                <!-- The full text (revealed on hover) -->
+                                <span class="absolute whitespace-nowrap text-xs font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                                    <span x-text="slide.cta"></span>
+                                </span>
+                            </a>
+                            <a :href="slide.link" class="text-sm font-bold uppercase tracking-widest text-gray-900 hover:text-primary transition-colors border-b border-gray-900 hover:border-primary pb-1">Ver Produto</a>
+                        </div>
+                    </div>
+
+                    <!-- Right Content: The Showcase Pedestal -->
+                    <div class="md:w-[55%] lg:w-[60%] h-[45vh] md:h-full relative flex items-center justify-center z-20">
+                        
+                        <!-- The Invisible Pedestal Glow -->
+                        <div class="absolute bottom-[10%] w-[60%] h-[40px] rounded-[100%] blur-[20px] mix-blend-multiply opacity-50 transition-colors duration-1000 z-10" :class="slide.shadowColor"></div>
+                        
+                        <!-- Extra dynamic floor reflection -->
+                        <div class="absolute bottom-[5%] w-[80%] h-[60px] rounded-[100%] bg-white/40 blur-[10px] scale-y-50 z-0"></div>
+
+                        <!-- Product Standing Tall -->
+                        <div class="relative w-full h-[90%] flex items-end justify-center pb-[5%] z-20">
+                            <img :src="slide.image"
+                                 :alt="slide.title"
+                                 class="relative max-h-full max-w-[90%] object-contain drop-shadow-[0_20px_20px_rgba(0,0,0,0.1)] origin-bottom"
+                                 x-show="active === index"
+                                 x-transition:enter="transition-all duration-[1200ms] delay-400 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+                                 x-transition:enter-start="opacity-0 scale-90 translate-y-32"
+                                 x-transition:enter-end="opacity-100 scale-100 translate-y-0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Vertical Interactive Index Navigation (Right Edge) -->
+    <div class="absolute right-8 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-6">
+        <template x-for="(slide, idx) in slides" :key="idx">
+            <button @click="goTo(idx)" 
+                    class="group flex items-center gap-4 text-right focus:outline-none justify-end">
+                <span class="text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300"
+                      :class="active === idx ? 'text-gray-900 translate-x-0' : 'text-gray-400 opacity-0 group-hover:opacity-100 translate-x-4'"
+                      x-text="slide.navName"></span>
+                <span class="w-1.5 transition-all duration-500 rounded-full"
+                      :class="active === idx ? 'h-12 bg-gray-900 border border-gray-900' : 'h-2 bg-gray-300 group-hover:bg-gray-400 group-hover:h-6'"></span>
+            </button>
+        </template>
+    </div>
+
+    <!-- Timeline Progress Bottom Left -->
+    <div class="absolute bottom-10 left-8 lg:left-16 z-40 w-48 hidden md:block">
+        <div class="h-[2px] bg-gray-200 w-full overflow-hidden">
+            <div class="h-full bg-gray-900 transition-all duration-[100ms] ease-linear" :style="`width: ${progress}%`"></div>
+        </div>
+        <div class="flex justify-between mt-3">
+            <span class="text-[10px] font-bold tracking-widest text-gray-900" x-text="'0' + (active + 1)"></span>
+            <span class="text-[10px] font-bold tracking-widest text-gray-400" x-text="'0' + slides.length"></span>
+        </div>
+    </div>
+
+</div>
+<!-- V9 HERO MUSEUM SHOWCASE END -->
+{% endcomment %}
+
+
+{% comment %}
+<!-- V10 HERO NEO-BENTO GRID START -->
+<div class="relative w-full min-h-[90vh] lg:h-[95vh] bg-[#f0f2f5] p-4 md:p-6 lg:p-8 flex items-center justify-center font-sans tracking-tight" x-data="heroSliderV10()" x-init="start()">
+
+    <div class="w-full max-w-[1600px] h-full flex flex-col items-center justify-center">
+        
+        <template x-for="(slide, index) in slides" :key="index">
+            <div class="absolute inset-4 md:inset-6 lg:inset-8 w-[calc(100%-2rem)] md:w-[calc(100%-3rem)] lg:w-[calc(100%-4rem)] max-w-[1600px] mx-auto z-10"
+                 x-show="active === index">
+                
+                <!-- Bento Grid Container -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 grid-rows-none lg:grid-rows-3 gap-4 lg:gap-6 w-full h-full pb-10 lg:pb-0">
+                    
+                    <!-- HUGE WIDGET: The Image Studio (Left side spanning 7 columns, all 3 rows) -->
+                    <div class="lg:col-span-7 lg:row-span-3 h-[45vh] lg:h-full bg-white rounded-[2rem] lg:rounded-[3rem] overflow-hidden flex items-center justify-center relative shadow-sm border border-gray-100/50 group"
+                         x-show="active === index"
+                         x-transition:enter="transition-all duration-[1000ms] delay-[100ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                         x-transition:enter-start="opacity-0 translate-y-16 scale-[0.97]"
+                         x-transition:enter-end="opacity-100 translate-y-0 scale-100">
+                        
+                        <!-- Studio Soft Spotlight -->
+                        <div class="absolute top-[10%] w-[60vw] h-[60vw] rounded-full blur-[100px] opacity-40 transition-colors duration-1000 mix-blend-multiply pointer-events-none" :class="slide.colorClass"></div>
+                        
+                        <!-- Product Number Accent -->
+                        <span class="absolute top-8 left-10 text-[10rem] font-bold text-gray-50 leading-none select-none tracking-tighter" x-text="'0' + (index+1)"></span>
+
+                        <!-- Product Image -->
+                        <img :src="slide.image"
+                             :alt="slide.title"
+                             class="relative w-[110%] max-w-[600px] object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.1)] z-10 transform-gpu group-hover:scale-105 transition-transform duration-700 ease-out"
+                             x-show="active === index"
+                             x-transition:enter="transition-all duration-[1200ms] delay-[400ms] ease-out"
+                             x-transition:enter-start="opacity-0 scale-75 translate-y-24"
+                             x-transition:enter-end="opacity-100 scale-100 translate-y-0">
+                             
+                        <!-- Interactive Tags Floating -->
+                        <div class="absolute bottom-8 left-8 bg-white/70 backdrop-blur-md border border-white rounded-full px-5 py-2.5 shadow-lg shadow-gray-200/50 z-20 flex items-center gap-2"
+                             x-show="active === index"
+                             x-transition:enter="transition-all duration-700 delay-[900ms]"
+                             x-transition:enter-start="opacity-0 translate-y-8"
+                             x-transition:enter-end="opacity-100 translate-y-0">
+                             <div class="w-1.5 h-1.5 rounded-full animate-ping" :class="'bg'+slide.colorClass.substring(2)"></div>
+                             <span class="text-xs font-bold uppercase tracking-wider text-gray-800">Em Destaque</span>
+                        </div>
+                    </div>
+
+                    <!-- TOP RIGHT WIDGET: Title & Copy (spanning 5 cols, 2 rows) -->
+                    <div class="lg:col-span-5 lg:row-span-2 bg-white rounded-[2rem] lg:rounded-[3rem] p-8 md:p-12 shadow-sm border border-gray-100/50 flex flex-col justify-center relative overflow-hidden"
+                         x-show="active === index"
+                         x-transition:enter="transition-all duration-[1000ms] delay-[200ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                         x-transition:enter-start="opacity-0 translate-x-16"
+                         x-transition:enter-end="opacity-100 translate-x-0">
+                         
+                        <p class="text-xs font-extrabold tracking-[0.2em] uppercase text-gray-400 mb-6 flex items-center gap-3">
+                            <span class="w-5 h-1 bg-gray-900 rounded-full"></span><span x-text="slide.subtitle"></span>
+                        </p>
+                        <h2 class="text-5xl lg:text-6xl xl:text-7xl font-black text-gray-900 leading-[1.05] tracking-tight mb-6" x-html="slide.title"></h2>
+                        <p class="text-base lg:text-lg text-gray-500 font-medium leading-relaxed max-w-md" x-text="slide.description"></p>
+                    </div>
+
+                    <!-- BOTTOM RIGHT WIDGETS -->
+                    <!-- Small Widget 1: Navigation / Stats -->
+                    <div class="lg:col-span-2 lg:row-span-1 bg-white rounded-[2rem] shadow-sm border border-gray-100/50 p-6 flex flex-col justify-between"
+                         x-show="active === index"
+                         x-transition:enter="transition-all duration-[1000ms] delay-[300ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                         x-transition:enter-start="opacity-0 translate-y-16"
+                         x-transition:enter-end="opacity-100 translate-y-0">
+                         
+                         <div class="w-full flex items-center justify-between mb-4">
+                             <button @click="prev()" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-black transition-colors">
+                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                             </button>
+                             <button @click="next()" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-black transition-colors">
+                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                             </button>
+                         </div>
+                         
+                         <!-- Mini Loader ring -->
+                         <div class="w-full flex items-end justify-between">
+                            <span class="text-6xl font-black text-gray-200 leading-none -ml-1 -mb-1" x-text="'0' + (active + 1)"></span>
+                            <div class="w-8 h-8 rounded-full border-4 border-gray-100 relative mb-1">
+                                <!-- Quick pure CSS circle hack based on progress -->
+                                <div class="absolute inset-[-4px] rounded-full border-4 border-transparent border-t-gray-900 border-r-gray-900 transform transition-all duration-[100ms] ease-linear" :style="`transform: rotate(${progress * 3.6}deg)`"></div>
+                            </div>
+                         </div>
+                    </div>
+
+                    <!-- Small Widget 2: The CTA Action Block -->
+                    <div class="lg:col-span-3 lg:row-span-1 rounded-[2rem] shadow-xl overflow-hidden group cursor-pointer relative"
+                         x-show="active === index"
+                         x-transition:enter="transition-all duration-[1000ms] delay-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+                         x-transition:enter-start="opacity-0 translate-x-16"
+                         x-transition:enter-end="opacity-100 translate-x-0">
+                         
+                        <a :href="slide.link" class="absolute inset-0 w-full h-full bg-gray-900 text-white flex flex-col justify-between p-8 group-hover:bg-primary transition-colors duration-500 z-10">
+                            <!-- Top Arrow icon -->
+                            <div class="flex justify-end">
+                                <span class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-white group-hover:text-primary transition-colors duration-500 group-hover:-rotate-45 transform">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                </span>
+                            </div>
+                            
+                            <!-- Bottom Action text -->
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-white animate-pulse"></span>
+                                <h3 class="text-xl font-bold uppercase tracking-widest" x-text="slide.cta"></h3>
+                            </div>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+        </template>
+        
+    </div>
+
+</div>
+<!-- V10 HERO NEO-BENTO GRID END -->
+{% endcomment %}
+
+
+<!-- V11 HERO E-COMMERCE MODERN START -->
+<div class="relative w-full h-[65vh] md:h-[75vh] lg:h-[80vh] overflow-hidden group font-sans" x-data="heroSliderV11()" x-init="start()">
+
+    <!-- Slides Container -->
+    <div class="w-full h-full relative">
+        <template x-for="(slide, index) in slides" :key="index">
+            <div class="absolute inset-0 w-full h-full flex flex-col md:flex-row items-center justify-between px-6 md:px-16 lg:px-24"
+                 x-show="active === index"
+                 x-transition:enter="transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)]"
+                 x-transition:enter-start="opacity-0 translate-x-16"
+                 x-transition:enter-end="opacity-100 translate-x-0"
+                 x-transition:leave="transition-all duration-[600ms] ease-in-out z-0"
+                 x-transition:leave-start="opacity-100 translate-x-0"
+                 x-transition:leave-end="opacity-0 -translate-x-16">
+                 
+                 <!-- Background Color/Gradient tied to slide -->
+                 <div class="absolute inset-0 -z-10 transition-colors duration-[1500ms]" :class="slide.bgColor"></div>
+                 
+                 <!-- Fine grain texture for modern premium feel -->
+                 <div class="absolute inset-0 opacity-[0.02] mix-blend-overlay -z-10 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');"></div>
+
+                 <!-- Splitted Content: Left Text -->
+                 <div class="w-full md:w-1/2 flex flex-col justify-center z-10 pt-20 md:pt-0">
+                     <span class="text-xs md:text-sm font-bold tracking-[0.25em] uppercase mb-4" 
+                           :class="slide.textColor" 
+                           x-text="slide.subtitle"
+                           x-show="active === index"
+                           x-transition:enter="transition-all duration-700 delay-300"
+                           x-transition:enter-start="opacity-0 translate-y-4"
+                           x-transition:enter-end="opacity-100 translate-y-0"></span>
+
+                     <h2 class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] mb-6" 
+                         :class="slide.titleColor" 
+                         x-html="slide.title"
+                         x-show="active === index"
+                         x-transition:enter="transition-all duration-700 delay-500 ease-out"
+                         x-transition:enter-start="opacity-0 translate-y-8"
+                         x-transition:enter-end="opacity-100 translate-y-0"></h2>
+
+                     <p class="text-lg md:text-xl font-medium max-w-lg mb-10 leading-relaxed" 
+                        :class="slide.descColor" 
+                        x-text="slide.description"
+                        x-show="active === index"
+                        x-transition:enter="transition-all duration-700 delay-700"
+                        x-transition:enter-start="opacity-0 translate-y-8"
+                        x-transition:enter-end="opacity-100 translate-y-0"></p>
+                     
+                     <div class="flex items-center gap-4"
+                          x-show="active === index"
+                          x-transition:enter="transition-all duration-700 delay-900"
+                          x-transition:enter-start="opacity-0 translate-y-8"
+                          x-transition:enter-end="opacity-100 translate-y-0">
+                         <a :href="slide.link" class="px-10 py-5 rounded-xl font-bold uppercase tracking-widest text-[13px] transition-all duration-300 shadow-xl hover:-translate-y-1 hover:shadow-2xl inline-block text-center" :class="slide.btnClass">
+                             <span x-text="slide.cta"></span>
+                         </a>
+                     </div>
+                 </div>
+
+                 <!-- Splitted Content: Right Image -->
+                 <div class="w-full md:w-1/2 h-[45%] md:h-full flex items-center justify-center relative z-10 pb-10 md:pb-0">
+                      <!-- Soft ambient glow behind product -->
+                      <div class="absolute w-[70%] h-[70%] rounded-full blur-[100px] opacity-40 mix-blend-multiply" :class="slide.glowColor"></div>
+                      
+                      <img :src="slide.image" 
+                           :alt="slide.title" 
+                           class="relative z-10 w-[95%] lg:w-[110%] max-w-[650px] object-contain drop-shadow-[0_40px_40px_rgba(0,0,0,0.15)] transition-transform duration-[2000ms] ease-out hover:scale-[1.03]"
+                           x-show="active === index"
+                           x-transition:enter="transition-all duration-[1200ms] delay-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
+                           x-transition:enter-start="opacity-0 scale-90 translate-y-12"
+                           x-transition:enter-end="opacity-100 scale-100 translate-y-0" />
+                 </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <button @click="prev()" class="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-white/70 backdrop-blur-md border border-gray-100 flex items-center justify-center text-gray-800 hover:bg-white transition-all opacity-0 group-hover:opacity-100 z-20 shadow-md hover:scale-105">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+    </button>
+    <button @click="next()" class="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-white/70 backdrop-blur-md border border-gray-100 flex items-center justify-center text-gray-800 hover:bg-white transition-all opacity-0 group-hover:opacity-100 z-20 shadow-md hover:scale-105">
+         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+    </button>
+
+    <!-- Navigation Progress Indicator (Minimal Bar) -->
+    <div class="absolute bottom-6 md:bottom-10 left-6 md:left-16 lg:left-24 flex items-center gap-2 md:gap-3 z-20 cursor-pointer">
+        <template x-for="(slide, index) in slides" :key="index">
+            <button @click="goTo(index)" class="group w-10 md:w-16 h-1.5 rounded-full overflow-hidden transition-all bg-gray-300/40 relative">
+                <!-- Progress fill -->
+                <div class="absolute inset-y-0 left-0 bg-gray-900 transition-all duration-75" x-show="active === index" :style="`width: ${progress}%`"></div>
+                <!-- Hover effect -->
+                <div class="absolute inset-0 bg-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </button>
+        </template>
+    </div>
+</div>
+<!-- V11 HERO E-COMMERCE MODERN END -->
+
+
+
+
+
+
+
+
 
 
 <!-- FEATURES SECTION -->
@@ -848,6 +1850,565 @@
             },
             goTo(index) {
                 this.active = index;
+                this.resetInterval();
+            }
+        }
+    }
+
+
+    function heroSliderV4() {
+        return {
+            active: 0,
+            progress: 0,
+            interval: null,
+            progressInterval: null,
+            mouseX: 0,
+            mouseY: 0,
+            slides: [
+                {
+                    subtitle: 'Lançamento',
+                    title: 'Totem<br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">Triedro</span>',
+                    description: 'Engajamento 360 Graus. Um totem de 3 faces desenvolvido para garantir máxima visibilidade em grandes corredores e espaços abertos.',
+                    image: "{% static 'img/totem_triedro.png' %}?v=10",
+                    cta: 'Personalizar',
+                    link: '/produto/totem-triedro-em-poliondas/',
+                    glowTop: 'bg-blue-600',
+                    glowBottom: 'bg-indigo-900'
+                },
+                {
+                    subtitle: 'Impacto Global',
+                    title: 'Cubo<br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">Promocional</span>',
+                    description: 'Geometria que atrai os olhos. Caixas robustas e leves, excelentes para vitrines extravagantes e empilhamento criativo.',
+                    image: "{% static 'img/cubo_ptbr.png' %}?v=4",
+                    cta: 'Descobrir Cubo',
+                    link: '/produto/cubo-promocional-em-poliondas/',
+                    glowTop: 'bg-orange-600',
+                    glowBottom: 'bg-red-900'
+                },
+                {
+                    subtitle: 'Elegância e Mobilidade',
+                    title: 'Banner<br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">Rollup</span>',
+                    description: 'O parceiro ideal de eventos premium. Montagem que leva menos de um minuto e um acabamento que valoriza sua marca instantaneamente.',
+                    image: "{% static 'img/rollup_hero.png' %}?v=2",
+                    cta: 'Configurar',
+                    link: '/produto/banner-rollup/',
+                    glowTop: 'bg-purple-600',
+                    glowBottom: 'bg-fuchsia-900'
+                }
+            ],
+            start() {
+                this.resetInterval();
+            },
+            onMouseMove(e) {
+                // Parallax calculations - from -0.5 to 0.5
+                this.mouseX = (e.clientX / window.innerWidth) - 0.5;
+                this.mouseY = (e.clientY / window.innerHeight) - 0.5;
+            },
+            resetInterval() {
+                clearInterval(this.interval);
+                clearInterval(this.progressInterval);
+                this.progress = 0;
+
+                // 8000ms duration per slide
+                this.progressInterval = setInterval(() => {
+                    this.progress += (100 / (8000 / 16)); // 16ms roughly 60fps
+                    if (this.progress > 100) this.progress = 100;
+                }, 16);
+
+                this.interval = setInterval(() => {
+                    this.active = (this.active + 1) % this.slides.length;
+                    this.resetInterval();
+                }, 8000);
+            },
+            goTo(index) {
+                this.active = index;
+                this.resetInterval();
+            }
+        }
+    }
+
+
+    function heroSliderV5() {
+        return {
+            active: 0,
+            progress: 0,
+            interval: null,
+            progressInterval: null,
+            mouseX: 0,
+            mouseY: 0,
+            slides: [
+                {
+                    subtitle: 'Lançamento',
+                    title: 'Totem<br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">Triedro</span>',
+                    description: 'Engajamento 360 Graus. Um totem de 3 faces desenvolvido para garantir máxima visibilidade em grandes corredores e espaços abertos.',
+                    image: "{% static 'img/totem_triedro.png' %}?v=11",
+                    cta: 'Personalizar',
+                    link: '/produto/totem-triedro-em-poliondas/',
+                    glowTop: 'bg-blue-100/80',
+                    glowBottom: 'bg-indigo-100/80'
+                },
+                {
+                    subtitle: 'Impacto Global',
+                    title: 'Cubo<br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">Promocional</span>',
+                    description: 'Geometria que atrai os olhos. Caixas robustas e leves, excelentes para vitrines extravagantes e empilhamento criativo.',
+                    image: "{% static 'img/cubo_ptbr.png' %}?v=5",
+                    cta: 'Descobrir Cubo',
+                    link: '/produto/cubo-promocional-em-poliondas/',
+                    glowTop: 'bg-orange-100/80',
+                    glowBottom: 'bg-red-100/80'
+                },
+                {
+                    subtitle: 'Elegância e Mobilidade',
+                    title: 'Banner<br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">Rollup</span>',
+                    description: 'O parceiro ideal de eventos premium. Montagem que leva menos de um minuto e um acabamento que valoriza sua marca instantaneamente.',
+                    image: "{% static 'img/rollup_hero.png' %}?v=3",
+                    cta: 'Configurar',
+                    link: '/produto/banner-rollup/',
+                    glowTop: 'bg-purple-100/80',
+                    glowBottom: 'bg-pink-100/80'
+                }
+            ],
+            start() {
+                this.resetInterval();
+            },
+            onMouseMove(e) {
+                // Parallax calculations - from -0.5 to 0.5
+                this.mouseX = (e.clientX / window.innerWidth) - 0.5;
+                this.mouseY = (e.clientY / window.innerHeight) - 0.5;
+            },
+            resetInterval() {
+                clearInterval(this.interval);
+                clearInterval(this.progressInterval);
+                this.progress = 0;
+
+                // 8000ms duration per slide
+                this.progressInterval = setInterval(() => {
+                    this.progress += (100 / (8000 / 16)); // 16ms roughly 60fps
+                    if (this.progress > 100) this.progress = 100;
+                }, 16);
+
+                this.interval = setInterval(() => {
+                    this.active = (this.active + 1) % this.slides.length;
+                    this.resetInterval();
+                }, 8000);
+            },
+            goTo(index) {
+                this.active = index;
+                this.resetInterval();
+            }
+        }
+    }
+
+
+    function heroSliderV6() {
+        return {
+            active: 0,
+            interval: null,
+            mouseX: 0,
+            mouseY: 0,
+            slides: [
+                {
+                    subtitle: 'Lançamento',
+                    title: 'Totem Triedro',
+                    description: 'Engajamento 360 Graus. Um totem de 3 faces focado em visibilidade máxima.',
+                    image: "{% static 'img/totem_triedro.png' %}?v=12",
+                    cta: 'Personalizar Material',
+                    link: '/produto/totem-triedro-em-poliondas/',
+                    bigBgText: 'TRIEDRO',
+                    glowColor: 'bg-blue-300'
+                },
+                {
+                    subtitle: 'Impacto Global',
+                    title: 'Cubo Promocional',
+                    description: 'Geometria que atrai os olhos. Caixas robustas para vitrines extravagantes.',
+                    image: "{% static 'img/cubo_ptbr.png' %}?v=6",
+                    cta: 'Descobrir Produto',
+                    link: '/produto/cubo-promocional-em-poliondas/',
+                    bigBgText: 'VITRINE',
+                    glowColor: 'bg-orange-300'
+                },
+                {
+                    subtitle: 'Feiras e Eventos',
+                    title: 'Banner Rollup',
+                    description: 'O parceiro ideal de eventos. Traga impacto instantâneo para sua marca.',
+                    image: "{% static 'img/rollup_hero.png' %}?v=4",
+                    cta: 'Configurar Banner',
+                    link: '/produto/banner-rollup/',
+                    bigBgText: 'ROLLUP',
+                    glowColor: 'bg-purple-300'
+                }
+            ],
+            start() {
+                this.resetInterval();
+            },
+            onMouseMove(e) {
+                // Parallax calculations
+                this.mouseX = (e.clientX / window.innerWidth) - 0.5;
+                this.mouseY = (e.clientY / window.innerHeight) - 0.5;
+            },
+            resetInterval() {
+                clearInterval(this.interval);
+                this.interval = setInterval(() => {
+                    this.active = (this.active + 1) % this.slides.length;
+                }, 7000);
+            },
+            goTo(index) {
+                this.active = index;
+                this.resetInterval();
+            }
+        }
+    }
+
+
+    function heroSliderV7() {
+        return {
+            active: 0,
+            progress: 0,
+            interval: null,
+            progressInterval: null,
+            slides: [
+                {
+                    subtitle: 'Evolução em PDV',
+                    title: 'Totem<br>Triedro.',
+                    description: 'Engajamento 360 Graus. Um totem de 3 faces focado em garantir máxima visibilidade dentro de corredores de shopping e supermercados.',
+                    image: "{% static 'img/totem_triedro.png' %}?v=13",
+                    cta: 'Comprar Totem',
+                    link: '/produto/totem-triedro-em-poliondas/',
+                    bgColor: 'bg-[#f0f4f8]'
+                },
+                {
+                    subtitle: 'Impacto Geométrico',
+                    title: 'Cubo<br>Promo.',
+                    description: 'Volume estratégico que atrai os olhos automaticamente. Caixas empilháveis para montagem de ilhas promocionais criativas.',
+                    image: "{% static 'img/cubo_ptbr.png' %}?v=7",
+                    cta: 'Descobrir Produto',
+                    link: '/produto/cubo-promocional-em-poliondas/',
+                    bgColor: 'bg-[#fcf5eb]'
+                },
+                {
+                    subtitle: 'Praticidade Elegante',
+                    title: 'Banner<br>Rollup.',
+                    description: 'O parceiro ideal para apresentações. Display automontável em menos de 1 minuto que transforma qualquer feira em um estande premium.',
+                    image: "{% static 'img/rollup_hero.png' %}?v=5",
+                    cta: 'Configurar Agora',
+                    link: '/produto/banner-rollup/',
+                    bgColor: 'bg-[#f4f0f6]'
+                }
+            ],
+            start() {
+                this.resetInterval();
+            },
+            resetInterval() {
+                clearInterval(this.interval);
+                clearInterval(this.progressInterval);
+                this.progress = 0;
+
+                this.progressInterval = setInterval(() => {
+                    this.progress += (100 / (7500 / 16)); 
+                    if (this.progress > 100) this.progress = 100;
+                }, 16);
+
+                this.interval = setInterval(() => {
+                    this.active = (this.active + 1) % this.slides.length;
+                    this.resetInterval();
+                }, 7500);
+            },
+            goTo(index) {
+                this.active = index;
+                this.resetInterval();
+            },
+            next() {
+                this.active = (this.active + 1) % this.slides.length;
+                this.resetInterval();
+            },
+            prev() {
+                this.active = (this.active - 1 + this.slides.length) % this.slides.length;
+                this.resetInterval();
+            }
+        }
+    }
+
+
+    function heroSliderV8() {
+        return {
+            active: 0,
+            progress: 0,
+            interval: null,
+            progressInterval: null,
+            slides: [
+                {
+                    subtitle: 'Impacto Automontável',
+                    title: 'Totem<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Triedro.</span>',
+                    description: 'O material ideal para feiras intensas. Três faces de pura visibilidade, montagem em segundos e total flexibilidade.',
+                    image: "{% static 'img/totem_triedro.png' %}?v=14",
+                    cta: 'Personalizar',
+                    link: '/produto/totem-triedro-em-poliondas/',
+                    badgeDotColor: 'bg-blue-500',
+                    buttonGradient: 'bg-gradient-to-r from-blue-600 to-indigo-600'
+                },
+                {
+                    subtitle: 'Visibilidade Total',
+                    title: 'Cubo<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500">Promocional.</span>',
+                    description: 'Geometria desenhada para as vitrines modernas. Construa ilhas gigantes com leveza.',
+                    image: "{% static 'img/cubo_ptbr.png' %}?v=8",
+                    cta: 'Configurar',
+                    link: '/produto/cubo-promocional-em-poliondas/',
+                    badgeDotColor: 'bg-orange-500',
+                    buttonGradient: 'bg-gradient-to-r from-orange-500 to-red-500'
+                },
+                {
+                    subtitle: 'Design Retrátil',
+                    title: 'Banner<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">Rollup.</span>',
+                    description: 'Sofisticação inquestionável para qualquer ambiente. Rollup elegante e estruturado.',
+                    image: "{% static 'img/rollup_hero.png' %}?v=6",
+                    cta: 'Reservar Agora',
+                    link: '/produto/banner-rollup/',
+                    badgeDotColor: 'bg-purple-500',
+                    buttonGradient: 'bg-gradient-to-r from-purple-600 to-pink-500'
+                }
+            ],
+            start() {
+                this.resetInterval();
+            },
+            resetInterval() {
+                clearInterval(this.interval);
+                clearInterval(this.progressInterval);
+                this.progress = 0;
+
+                this.progressInterval = setInterval(() => {
+                    this.progress += (100 / (8000 / 16)); 
+                    if (this.progress > 100) this.progress = 100;
+                }, 16);
+
+                this.interval = setInterval(() => {
+                    this.active = (this.active + 1) % this.slides.length;
+                    this.resetInterval();
+                }, 8000);
+            },
+            goTo(index) {
+                this.active = index;
+                this.resetInterval();
+            },
+            next() {
+                this.active = (this.active + 1) % this.slides.length;
+                this.resetInterval();
+            },
+            prev() {
+                this.active = (this.active - 1 + this.slides.length) % this.slides.length;
+                this.resetInterval();
+            }
+        }
+    }
+
+
+    function heroSliderV9() {
+        return {
+            active: 0,
+            progress: 0,
+            interval: null,
+            progressInterval: null,
+            slides: [
+                {
+                    navName: 'Totem',
+                    title: 'Totem<br>Triedro.',
+                    description: 'Engajamento absoluto em corredores luxuosos. Totem de 3 faces desenvolvido para presença em todos os ângulos.',
+                    image: "{% static 'img/totem_triedro.png' %}?v=15",
+                    cta: 'Personalizar Agora',
+                    link: '/produto/totem-triedro-em-poliondas/',
+                    shadowColor: 'bg-blue-900/30'
+                },
+                {
+                    navName: 'Cubo',
+                    title: 'Cubo<br>Promo.',
+                    description: 'Transforme qualquer vitrine em uma obra de arte empilhável. Leve, imponente e fácil de transportar.',
+                    image: "{% static 'img/cubo_ptbr.png' %}?v=9",
+                    cta: 'Descobrir Cubo',
+                    link: '/produto/cubo-promocional-em-poliondas/',
+                    shadowColor: 'bg-orange-900/30'
+                },
+                {
+                    navName: 'Rollup',
+                    title: 'Banner<br>Rollup.',
+                    description: 'Retrátil, robusto e absurdamente elegante. A peça central de quem atrai olhares em grandes eventos.',
+                    image: "{% static 'img/rollup_hero.png' %}?v=7",
+                    cta: 'Configurar Layout',
+                    link: '/produto/banner-rollup/',
+                    shadowColor: 'bg-purple-900/30'
+                }
+            ],
+            start() {
+                this.resetInterval();
+            },
+            resetInterval() {
+                clearInterval(this.interval);
+                clearInterval(this.progressInterval);
+                this.progress = 0;
+
+                this.progressInterval = setInterval(() => {
+                    this.progress += (100 / (8000 / 16)); 
+                    if (this.progress > 100) this.progress = 100;
+                }, 16);
+
+                this.interval = setInterval(() => {
+                    this.active = (this.active + 1) % this.slides.length;
+                    this.resetInterval();
+                }, 8000);
+            },
+            goTo(index) {
+                this.active = index;
+                this.resetInterval();
+            }
+        }
+    }
+
+
+    function heroSliderV10() {
+        return {
+            active: 0,
+            progress: 0,
+            interval: null,
+            progressInterval: null,
+            slides: [
+                {
+                    subtitle: 'Estruturação',
+                    title: 'Totem<br/>Triedro.',
+                    description: 'Engajamento 360 Graus. Um totem de 3 faces desenvolvido para capturar a atenção de clientes vindos de todas as direções.',
+                    image: "{% static 'img/totem_triedro.png' %}?v=16",
+                    cta: 'Personalizar',
+                    link: '/produto/totem-triedro-em-poliondas/',
+                    colorClass: 'bg-blue-300'
+                },
+                {
+                    subtitle: 'Impacto Global',
+                    title: 'Cubo<br/>Promo.',
+                    description: 'Construa verdadeiros muros criativos em segundos. Caixas robustas para criação de ilhas imponentes.',
+                    image: "{% static 'img/cubo_ptbr.png' %}?v=10",
+                    cta: 'Montar Ilha',
+                    link: '/produto/cubo-promocional-em-poliondas/',
+                    colorClass: 'bg-orange-300'
+                },
+                {
+                    subtitle: 'Eventos & PDV',
+                    title: 'Banner<br/>Rollup.',
+                    description: 'O parceiro ideal para eventos inesquecíveis. Extremamente sofisticado e montado num piscar de olhos.',
+                    image: "{% static 'img/rollup_hero.png' %}?v=8",
+                    cta: 'Configurar',
+                    link: '/produto/banner-rollup/',
+                    colorClass: 'bg-purple-300'
+                }
+            ],
+            start() {
+                this.resetInterval();
+            },
+            resetInterval() {
+                clearInterval(this.interval);
+                clearInterval(this.progressInterval);
+                this.progress = 0;
+
+                this.progressInterval = setInterval(() => {
+                    this.progress += (100 / (8000 / 16)); 
+                    if (this.progress > 100) this.progress = 100;
+                }, 16);
+
+                this.interval = setInterval(() => {
+                    this.active = (this.active + 1) % this.slides.length;
+                    this.resetInterval();
+                }, 8000);
+            },
+            goTo(index) {
+                this.active = index;
+                this.resetInterval();
+            },
+            next() {
+                this.active = (this.active + 1) % this.slides.length;
+                this.resetInterval();
+            },
+            prev() {
+                this.active = (this.active - 1 + this.slides.length) % this.slides.length;
+                this.resetInterval();
+            }
+        }
+    }
+
+
+    function heroSliderV11() {
+        return {
+            active: 0,
+            progress: 0,
+            interval: null,
+            progressInterval: null,
+            slides: [
+                {
+                    subtitle: 'Destaque Absoluto',
+                    title: 'Totem Triedro',
+                    description: 'Atraia clientes de todos os lados com o Totem Triedro. Material extremamente leve, automontável e com impressão HD.',
+                    image: "{% static 'img/totem_triedro.png' %}?v=17",
+                    cta: 'COMPRAR AGORA',
+                    link: '/produto/totem-triedro-em-poliondas/',
+                    bgColor: 'bg-[#f0f4f8]',
+                    textColor: 'text-blue-600',
+                    titleColor: 'text-gray-900',
+                    descColor: 'text-gray-600',
+                    btnClass: 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-600/30',
+                    glowColor: 'bg-blue-300'
+                },
+                {
+                    subtitle: 'Lançamento',
+                    title: 'Cubo Promo',
+                    description: 'Construa vitrines criativas e ilhas sensacionais empilhando cubos super resistentes. Impacto visual imediato no PDV.',
+                    image: "{% static 'img/cubo_ptbr.png' %}?v=12",
+                    cta: 'COMPRAR AGORA',
+                    link: '/produto/cubo-promocional-em-poliondas/',
+                    bgColor: 'bg-[#fcf5ec]',
+                    textColor: 'text-orange-600',
+                    titleColor: 'text-gray-900',
+                    descColor: 'text-gray-600',
+                    btnClass: 'bg-orange-500 text-white hover:bg-orange-600 shadow-orange-500/30',
+                    glowColor: 'bg-orange-300'
+                },
+                {
+                    subtitle: 'Elegância Prática',
+                    title: 'Banner Rollup',
+                    description: 'Apresentação corporativa de luxo. Acompanha bolsa para transporte e é armado em menos de 10 segundos.',
+                    image: "{% static 'img/rollup_hero.png' %}?v=10",
+                    cta: 'COMPRAR AGORA',
+                    link: '/produto/banner-rollup/',
+                    bgColor: 'bg-[#f7f2fb]',
+                    textColor: 'text-purple-600',
+                    titleColor: 'text-gray-900',
+                    descColor: 'text-gray-600',
+                    btnClass: 'bg-purple-600 text-white hover:bg-purple-700 shadow-purple-600/30',
+                    glowColor: 'bg-purple-300'
+                }
+            ],
+            start() {
+                this.resetInterval();
+            },
+            resetInterval() {
+                clearInterval(this.interval);
+                clearInterval(this.progressInterval);
+                this.progress = 0;
+
+                this.progressInterval = setInterval(() => {
+                    this.progress += (100 / (6000 / 16)); 
+                    if (this.progress > 100) this.progress = 100;
+                }, 16);
+
+                this.interval = setInterval(() => {
+                    this.active = (this.active + 1) % this.slides.length;
+                    this.resetInterval();
+                }, 6000);
+            },
+            goTo(index) {
+                this.active = index;
+                this.resetInterval();
+            },
+            next() {
+                this.active = (this.active + 1) % this.slides.length;
+                this.resetInterval();
+            },
+            prev() {
+                this.active = (this.active - 1 + this.slides.length) % this.slides.length;
                 this.resetInterval();
             }
         }
