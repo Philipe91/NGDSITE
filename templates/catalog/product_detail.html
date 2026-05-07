@@ -264,6 +264,61 @@
                         </p>
                     </div>
                 </div>
+                {% elif product.slug == 'totem-triangular' %}
+                <!-- Especificações compactas (Totem Triangular) -->
+                <div class="grid grid-cols-2 gap-3 mt-2">
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Material</span>
+                        </div>
+                        <p class="text-[13px] text-gray-800 font-semibold leading-snug">
+                            Poliondas 3mm (polipropileno corrugado alveolar)
+                        </p>
+                    </div>
+
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Impressão</span>
+                        </div>
+                        <p class="text-[13px] text-gray-800 font-semibold leading-snug">
+                            UV de alta resolução em todas as 3 faces
+                        </p>
+                    </div>
+
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Estrutura</span>
+                        </div>
+                        <p class="text-[13px] text-gray-800 font-semibold leading-snug">
+                            4 módulos de 3 faces, giram 45° alternadamente
+                        </p>
+                    </div>
+
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Acabamento</span>
+                        </div>
+                        <p class="text-[13px] text-gray-800 font-semibold leading-snug">
+                            Corte, vinco e dobra — pronto para uso, sem suporte
+                        </p>
+                    </div>
+                </div>
                 {% endif %}
             </div>
         </div>
@@ -514,8 +569,8 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {% if product.slug == 'banner-rollup' %}
-                        <!-- Rollup Production Time Options -->
+                        {% if product.slug == 'banner-rollup' or product.slug == 'totem-triangular' %}
+                        <!-- Production Time Options (rollup + totem triangular) -->
                         <template x-for="option in [
                             {days: 7, label: '7 dias úteis', subtitle: '7 dias úteis - Prazo Padrão', fee: 0},
                             {days: 6, label: '6 dias úteis', subtitle: '6 dias úteis + R$ 20,00 /un.', fee: 20},
@@ -915,7 +970,7 @@
             quantity: 1,
                 discountMultiplier: 1,
                     expressFee: 0,
-                        productionDays: {% if product.slug == 'banner-rollup' %} 7{% else %} 'normal'{% endif %},
+                        productionDays: {% if product.slug == 'banner-rollup' or product.slug == 'totem-triangular' %} 7{% else %} 'normal'{% endif %},
         material: '{% if product.slug == "banner-rollup" %}lona380{% else %}poliondas{% endif %}',
             acabamento: '{% if product.slug == "banner-rollup" %}refile_reto{% else %}corte_vinco{% endif %}',
 
