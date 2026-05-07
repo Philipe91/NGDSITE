@@ -18,11 +18,20 @@ load_dotenv(BASE_DIR / ".env")
 # =============================================================================
 # SEGURANÇA
 # =============================================================================
-SECRET_KEY = os.getenv("SECRET_KEY", "fallback-insecure-key-apenas-para-dev")
 DEBUG = os.getenv("DEBUG", "False") == "True"
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
 
-# Para permitir CSRF (adicionar ao carrinho, finalizar compra) via túneis
+SECRET_KEY = os.getenv("SECRET_KEY", "")
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = "django-insecure-dev-only-key-DO-NOT-USE-IN-PRODUCTION"
+    else:
+        raise RuntimeError(
+            "SECRET_KEY ausente. Defina SECRET_KEY no .env antes de rodar com DEBUG=False."
+        )
+
+ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()]
+
+# Origens permitidas para CSRF — túneis de desenvolvimento + valor extra via env (CSRF_TRUSTED_ORIGINS_EXTRA)
 CSRF_TRUSTED_ORIGINS = [
     "https://*.loca.lt",
     "https://*.serveo.net",
@@ -30,6 +39,23 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.pinggy.link",
     "https://*.trycloudflare.com",
 ]
+_extra_trusted = os.getenv("CSRF_TRUSTED_ORIGINS_EXTRA", "").strip()
+if _extra_trusted:
+    CSRF_TRUSTED_ORIGINS += [o.strip() for o in _extra_trusted.split(",") if o.strip()]
+
+# Cookies — sempre HttpOnly e SameSite=Lax (evita roubo via XSS / CSRF cross-site)
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_HTTPONLY = False  # precisa ser legível p/ JS de fetch protegido
+CSRF_COOKIE_SAMESITE = "Lax"
+
+# Limites de upload (defesa contra DoS por payload gigante)
+DATA_UPLOAD_MAX_MEMORY_SIZE = 30 * 1024 * 1024   # 30 MB para form data
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024   # 10 MB em memória, resto para disco
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 1000
+
+# Tamanho máximo de upload de arte (configurável via env, default 50 MB)
+ART_UPLOAD_MAX_BYTES = int(os.getenv("ART_UPLOAD_MAX_BYTES", str(50 * 1024 * 1024)))
 
 # =============================================================================
 # SEGURANÇA EM PRODUÇÃO (ativada quando DEBUG=False)
@@ -50,8 +76,15 @@ if not DEBUG:
 
     # Proteções extras
     SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = "same-origin"
     X_FRAME_OPTIONS = "DENY"
     SECURE_BROWSER_XSS_FILTER = True
+
+    # Em produção exige ALLOWED_HOSTS configurado explicitamente (não localhost default)
+    if ALLOWED_HOSTS == ["localhost", "127.0.0.1"]:
+        raise RuntimeError(
+            "ALLOWED_HOSTS não configurado para produção. Defina ALLOWED_HOSTS no .env."
+        )
 
 
 # =============================================================================
@@ -65,6 +98,7 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "image_uploader_widget",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -89,6 +123,8 @@ INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
 # =============================================================================
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    # WhiteNoise serve estáticos com cache + compressão (precisa vir logo após SecurityMiddleware)
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -144,6 +180,9 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD", ""),
         "HOST": os.getenv("DB_HOST", "localhost"),
         "PORT": os.getenv("DB_PORT", "5432"),
+        # Persistent connections — reduz latência e custo de conexão sob carga
+        "CONN_MAX_AGE": int(os.getenv("DB_CONN_MAX_AGE", "60")),
+        "CONN_HEALTH_CHECKS": True,
     }
 }
 
@@ -167,17 +206,97 @@ USE_TZ = True
 USE_THOUSAND_SEPARATOR = True
 
 # =============================================================================
-# ARQUIVOS ESTÁTICOS
+# ARQUIVOS ESTÁTICOS — servidos por WhiteNoise em produção (compressão + cache)
 # =============================================================================
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Storage com hash + compressão (gzip/brotli) para cache eterno em prod
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": (
+            "whitenoise.storage.CompressedManifestStaticFilesStorage"
+            if not DEBUG
+            else "django.contrib.staticfiles.storage.StaticFilesStorage"
+        ),
+    },
+}
 
 # =============================================================================
 # ARQUIVOS DE MÍDIA (uploads)
 # =============================================================================
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+# =============================================================================
+# CACHE — local em dev, Redis em prod se REDIS_URL estiver definido
+# =============================================================================
+_redis_url = os.getenv("REDIS_URL", "").strip()
+if _redis_url:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": _redis_url,
+        }
+    }
+    SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "ngdsite-default",
+        }
+    }
+
+# =============================================================================
+# LOGGING — sempre console; em prod também grava em arquivo rotativo
+# =============================================================================
+LOG_DIR = BASE_DIR / "logs"
+LOG_DIR.mkdir(exist_ok=True)
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "[{asctime}] {levelname} {name} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": str(LOG_DIR / "ngdsite.log"),
+            "maxBytes": 5 * 1024 * 1024,
+            "backupCount": 5,
+            "formatter": "verbose",
+        },
+    },
+    "root": {
+        "handlers": ["console", "file"],
+        "level": "INFO" if not DEBUG else "DEBUG",
+    },
+    "loggers": {
+        "django.security": {
+            "handlers": ["console", "file"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["console", "file"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+    },
+}
 
 # =============================================================================
 # CHAVE PADRÃO DE AUTO-CAMPO
@@ -195,6 +314,8 @@ CART_SESSION_ID = "cart"
 MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN", "")
 MP_PUBLIC_KEY = os.getenv("MP_PUBLIC_KEY", "")
 MP_SANDBOX = os.getenv("MP_SANDBOX", "True") == "True"
+# Secret do webhook configurado no painel do Mercado Pago (obrigatório em produção)
+MP_WEBHOOK_SECRET = os.getenv("MP_WEBHOOK_SECRET", "")
 
 # =============================================================================
 # FRETE

@@ -1,0 +1,23 @@
+[Unit]
+Description=NGD Site — Gunicorn (Django)
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=notify
+User=ngdsite
+Group=www-data
+WorkingDirectory=/var/www/ngdsite
+EnvironmentFile=/var/www/ngdsite/.env
+ExecStart=/var/www/ngdsite/venv/bin/gunicorn -c gunicorn.conf.py setup.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=30
+Restart=on-failure
+RestartSec=5
+PrivateTmp=true
+NoNewPrivileges=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target

@@ -11,20 +11,22 @@ class Cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
-    def add(self, variant, quantity=1, update_quantity=False):
+    def add(self, variant, quantity=1, update_quantity=False, prazo=0):
         """Adiciona variante ao carrinho ou atualiza quantidade."""
         variant_id = str(variant.id)
         if variant_id not in self.cart:
-            self.cart[variant_id] = {'quantity': 0, 'price': str(variant.price)}
+            self.cart[variant_id] = {'quantity': 0, 'price': str(variant.price), 'prazo': 0}
         if update_quantity:
             self.cart[variant_id]['quantity'] = quantity
         else:
             self.cart[variant_id]['quantity'] += quantity
-            
+        self.cart[variant_id]['prazo'] = int(prazo) if prazo else 0
+
         self.save()
 
     def update_price(self, variant, custom_price):
-        """Atualiza o preco customizado no carrinho"""
+        """Atualiza o preco customizado de exibição. NÃO usar como fonte de verdade
+        em checkout — o checkout recalcula preço pelo variant.price + quantity + prazo."""
         variant_id = str(variant.id)
         if variant_id in self.cart:
             self.cart[variant_id]['price'] = str(custom_price)

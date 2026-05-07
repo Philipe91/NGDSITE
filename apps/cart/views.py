@@ -4,17 +4,22 @@ from apps.catalog.models import ProductVariant
 from .cart import Cart
 from django.contrib import messages
 
+CART_MIN_QTY = 1
+CART_MAX_QTY = 999
+
+
 @require_POST
 def cart_add(request):
     cart = Cart(request)
     variant_id = request.POST.get('variant_id')
-    
+
     quantity_str = request.POST.get('quantity', '1')
     try:
         quantity = int(quantity_str) if quantity_str else 1
-    except ValueError:
+    except (ValueError, TypeError):
         quantity = 1
-    
+    quantity = max(CART_MIN_QTY, min(CART_MAX_QTY, quantity))
+
     # Process production time fee
     try:
         prazo_str = request.POST.get('prazo', 'normal')
@@ -28,9 +33,9 @@ def cart_add(request):
     if not variant_id:
         messages.error(request, "Por favor, selecione um formato antes de adicionar ao carrinho.")
         return redirect(request.META.get('HTTP_REFERER', '/'))
-        
-    variant = get_object_or_404(ProductVariant, id=variant_id)
-    cart.add(variant=variant, quantity=quantity, update_quantity=True)
+
+    variant = get_object_or_404(ProductVariant, id=variant_id, is_active=True)
+    cart.add(variant=variant, quantity=quantity, update_quantity=True, prazo=prazo)
     
     # Base price calculation
     base_price = float(variant.price)

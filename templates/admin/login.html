@@ -1,0 +1,251 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% trans "Entrar" %} | NGD Painel Administrativo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #060f24 0%, #0d2657 30%, #1a4fad 60%, #0d2657 80%, #060f24 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Glowing orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(60px);
+    }
+    .orb-1 {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(29, 78, 216, 0.35) 0%, transparent 70%);
+      top: -200px; left: -200px;
+    }
+    .orb-2 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.25) 0%, transparent 70%);
+      bottom: -150px; right: -150px;
+    }
+    .orb-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.20) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Card wrapper */
+    .login-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      padding: 24px;
+    }
+
+    /* Logo */
+    .login-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .login-logo img {
+      max-width: 190px;
+      filter: drop-shadow(0 4px 20px rgba(59, 130, 246, 0.6));
+    }
+    .login-logo .subtitle {
+      margin-top: 10px;
+      color: rgba(186, 210, 255, 0.65);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* Glass card */
+    .login-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 24px;
+      padding: 40px 40px 36px;
+      box-shadow:
+        0 30px 70px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .login-card h1 {
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 32px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Error */
+    .errornote {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      border-radius: 10px;
+      color: #fca5a5;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* Form group */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      color: rgba(186, 210, 255, 0.80);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="password"] {
+      width: 100%;
+      padding: 13px 16px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 12px;
+      color: #ffffff;
+      font-size: 15px;
+      font-family: inherit;
+      transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+      outline: none;
+    }
+    .form-group input[type="text"]:focus,
+    .form-group input[type="password"]:focus {
+      border-color: rgba(96, 165, 250, 0.75);
+      background: rgba(255, 255, 255, 0.11);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
+    }
+    .form-group input::placeholder {
+      color: rgba(186, 210, 255, 0.30);
+    }
+
+    /* Button */
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      border: none;
+      border-radius: 12px;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 24px rgba(37, 99, 235, 0.45);
+    }
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(37, 99, 235, 0.60);
+    }
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    /* Footer version */
+    .login-footer {
+      text-align: center;
+      margin-top: 28px;
+      color: rgba(148, 180, 255, 0.40);
+      font-size: 11px;
+      letter-spacing: 0.8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="login-wrapper">
+    <div class="login-logo">
+      <img src="{% static 'img/logobranca.png' %}" alt="NGD Logo">
+      <p class="subtitle">Painel Administrativo</p>
+    </div>
+
+    <div class="login-card">
+      <h1>{% trans "Fazer Login" %}</h1>
+
+      {% if form.errors %}
+        <div class="errornote">
+          {% blocktrans count counter=form.errors.items|length %}
+            Usuário ou senha incorretos. Tente novamente.
+          {% plural %}
+            Por favor, corrija os erros abaixo.
+          {% endblocktrans %}
+        </div>
+      {% endif %}
+
+      {% if error_message %}
+        <div class="errornote">{{ error_message }}</div>
+      {% endif %}
+
+      <form method="post" action="{{ app_path }}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <div class="form-group">
+          <label for="id_username">{% trans "Usuário" %}</label>
+          <input type="text"
+                 id="id_username"
+                 name="username"
+                 value="{{ form.username.value|default:'' }}"
+                 autocomplete="username"
+                 autofocus
+                 placeholder="seu usuário">
+        </div>
+
+        <div class="form-group">
+          <label for="id_password">{% trans "Senha" %}</label>
+          <input type="password"
+                 id="id_password"
+                 name="password"
+                 autocomplete="current-password"
+                 placeholder="••••••••">
+        </div>
+
+        <button type="submit" class="btn-login">{% trans "Entrar" %}</button>
+      </form>
+
+      <p class="login-footer">NGD SITE v1.2.0 · Sistema de Gestão Web-to-Print</p>
+    </div>
+  </div>
+</body>
+</html>

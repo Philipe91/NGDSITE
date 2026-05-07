@@ -1,0 +1,81 @@
+# =============================================================================
+# Exemplo nginx para NGD Site — proxy reverso para Gunicorn + estáticos via WhiteNoise
+# Copie para /etc/nginx/sites-available/ngdsite e ajuste server_name + caminhos.
+# =============================================================================
+
+upstream ngdsite_app {
+    # Aponta para o Gunicorn (mesmo host ou socket)
+    server 127.0.0.1:8000 fail_timeout=0;
+}
+
+# Limita 10 conexões simultâneas por IP (anti-DoS leve, ajuste conforme tráfego)
+limit_conn_zone $binary_remote_addr zone=perip:10m;
+# Limita 30 req/s burst 60 — protege endpoints comuns
+limit_req_zone $binary_remote_addr zone=common:10m rate=30r/s;
+
+server {
+    listen 80;
+    server_name seudominio.com.br www.seudominio.com.br;
+
+    # Redirect HTTP → HTTPS (Certbot/Let's Encrypt)
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name seudominio.com.br www.seudominio.com.br;
+
+    # Certificados (Let's Encrypt via certbot)
+    ssl_certificate     /etc/letsencrypt/live/seudominio.com.br/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/seudominio.com.br/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_tickets off;
+
+    # Headers de segurança extras (Django também envia)
+    add_header X-Content-Type-Options nosniff always;
+    add_header X-Frame-Options DENY always;
+    add_header Referrer-Policy "same-origin" always;
+
+    # Tamanho máximo de upload — alinhe com ART_UPLOAD_MAX_BYTES
+    client_max_body_size 60M;
+    client_body_timeout 60s;
+
+    # Gzip básico (WhiteNoise já comprime estáticos pré-gerados)
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss image/svg+xml;
+    gzip_min_length 1024;
+
+    # Anti-DoS leve
+    limit_conn perip 20;
+    limit_req zone=common burst=60 nodelay;
+
+    # Mídia (uploads de cliente)
+    location /media/ {
+        alias /var/www/ngdsite/media/;
+        expires 7d;
+        add_header Cache-Control "public, no-transform";
+        # Bloqueia execução de scripts a partir do diretório de mídia
+        location ~ \.(php|py|cgi|pl|sh)$ {
+            return 403;
+        }
+    }
+
+    # Estáticos — WhiteNoise serve via Gunicorn, mas você pode servir direto:
+    location /static/ {
+        alias /var/www/ngdsite/staticfiles/;
+        expires 365d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location / {
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_redirect off;
+        proxy_read_timeout 60s;
+        proxy_pass http://ngdsite_app;
+    }
+}

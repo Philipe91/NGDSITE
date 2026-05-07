@@ -22,6 +22,7 @@ env/
 
 # Django
 *.log
+logs/
 local_settings.py
 db.sqlite3
 staticfiles/
@@ -29,6 +30,23 @@ media/
 
 # Variáveis de ambiente — NUNCA commitar!
 .env
+.env.local
+.env.production
+.env.*.local
+
+# Backups e dumps de banco — podem conter dados de cliente
+*.sql
+*.sql.gz
+*.dump
+backups/
+backup_*.sql
+
+# Binários e ferramentas locais
+cloudflared.exe
+*.exe
+!seed.py
+list_users_temp.py
+*_temp.py
 
 # IDEs
 .vscode/
@@ -39,7 +57,3 @@ media/
 # Sistema operacional
 .DS_Store
 Thumbs.db
-
-.env
-.venv/
-__pycache__/

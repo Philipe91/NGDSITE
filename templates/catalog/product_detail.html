@@ -208,6 +208,63 @@
                         Atendimento individualizado com assessoria profissional
                     </li>
                 </ul>
+
+                {% if product.slug == 'banner-rollup' %}
+                <!-- Especificações compactas (preenche espaço lateral até a galeria) -->
+                <div class="grid grid-cols-2 gap-3 mt-2">
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Material</span>
+                        </div>
+                        <p class="text-[13px] text-gray-800 font-semibold leading-snug">
+                            Lona 380g fosca + base discreta de alumínio
+                        </p>
+                    </div>
+
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Impressão</span>
+                        </div>
+                        <p class="text-[13px] text-gray-800 font-semibold leading-snug">
+                            UV de alta definição, cura a frio — cores vivas, sem encanoar
+                        </p>
+                    </div>
+
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Inclui</span>
+                        </div>
+                        <p class="text-[13px] text-gray-800 font-semibold leading-snug">
+                            Case de transporte e estrutura retrátil leve
+                        </p>
+                    </div>
+
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Produção</span>
+                        </div>
+                        <p class="text-[13px] text-gray-800 font-semibold leading-snug">
+                            Em até 48h após aprovação da arte
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -234,7 +291,7 @@
                         </div>
                         <div>
                             <h2 class="text-2xl font-black text-gray-900 tracking-tight">Formato</h2>
-                            <span class="text-sm text-gray-400 font-medium">Passo 1 de 6</span>
+                            <span class="text-sm text-gray-400 font-medium">Passo 1 de {% if product.slug == 'banner-rollup' %}4{% else %}6{% endif %}</span>
                         </div>
                     </div>
 
@@ -264,8 +321,25 @@
                                     <div class="text-[13px] font-bold text-black mb-3">
                                         A partir de R$ {{ variant.price|floatformat:"2" }}
                                     </div>
-                                    <p class="text-xs text-gray-500 leading-relaxed max-w-[200px]">Pronto para uso.
-                                        Ideal para pontos de venda e eventos.</p>
+                                    <p class="text-xs text-gray-500 leading-relaxed max-w-[200px]">
+                                        {% if product.slug == 'banner-rollup' %}
+                                            {% if "80 x 200" in variant.size_label %}
+                                                Padrão "Padrão" para feiras, eventos corporativos e lojas.
+                                            {% elif "100 x 200" in variant.size_label %}
+                                                Intermediário, ideal para maior visibilidade em eventos.
+                                            {% elif "120 x 200" in variant.size_label %}
+                                                Grande, excelente para lojas e promoções internas.
+                                            {% elif "150 x 200" in variant.size_label %}
+                                                Extra largo, utilizado para impacto máximo ou painéis de fundo.
+                                            {% elif "200 x 200" in variant.size_label %}
+                                                Tamanho máximo, ideal para painéis de fundo, palco e backdrops.
+                                            {% else %}
+                                                Pronto para uso. Ideal para pontos de venda e eventos.
+                                            {% endif %}
+                                        {% else %}
+                                            Pronto para uso. Ideal para pontos de venda e eventos.
+                                        {% endif %}
+                                    </p>
                                 </div>
                             </div>
                         </label>
@@ -275,7 +349,8 @@
                     </div>
                 </div>
 
-                <!-- Passo 2: Material -->
+                {% if product.slug != 'banner-rollup' %}
+                <!-- Passo 2: Material (oculto no rollup — material é fixo: lona 380g) -->
                 <div class="step-section mt-16">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-12 h-12 rounded-[14px] bg-gradient-to-br from-[#153e8a] to-[#0070f3] shadow-[0_10px_20px_-5px_rgba(21,62,138,0.5)] flex items-center justify-center shrink-0">
@@ -344,8 +419,10 @@
                         {% endif %}
                     </div>
                 </div>
+                {% endif %}
 
-                <!-- Passo 3: Acabamento -->
+                {% if product.slug != 'banner-rollup' %}
+                <!-- Passo 3: Acabamento (oculto no rollup — acabamento é fixo: refile reto + montagem) -->
                 <div class="step-section mt-16">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-12 h-12 rounded-[14px] bg-gradient-to-br from-[#153e8a] to-[#0070f3] shadow-[0_10px_20px_-5px_rgba(21,62,138,0.5)] flex items-center justify-center shrink-0">
@@ -409,21 +486,25 @@
                         {% endif %}
                     </div>
                 </div>
+                {% endif %}
 
                 <!-- Passo 4: Prazo de Produção -->
                 <div class="step-section mt-16">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-12 h-12 rounded-[14px] bg-gradient-to-br from-[#153e8a] to-[#0070f3] shadow-[0_10px_20px_-5px_rgba(21,62,138,0.5)] flex items-center justify-center shrink-0">
+                            <!-- Velocímetro / Gauge -->
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
+                                    d="M3.5 17a8.5 8.5 0 0 1 17 0"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M12 17l5-4.5"></path>
+                                <circle cx="12" cy="17" r="1.4" fill="currentColor" stroke="none"></circle>
                             </svg>
                         </div>
                         <div class="flex-grow flex justify-between items-center">
                             <div>
                                 <h2 class="text-2xl font-black text-gray-900 tracking-tight">Prazo de Produção</h2>
-                                <span class="text-sm text-gray-400 font-medium">Passo 4 de 6</span>
+                                <span class="text-sm text-gray-400 font-medium">Passo {% if product.slug == 'banner-rollup' %}2 de 4{% else %}4 de 6{% endif %}</span>
                             </div>
                             <div class="hidden sm:flex text-xs text-gray-500 gap-4">
                                 <span>✔ DIL Realizado</span>
@@ -497,7 +578,7 @@
                         </div>
                         <div>
                             <h2 class="text-2xl font-black text-gray-900 tracking-tight">Arquivo para Impressão</h2>
-                            <span class="text-sm text-gray-400 font-medium">Passo 5 de 6</span>
+                            <span class="text-sm text-gray-400 font-medium">Passo {% if product.slug == 'banner-rollup' %}3 de 4{% else %}5 de 6{% endif %}</span>
                         </div>
                     </div>
 
@@ -546,7 +627,7 @@
                             </div>
                             <div>
                                 <h2 class="text-2xl font-black text-gray-900 tracking-tight">Quantidade</h2>
-                                <span class="text-sm text-gray-400 font-medium">Passo 6 de 6</span>
+                                <span class="text-sm text-gray-400 font-medium">Passo {% if product.slug == 'banner-rollup' %}4 de 4{% else %}6 de 6{% endif %}</span>
                             </div>
                         </div>
                         <div class="hidden sm:flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl p-1 shadow-inner h-10 w-32">
@@ -686,6 +767,111 @@
         </div>
 
     </div>
+
+    {% if product.slug == 'banner-rollup' %}
+    <!-- FAQ — Perguntas Frequentes (Roll Up) -->
+    <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
+        <div class="text-center mb-10">
+            <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-black">Perguntas <span class="text-primary italic">Frequentes</span></h2>
+        </div>
+
+        <div class="space-y-3">
+            <!-- 1. Tamanhos -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 1 ? 0 : 1)">
+                    <span class="font-bold text-sm text-black">Quais os tamanhos disponíveis?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 1 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 1" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <p class="mb-3">A NGD disponibiliza o Roll Up nos seguintes tamanhos (Largura × Altura):</p>
+                        <ul class="grid grid-cols-2 gap-x-4 gap-y-1 text-[13px]">
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>80 × 200 cm</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>100 × 200 cm</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>120 × 200 cm</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>150 × 200 cm</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>200 × 200 cm</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Material -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 2 ? 0 : 2)">
+                    <span class="font-bold text-sm text-black">Qual o tipo de material usado?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 2 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 2" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        Lona PVC <strong>380g fosca</strong> — material leve e resistente, com 500 fios. A estrutura usa
+                        base discreta de alumínio, estável e fácil de transportar.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3. Impressão -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 3 ? 0 : 3)">
+                    <span class="font-bold text-sm text-black">Qual o tipo de impressão utilizada?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 3 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 3" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <strong>Tecnologia UV de Alta Definição</strong> — diferente dos banners comuns que curvam nas
+                        laterais e perdem o brilho com o tempo, o Roll Up da NGD usa o que há de mais moderno em
+                        impressão UV, com cura a frio que não agride a lona.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4. Vantagens NGD -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 4 ? 0 : 4)">
+                    <span class="font-bold text-sm text-black">Quais as vantagens de comprar o Roll Up com a NGD?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 4 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 4" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-3">
+                        <div>
+                            <strong class="text-black">Acabamento impecável (sem "encanoar")</strong>
+                            <p class="text-[13px]">Tecnologia de cura a frio que não agride a lona — banner perfeitamente plano, sem dobras nas bordas.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Cores vivas e reais</strong>
+                            <p class="text-[13px]">Pigmentação de alta densidade entrega cores muito mais vibrantes e pretos profundos.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Durabilidade superior</strong>
+                            <p class="text-[13px]">Tinta UV altamente resistente a riscos e que não desbota — mantém a aparência de novo por muito mais tempo.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Sem cheiro e sustentável</strong>
+                            <p class="text-[13px]">Ideal para eventos internos: impressão livre de solventes químicos e odores fortes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <!-- Footer Section: Confiança -->
     <div class="mt-20 border-t border-gray-100 pt-16 pb-12 text-center max-w-4xl mx-auto px-4">

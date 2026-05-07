@@ -186,7 +186,7 @@
 <script>
     function checkoutApp() {
         return {
-            subtotal: parseFloat("{{ cart.get_total_price|floatformat:'2' }}".replace(',', '.')) || 0,
+            subtotal: parseFloat("{{ cart.get_total_price|floatformat:'2' }}".replace(/\./g, '').replace(',', '.')) || 0,
             cep: '',
             freteOptions: [],
             freteError: '',
