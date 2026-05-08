@@ -319,6 +319,61 @@
                         </p>
                     </div>
                 </div>
+                {% elif product.slug == 'cubo-promocional-em-poliondas' %}
+                <!-- Especificações compactas (Cubo Promocional) -->
+                <div class="grid grid-cols-2 gap-3 mt-2">
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Material</span>
+                        </div>
+                        <p class="text-[13px] text-gray-800 font-semibold leading-snug">
+                            Poliondas (polipropileno corrugado alveolar)
+                        </p>
+                    </div>
+
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Impressão</span>
+                        </div>
+                        <p class="text-[13px] text-gray-800 font-semibold leading-snug">
+                            CMYK (4×0) em alta resolução nas 6 faces
+                        </p>
+                    </div>
+
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Formato</span>
+                        </div>
+                        <p class="text-[13px] text-gray-800 font-semibold leading-snug">
+                            Cubo 360° — comunicação visível em todos os ângulos
+                        </p>
+                    </div>
+
+                    <div class="rounded-xl border border-gray-200 bg-gray-50/60 p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Acabamento</span>
+                        </div>
+                        <p class="text-[13px] text-gray-800 font-semibold leading-snug">
+                            Corte, vinco e dobra — pronto para uso
+                        </p>
+                    </div>
+                </div>
                 {% endif %}
             </div>
         </div>
@@ -356,7 +411,7 @@
                         <label class="relative cursor-pointer group">
                             <input type="radio" name="variant_id" :value="{{ variant.id }}" class="peer sr-only"
                                 x-model.number="selectedVariantId" @change="updateSelectedVariant()">
-                            <div class="h-full border-2 rounded-xl p-5 hover:border-gray-300 transition-all flex flex-col justify-between"
+                            <div class="h-full border-2 rounded-xl p-5 hover:border-gray-300 transition-all flex flex-col justify-between {% if product.slug == 'cubo-promocional-em-poliondas' %}min-h-[200px]{% endif %}"
                                 :class="selectedVariantId === {{ variant.id }} ? 'border-primary bg-primary/5' : 'border-gray-200'">
                                 <!-- Radio Circle -->
                                 <div class="w-5 h-5 border-2 rounded-full flex items-center justify-center shrink-0 absolute top-6 left-5 transition-colors"
@@ -366,7 +421,7 @@
                                     </div>
                                 </div>
 
-                                <div class="pl-8 flex flex-col flex-grow">
+                                <div class="pl-8 flex flex-col flex-grow {% if product.slug == 'cubo-promocional-em-poliondas' %}pr-48{% endif %}">
                                     <h3 class="font-bold text-black text-sm mb-1 leading-tight">
                                         {{ product.name }} {{ variant.size_label }}
                                     </h3>
@@ -376,7 +431,7 @@
                                     <div class="text-[13px] font-bold text-black mb-3">
                                         A partir de R$ {{ variant.price|floatformat:"2" }}
                                     </div>
-                                    <p class="text-xs text-gray-500 leading-relaxed max-w-[200px]">
+                                    <p class="text-xs text-gray-500 leading-relaxed {% if product.slug == 'cubo-promocional-em-poliondas' %}max-w-[120px]{% else %}max-w-[200px]{% endif %}">
                                         {% if product.slug == 'banner-rollup' %}
                                             {% if "80 x 200" in variant.size_label %}
                                                 Padrão "Padrão" para feiras, eventos corporativos e lojas.
@@ -391,11 +446,42 @@
                                             {% else %}
                                                 Pronto para uso. Ideal para pontos de venda e eventos.
                                             {% endif %}
+                                        {% elif product.slug == 'cubo-promocional-em-poliondas' %}
+                                            {% with s=variant.size_label|cut:" cm" %}Impressão CMYK (4×0) nas 6 faces de {{ s }}×{{ s }} cm. Pronto para uso.{% endwith %}
                                         {% else %}
                                             Pronto para uso. Ideal para pontos de venda e eventos.
                                         {% endif %}
                                     </p>
                                 </div>
+
+                                {% if product.slug == 'cubo-promocional-em-poliondas' %}
+                                <!-- Cubo isométrico (canto direito) com setas de dimensão -->
+                                <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-800">
+                                    <svg viewBox="0 0 110 95" class="w-[176px] h-[156px]">
+                                        <!-- arestas do cubo isométrico -->
+                                        <g stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round">
+                                            <!-- face frontal -->
+                                            <rect x="14" y="30" width="48" height="48"/>
+                                            <!-- face de cima -->
+                                            <path d="M 14 30 L 27 17 L 75 17 L 62 30 Z"/>
+                                            <!-- face direita -->
+                                            <path d="M 62 30 L 75 17 L 75 65 L 62 78 Z"/>
+                                        </g>
+                                        <!-- dimensão vertical (altura) à direita do cubo -->
+                                        <g font-size="8" font-weight="700" fill="currentColor" font-family="ui-sans-serif, system-ui">
+                                            <text x="92" y="33" text-anchor="middle">▲</text>
+                                            <text x="92" y="51" text-anchor="middle">{{ variant.size_label }}</text>
+                                            <text x="92" y="69" text-anchor="middle">▼</text>
+                                        </g>
+                                        <!-- dimensão horizontal (largura) abaixo do cubo -->
+                                        <g font-size="8" font-weight="700" fill="currentColor" font-family="ui-sans-serif, system-ui">
+                                            <text x="11" y="92">◀</text>
+                                            <text x="38" y="92" text-anchor="middle">{{ variant.size_label }}</text>
+                                            <text x="60" y="92">▶</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                                {% endif %}
                             </div>
                         </label>
                         {% empty %}
