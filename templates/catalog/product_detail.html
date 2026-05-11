@@ -411,7 +411,7 @@
                         <label class="relative cursor-pointer group">
                             <input type="radio" name="variant_id" :value="{{ variant.id }}" class="peer sr-only"
                                 x-model.number="selectedVariantId" @change="updateSelectedVariant()">
-                            <div class="h-full border-2 rounded-xl p-5 hover:border-gray-300 transition-all flex flex-col justify-between {% if product.slug == 'cubo-promocional-em-poliondas' %}min-h-[200px]{% endif %}"
+                            <div class="h-full border-2 rounded-xl p-5 hover:border-gray-300 transition-all flex flex-col justify-between {% if product.slug == 'cubo-promocional-em-poliondas' or product.slug == 'totem-triedro-em-poliondas' %}min-h-[200px]{% endif %}"
                                 :class="selectedVariantId === {{ variant.id }} ? 'border-primary bg-primary/5' : 'border-gray-200'">
                                 <!-- Radio Circle -->
                                 <div class="w-5 h-5 border-2 rounded-full flex items-center justify-center shrink-0 absolute top-6 left-5 transition-colors"
@@ -421,7 +421,7 @@
                                     </div>
                                 </div>
 
-                                <div class="pl-8 flex flex-col flex-grow {% if product.slug == 'cubo-promocional-em-poliondas' %}pr-48{% endif %}">
+                                <div class="pl-8 flex flex-col flex-grow {% if product.slug == 'cubo-promocional-em-poliondas' %}pr-48{% elif product.slug == 'totem-triedro-em-poliondas' %}pr-36{% endif %}">
                                     <h3 class="font-bold text-black text-sm mb-1 leading-tight">
                                         {{ product.name }} {{ variant.size_label }}
                                     </h3>
@@ -448,11 +448,135 @@
                                             {% endif %}
                                         {% elif product.slug == 'cubo-promocional-em-poliondas' %}
                                             {% with s=variant.size_label|cut:" cm" %}Impressão CMYK (4×0) nas 6 faces de {{ s }}×{{ s }} cm. Pronto para uso.{% endwith %}
+                                        {% elif product.slug == 'totem-triedro-em-poliondas' %}
+                                            3 faces de {{ variant.size_label }}. Pronto para uso.
                                         {% else %}
                                             Pronto para uso. Ideal para pontos de venda e eventos.
                                         {% endif %}
                                     </p>
                                 </div>
+
+                                {% if product.slug == 'totem-triedro-em-poliondas' %}
+                                <!-- Totem Triedro + silhueta para escala -->
+                                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                                    {# Define dimensões por variante #}
+                                    {% if "40x120" in variant.size_label %}
+                                        {% with totem_h=78 totem_w=22 totem_y=66 face_label="40x120cm" %}
+                                        <svg viewBox="0 0 130 160" class="w-[140px] h-[170px]">
+                                            <defs>
+                                                <linearGradient id="totemGrad{{ variant.id }}" x1="0" y1="0" x2="1" y2="1">
+                                                    <stop offset="0%" stop-color="#1e5594"/>
+                                                    <stop offset="100%" stop-color="#0a2553"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <!-- Sombra do chão -->
+                                            <ellipse cx="65" cy="148" rx="55" ry="3" fill="#000" opacity="0.06"/>
+                                            <!-- Silhueta da pessoa (175cm de referência) -->
+                                            <g fill="#cbd5e1">
+                                                <circle cx="98" cy="52" r="7"/>
+                                                <path d="M88 62 Q98 60 108 62 L110 88 L106 116 L108 144 L102 144 L99 118 L98 100 L97 118 L94 144 L88 144 L90 116 L86 88 Z"/>
+                                            </g>
+                                            <!-- Totem -->
+                                            <g>
+                                                <!-- Face frontal -->
+                                                <rect x="28" y="{{ totem_y }}" width="{{ totem_w }}" height="{{ totem_h }}" fill="url(#totemGrad{{ variant.id }})" rx="1"/>
+                                                <!-- Lateral (perspectiva) -->
+                                                <path d="M50 {{ totem_y }} L57 {{ totem_y|add:-3 }} L57 {{ totem_y|add:totem_h|add:-3 }} L50 {{ totem_y|add:totem_h }} Z" fill="#0a2553" opacity="0.55"/>
+                                                <!-- Topo -->
+                                                <path d="M28 {{ totem_y }} L35 {{ totem_y|add:-3 }} L57 {{ totem_y|add:-3 }} L50 {{ totem_y }} Z" fill="#2563a8"/>
+                                                <!-- Label TOTEM TRIEDRO -->
+                                                <text x="39" y="{{ totem_y|add:14 }}" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="3.5" font-weight="800" fill="white" letter-spacing="0.3">TOTEM TRIEDRO</text>
+                                                <!-- Label dimensão -->
+                                                <text x="39" y="{{ totem_y|add:24 }}" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="4" font-weight="700" fill="white">{{ face_label }}</text>
+                                                <!-- Padrão decorativo -->
+                                                <g fill="white" opacity="0.30">
+                                                    <circle cx="32" cy="{{ totem_y|add:35 }}" r="0.6"/>
+                                                    <circle cx="36" cy="{{ totem_y|add:35 }}" r="0.6"/>
+                                                    <circle cx="40" cy="{{ totem_y|add:35 }}" r="0.6"/>
+                                                    <circle cx="44" cy="{{ totem_y|add:35 }}" r="0.6"/>
+                                                    <circle cx="32" cy="{{ totem_y|add:42 }}" r="0.6"/>
+                                                    <circle cx="36" cy="{{ totem_y|add:42 }}" r="0.6"/>
+                                                    <circle cx="40" cy="{{ totem_y|add:42 }}" r="0.6"/>
+                                                    <circle cx="44" cy="{{ totem_y|add:42 }}" r="0.6"/>
+                                                </g>
+                                            </g>
+                                            <!-- Linha do chão -->
+                                            <line x1="5" y1="145" x2="125" y2="145" stroke="#e5e7eb" stroke-width="0.7"/>
+                                        </svg>
+                                        {% endwith %}
+                                    {% elif "40x190" in variant.size_label %}
+                                        {% with totem_h=120 totem_w=22 totem_y=25 face_label="40x190cm" %}
+                                        <svg viewBox="0 0 130 160" class="w-[140px] h-[170px]">
+                                            <defs>
+                                                <linearGradient id="totemGrad{{ variant.id }}" x1="0" y1="0" x2="1" y2="1">
+                                                    <stop offset="0%" stop-color="#1e5594"/>
+                                                    <stop offset="100%" stop-color="#0a2553"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <ellipse cx="65" cy="148" rx="55" ry="3" fill="#000" opacity="0.06"/>
+                                            <g fill="#cbd5e1">
+                                                <circle cx="98" cy="52" r="7"/>
+                                                <path d="M88 62 Q98 60 108 62 L110 88 L106 116 L108 144 L102 144 L99 118 L98 100 L97 118 L94 144 L88 144 L90 116 L86 88 Z"/>
+                                            </g>
+                                            <g>
+                                                <rect x="28" y="{{ totem_y }}" width="{{ totem_w }}" height="{{ totem_h }}" fill="url(#totemGrad{{ variant.id }})" rx="1"/>
+                                                <path d="M50 {{ totem_y }} L57 {{ totem_y|add:-3 }} L57 {{ totem_y|add:totem_h|add:-3 }} L50 {{ totem_y|add:totem_h }} Z" fill="#0a2553" opacity="0.55"/>
+                                                <path d="M28 {{ totem_y }} L35 {{ totem_y|add:-3 }} L57 {{ totem_y|add:-3 }} L50 {{ totem_y }} Z" fill="#2563a8"/>
+                                                <text x="39" y="{{ totem_y|add:18 }}" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="3.5" font-weight="800" fill="white" letter-spacing="0.3">TOTEM TRIEDRO</text>
+                                                <text x="39" y="{{ totem_y|add:30 }}" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="4" font-weight="700" fill="white">{{ face_label }}</text>
+                                                <g fill="white" opacity="0.30">
+                                                    <circle cx="32" cy="{{ totem_y|add:50 }}" r="0.6"/>
+                                                    <circle cx="36" cy="{{ totem_y|add:50 }}" r="0.6"/>
+                                                    <circle cx="40" cy="{{ totem_y|add:50 }}" r="0.6"/>
+                                                    <circle cx="44" cy="{{ totem_y|add:50 }}" r="0.6"/>
+                                                    <circle cx="32" cy="{{ totem_y|add:60 }}" r="0.6"/>
+                                                    <circle cx="36" cy="{{ totem_y|add:60 }}" r="0.6"/>
+                                                    <circle cx="40" cy="{{ totem_y|add:60 }}" r="0.6"/>
+                                                    <circle cx="44" cy="{{ totem_y|add:60 }}" r="0.6"/>
+                                                </g>
+                                            </g>
+                                            <line x1="5" y1="145" x2="125" y2="145" stroke="#e5e7eb" stroke-width="0.7"/>
+                                        </svg>
+                                        {% endwith %}
+                                    {% elif "60x190" in variant.size_label %}
+                                        {% with totem_h=120 totem_w=33 totem_y=25 face_label="60x190cm" %}
+                                        <svg viewBox="0 0 130 160" class="w-[140px] h-[170px]">
+                                            <defs>
+                                                <linearGradient id="totemGrad{{ variant.id }}" x1="0" y1="0" x2="1" y2="1">
+                                                    <stop offset="0%" stop-color="#1e5594"/>
+                                                    <stop offset="100%" stop-color="#0a2553"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <ellipse cx="65" cy="148" rx="55" ry="3" fill="#000" opacity="0.06"/>
+                                            <g fill="#cbd5e1">
+                                                <circle cx="105" cy="52" r="7"/>
+                                                <path d="M95 62 Q105 60 115 62 L117 88 L113 116 L115 144 L109 144 L106 118 L105 100 L104 118 L101 144 L95 144 L97 116 L93 88 Z"/>
+                                            </g>
+                                            <g>
+                                                <rect x="22" y="{{ totem_y }}" width="{{ totem_w }}" height="{{ totem_h }}" fill="url(#totemGrad{{ variant.id }})" rx="1"/>
+                                                <path d="M55 {{ totem_y }} L62 {{ totem_y|add:-3 }} L62 {{ totem_y|add:totem_h|add:-3 }} L55 {{ totem_y|add:totem_h }} Z" fill="#0a2553" opacity="0.55"/>
+                                                <path d="M22 {{ totem_y }} L29 {{ totem_y|add:-3 }} L62 {{ totem_y|add:-3 }} L55 {{ totem_y }} Z" fill="#2563a8"/>
+                                                <text x="38" y="{{ totem_y|add:18 }}" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="4" font-weight="800" fill="white" letter-spacing="0.4">TOTEM TRIEDRO</text>
+                                                <text x="38" y="{{ totem_y|add:30 }}" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="4.5" font-weight="700" fill="white">{{ face_label }}</text>
+                                                <g fill="white" opacity="0.30">
+                                                    <circle cx="27" cy="{{ totem_y|add:50 }}" r="0.7"/>
+                                                    <circle cx="32" cy="{{ totem_y|add:50 }}" r="0.7"/>
+                                                    <circle cx="37" cy="{{ totem_y|add:50 }}" r="0.7"/>
+                                                    <circle cx="42" cy="{{ totem_y|add:50 }}" r="0.7"/>
+                                                    <circle cx="47" cy="{{ totem_y|add:50 }}" r="0.7"/>
+                                                    <circle cx="27" cy="{{ totem_y|add:60 }}" r="0.7"/>
+                                                    <circle cx="32" cy="{{ totem_y|add:60 }}" r="0.7"/>
+                                                    <circle cx="37" cy="{{ totem_y|add:60 }}" r="0.7"/>
+                                                    <circle cx="42" cy="{{ totem_y|add:60 }}" r="0.7"/>
+                                                    <circle cx="47" cy="{{ totem_y|add:60 }}" r="0.7"/>
+                                                </g>
+                                            </g>
+                                            <line x1="5" y1="145" x2="125" y2="145" stroke="#e5e7eb" stroke-width="0.7"/>
+                                        </svg>
+                                        {% endwith %}
+                                    {% endif %}
+                                </div>
+                                {% endif %}
 
                                 {% if product.slug == 'cubo-promocional-em-poliondas' %}
                                 <!-- Cubo isométrico (canto direito) com setas de dimensão -->
@@ -1006,6 +1130,158 @@
                         <div>
                             <strong class="text-black">Sem cheiro e sustentável</strong>
                             <p class="text-[13px]">Ideal para eventos internos: impressão livre de solventes químicos e odores fortes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if product.slug == 'totem-triedro-em-poliondas' %}
+    <!-- FAQ — Perguntas Frequentes (Totem Triedro) -->
+    <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
+        <div class="text-center mb-10">
+            <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-black">Perguntas <span class="text-primary italic">Frequentes</span></h2>
+        </div>
+
+        <div class="space-y-3">
+            <!-- 1. Tamanhos -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 1 ? 0 : 1)">
+                    <span class="font-bold text-sm text-black">Quais os tamanhos disponíveis?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 1 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 1" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <p class="mb-3">O Totem Triedro NGD vem com 3 faces nos seguintes tamanhos (largura × altura por face):</p>
+                        <ul class="grid grid-cols-2 gap-x-4 gap-y-1 text-[13px]">
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>40 × 120 cm</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>40 × 190 cm</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>60 × 190 cm</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Material -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 2 ? 0 : 2)">
+                    <span class="font-bold text-sm text-black">Qual o material e a estrutura?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 2 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 2" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <strong>Polipropileno corrugado (poliondas) de 3 mm</strong> — leve, resistente à umidade
+                        e muito mais durável que o papelão. Vem cortado, vincado e dobrado, sem laminação
+                        (acabamento fosco natural). Fica em pé sozinho, sem precisar de suporte.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3. Impressão -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 3 ? 0 : 3)">
+                    <span class="font-bold text-sm text-black">Como é a impressão?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 3 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 3" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <strong>Impressão UV em alta resolução</strong> nas 3 faces — cores vivas, pretos profundos
+                        e sem desbotar com o tempo. A cura a frio não agride a poliondas e elimina o cheiro
+                        químico de tintas convencionais.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4. Montagem -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 4 ? 0 : 4)">
+                    <span class="font-bold text-sm text-black">Como vai a peça? Precisa de montagem?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 4 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 4" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <strong>Pronto para uso.</strong> Já sai daqui cortado, vincado e dobrado em formato
+                        triangular — é só posicionar no chão que o totem fica em pé sozinho. Não precisa de
+                        suporte, parafusos ou ferramentas.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 5. Onde usar -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 5 ? 0 : 5)">
+                    <span class="font-bold text-sm text-black">Onde posso usar o Totem Triedro?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 5 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 5" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-2">
+                        <p>Ambientes internos com bom impacto visual:</p>
+                        <ul class="grid grid-cols-2 gap-x-4 gap-y-1 text-[13px]">
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Ponto de venda (PDV)</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Eventos e feiras</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Stands corporativos</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Halls de entrada</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Lojas e shoppings</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Lançamentos de produto</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Vantagens NGD -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 6 ? 0 : 6)">
+                    <span class="font-bold text-sm text-black">Quais as vantagens de comprar com a NGD?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 6 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 6" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-3">
+                        <div>
+                            <strong class="text-black">Comunicação 360°</strong>
+                            <p class="text-[13px]">Três faces personalizáveis, visível de qualquer ângulo.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Sem montagem complicada</strong>
+                            <p class="text-[13px]">Já chega cortado e vincado — é só posicionar e usar.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Impressão UV de alta definição</strong>
+                            <p class="text-[13px]">Cores vivas, durabilidade superior e sem odor químico.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Checagem de arquivo gratuita</strong>
+                            <p class="text-[13px]">Time de pré-impressão revisa seu arquivo antes de produzir.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Envio para todo o Brasil</strong>
+                            <p class="text-[13px]">Frete calculado pelo CEP. Pix com 5% de desconto.</p>
                         </div>
                     </div>
                 </div>
