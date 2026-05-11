@@ -1235,7 +1235,73 @@
 
 
 
-<!-- FEATURES SECTION -->
+<!-- CATÁLOGO -->
+<section id="catalogo" class="py-24 bg-surface">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-4">
+            <div class="max-w-xl text-center md:text-left">
+                <h3 class="text-4xl font-bold text-black mb-4">Nosso Catálogo</h3>
+                <p class="text-gray-500">Soluções exclusivas em comunicação visual para transformar seu ponto de venda.
+                </p>
+            </div>
+            <div class="w-24 h-1 bg-primary/10 rounded-full hidden md:block mb-4"></div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {% for prod in featured_products %}
+            <div
+                class="bg-white rounded-[2rem] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.08)] transition-all duration-500 border border-gray-100 group flex flex-col">
+                <div class="relative overflow-hidden aspect-square bg-surface p-8">
+                    <a href="{% url 'catalog:product_detail' prod.slug %}" class="block w-full h-full">
+                        {% if prod.featured_image %}
+                        <img src="{{ prod.featured_image.url }}" alt="{{ prod.name }}"
+                            class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700">
+                        {% else %}
+                        <div class="w-full h-full flex flex-col items-center justify-center text-gray-400">
+                            <svg class="w-12 h-12 mb-2 opacity-50" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        {% endif %}
+                    </a>
+                </div>
+
+                <div class="p-8 flex flex-col flex-grow text-center">
+                    <a href="{% url 'catalog:product_detail' prod.slug %}" class="flex-grow">
+                        <h4
+                            class="text-lg font-bold mb-2 text-black group-hover:text-primary transition-colors leading-tight">
+                            {{ prod.name }}</h4>
+                        <div class="flex justify-center text-primary mb-4 gap-1">
+                            <span class="text-xs">★★★★★</span> <span
+                                class="text-[10px] text-gray-400 font-medium ml-1">4.9/5</span>
+                        </div>
+                    </a>
+
+                    <div class="mt-auto pt-4">
+                        {% with variant=prod.variants.all|first %}
+                        {% if variant %}
+                        <div class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">A partir de</div>
+                        <span class="text-2xl font-bold text-black group-hover:gradient-text">R$ {{ variant.price|floatformat:"2" }}</span>
+                        {% else %}
+                        <span class="text-lg font-bold text-gray-400">Sob Consulta</span>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full py-20 text-center text-gray-500">
+                <p>Catálogo vazio por enquanto.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES SECTION (Suporte Premium) -->
 <section class="py-24 bg-white relative overflow-hidden">
     <!-- Decoração de Fundo -->
     <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none">
@@ -1300,72 +1366,6 @@
                 <p class="text-gray-500 leading-relaxed">Flexibilidade escalonável para franquias e agências, com
                     logística integrada para todo o território nacional.</p>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- CATÁLOGO -->
-<section id="catalogo" class="py-24 bg-surface">
-    <div class="container mx-auto px-4 lg:px-8">
-        <div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-4">
-            <div class="max-w-xl text-center md:text-left">
-                <h3 class="text-4xl font-bold text-black mb-4">Nosso Catálogo</h3>
-                <p class="text-gray-500">Soluções exclusivas em comunicação visual para transformar seu ponto de venda.
-                </p>
-            </div>
-            <div class="w-24 h-1 bg-primary/10 rounded-full hidden md:block mb-4"></div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {% for prod in featured_products %}
-            <div
-                class="bg-white rounded-[2rem] overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.08)] transition-all duration-500 border border-gray-100 group flex flex-col">
-                <div class="relative overflow-hidden aspect-square bg-surface p-8">
-                    <a href="{% url 'catalog:product_detail' prod.slug %}" class="block w-full h-full">
-                        {% if prod.featured_image %}
-                        <img src="{{ prod.featured_image.url }}" alt="{{ prod.name }}"
-                            class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700">
-                        {% else %}
-                        <div class="w-full h-full flex flex-col items-center justify-center text-gray-400">
-                            <svg class="w-12 h-12 mb-2 opacity-50" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                </path>
-                            </svg>
-                        </div>
-                        {% endif %}
-                    </a>
-                </div>
-
-                <div class="p-8 flex flex-col flex-grow text-center">
-                    <a href="{% url 'catalog:product_detail' prod.slug %}" class="flex-grow">
-                        <h4
-                            class="text-lg font-bold mb-2 text-black group-hover:text-primary transition-colors leading-tight">
-                            {{ prod.name }}</h4>
-                        <div class="flex justify-center text-primary mb-4 gap-1">
-                            <span class="text-xs">★★★★★</span> <span
-                                class="text-[10px] text-gray-400 font-medium ml-1">4.9/5</span>
-                        </div>
-                    </a>
-
-                    <div class="mt-auto pt-4">
-                        {% with variant=prod.variants.all|first %}
-                        {% if variant %}
-                        <div class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">A partir de</div>
-                        <span class="text-2xl font-bold text-black group-hover:gradient-text">R$ {{ variant.price|floatformat:"2" }}</span>
-                        {% else %}
-                        <span class="text-lg font-bold text-gray-400">Sob Consulta</span>
-                        {% endif %}
-                        {% endwith %}
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-span-full py-20 text-center text-gray-500">
-                <p>Catálogo vazio por enquanto.</p>
-            </div>
-            {% endfor %}
         </div>
     </div>
 </section>
@@ -1785,7 +1785,7 @@
                     subtitle: 'Novo Produto',
                     title: 'Totem <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Triedro</span>',
                     description: 'Visibilidade impecável de todos os ângulos. Totem de 3 faces que revoluciona o espaço do seu PDV.',
-                    image: "{% static 'img/totem_triedro.png' %}?v=9",
+                    image: "{% static 'img/totem_triedro_hero.png' %}?v=20",
                     cta: 'Personalizar',
                     link: '/produto/totem-triedro-em-poliondas/',
                     bigBgText: 'TOTEM',
@@ -1869,7 +1869,7 @@
                     subtitle: 'Lançamento',
                     title: 'Totem<br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">Triedro</span>',
                     description: 'Engajamento 360 Graus. Um totem de 3 faces desenvolvido para garantir máxima visibilidade em grandes corredores e espaços abertos.',
-                    image: "{% static 'img/totem_triedro.png' %}?v=10",
+                    image: "{% static 'img/totem_triedro_hero.png' %}?v=21",
                     cta: 'Personalizar',
                     link: '/produto/totem-triedro-em-poliondas/',
                     glowTop: 'bg-blue-600',
@@ -1941,7 +1941,7 @@
                     subtitle: 'Lançamento',
                     title: 'Totem<br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">Triedro</span>',
                     description: 'Engajamento 360 Graus. Um totem de 3 faces desenvolvido para garantir máxima visibilidade em grandes corredores e espaços abertos.',
-                    image: "{% static 'img/totem_triedro.png' %}?v=11",
+                    image: "{% static 'img/totem_triedro_hero.png' %}?v=22",
                     cta: 'Personalizar',
                     link: '/produto/totem-triedro-em-poliondas/',
                     glowTop: 'bg-blue-100/80',
@@ -2011,7 +2011,7 @@
                     subtitle: 'Lançamento',
                     title: 'Totem Triedro',
                     description: 'Engajamento 360 Graus. Um totem de 3 faces focado em visibilidade máxima.',
-                    image: "{% static 'img/totem_triedro.png' %}?v=12",
+                    image: "{% static 'img/totem_triedro_hero.png' %}?v=23",
                     cta: 'Personalizar Material',
                     link: '/produto/totem-triedro-em-poliondas/',
                     bigBgText: 'TRIEDRO',
@@ -2071,7 +2071,7 @@
                     subtitle: 'Evolução em PDV',
                     title: 'Totem<br>Triedro.',
                     description: 'Engajamento 360 Graus. Um totem de 3 faces focado em garantir máxima visibilidade dentro de corredores de shopping e supermercados.',
-                    image: "{% static 'img/totem_triedro.png' %}?v=13",
+                    image: "{% static 'img/totem_triedro_hero.png' %}?v=24",
                     cta: 'Comprar Totem',
                     link: '/produto/totem-triedro-em-poliondas/',
                     bgColor: 'bg-[#f0f4f8]'
@@ -2140,7 +2140,7 @@
                     subtitle: 'Impacto Automontável',
                     title: 'Totem<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Triedro.</span>',
                     description: 'O material ideal para feiras intensas. Três faces de pura visibilidade, montagem em segundos e total flexibilidade.',
-                    image: "{% static 'img/totem_triedro.png' %}?v=14",
+                    image: "{% static 'img/totem_triedro_hero.png' %}?v=25",
                     cta: 'Personalizar',
                     link: '/produto/totem-triedro-em-poliondas/',
                     badgeDotColor: 'bg-blue-500',
@@ -2212,7 +2212,7 @@
                     navName: 'Totem',
                     title: 'Totem<br>Triedro.',
                     description: 'Engajamento absoluto em corredores luxuosos. Totem de 3 faces desenvolvido para presença em todos os ângulos.',
-                    image: "{% static 'img/totem_triedro.png' %}?v=15",
+                    image: "{% static 'img/totem_triedro_hero.png' %}?v=26",
                     cta: 'Personalizar Agora',
                     link: '/produto/totem-triedro-em-poliondas/',
                     shadowColor: 'bg-blue-900/30'
@@ -2273,7 +2273,7 @@
                     subtitle: 'Estruturação',
                     title: 'Totem<br/>Triedro.',
                     description: 'Engajamento 360 Graus. Um totem de 3 faces desenvolvido para capturar a atenção de clientes vindos de todas as direções.',
-                    image: "{% static 'img/totem_triedro.png' %}?v=16",
+                    image: "{% static 'img/totem_triedro_hero.png' %}?v=27",
                     cta: 'Personalizar',
                     link: '/produto/totem-triedro-em-poliondas/',
                     colorClass: 'bg-blue-300'
@@ -2342,7 +2342,7 @@
                     subtitle: 'Destaque Absoluto',
                     title: 'Totem Triedro',
                     description: 'Atraia clientes de todos os lados com o Totem Triedro. Material extremamente leve, automontável e com impressão HD.',
-                    image: "{% static 'img/totem_triedro.png' %}?v=17",
+                    image: "{% static 'img/totem_triedro_hero.png' %}?v=28",
                     cta: 'COMPRAR AGORA',
                     link: '/produto/totem-triedro-em-poliondas/',
                     bgColor: 'bg-[#f0f4f8]',
