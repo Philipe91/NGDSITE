@@ -16,6 +16,11 @@ def home(request):
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug, is_active=True)
     products = category.products.filter(is_active=True)
+    # Totens PDV: exibir apenas produtos cujo nome começa com "Totem"
+    # (Wobbler, Faixa de Gôndola e Lixeira estão na mesma categoria por legado,
+    #  mas têm página própria via nav direto no header.)
+    if slug == 'totens-pdv':
+        products = products.filter(name__istartswith='Totem')
     context = {
         'category': category,
         'products': products,

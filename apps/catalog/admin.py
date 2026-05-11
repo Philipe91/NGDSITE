@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.db import models
 from image_uploader_widget.widgets import ImageUploaderWidget
-from .models import Category, Product, ProductVariant, ProductImage
+from .models import Category, Product, ProductVariant, ProductImage, MegaMenuTotensCard
 
 
 class ProductImageInlineForm(forms.ModelForm):
@@ -101,3 +101,38 @@ class ProductImageAdmin(admin.ModelAdmin):
     list_display = ('product', 'alt_text', 'sort_order')
     list_filter = ('product',)
     search_fields = ('product__name',)
+
+
+@admin.register(MegaMenuTotensCard)
+class MegaMenuTotensCardAdmin(admin.ModelAdmin):
+    list_display = ('order', 'title', 'product', 'badge', 'is_active', 'image_thumb')
+    list_display_links = ('title',)
+    list_editable = ('order', 'is_active')
+    list_filter = ('is_active', 'badge')
+    search_fields = ('title', 'product__name')
+    autocomplete_fields = ('product',)
+    formfield_overrides = {
+        models.ImageField: {'widget': ImageUploaderWidget},
+    }
+    fieldsets = (
+        ('Conteúdo do card', {
+            'fields': ('title', 'image', 'badge')
+        }),
+        ('Link do card', {
+            'fields': ('product', 'custom_url'),
+            'description': 'Vincule a um produto (recomendado) OU defina uma URL customizada. Se ambos estiverem preenchidos, a URL customizada vence.',
+        }),
+        ('Exibição', {
+            'fields': ('order', 'is_active')
+        }),
+    )
+
+    def image_thumb(self, obj):
+        from django.utils.html import format_html
+        if obj.image:
+            return format_html(
+                '<img src="{}" style="height:48px;width:auto;border-radius:6px;border:1px solid #e5e7eb;" />',
+                obj.image.url,
+            )
+        return "—"
+    image_thumb.short_description = "Imagem"

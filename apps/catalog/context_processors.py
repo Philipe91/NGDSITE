@@ -1,19 +1,23 @@
-from apps.catalog.models import Product, Category
+from apps.catalog.models import MegaMenuTotensCard
+
 
 def totens_processor(request):
-    try:
-        cat = Category.objects.get(slug='totens-pdv')
-        totens = list(
-            Product.objects.filter(category=cat, is_active=True, name__istartswith="Totem")
-            .order_by("id")[:6]
-        )
-    except Category.DoesNotExist:
-        totens = []
+    """Cards do megamenu 'Totens PDV' — separados em featured + others.
+    O 'featured' é o card com badge='destaque' (ou o 1º se nenhum tiver)."""
+    cards = list(
+        MegaMenuTotensCard.objects.filter(is_active=True)
+        .select_related("product")
+        .order_by("order", "id")
+    )
 
-    by_slug = {p.slug: p for p in totens}
+    featured = next((c for c in cards if c.badge == "destaque"), None)
+    if featured is None and cards:
+        featured = cards[0]
+
+    others = [c for c in cards if c is not featured]
 
     return {
-        "mega_totens": totens,
-        "mega_totem_triangular": by_slug.get("totem-triangular"),
-        "mega_totem_triedro": by_slug.get("totem-triedro-em-poliondas"),
+        "mega_totens_cards": cards,
+        "mega_totens_featured": featured,
+        "mega_totens_others": others,
     }

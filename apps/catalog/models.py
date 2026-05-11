@@ -86,3 +86,81 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"Imagem de {self.product.name}"
+
+
+class MegaMenuTotensCard(models.Model):
+    """Cards do megamenu 'Totens PDV'. Cada linha vira um card no header.
+    Permite ao admin editar imagem, título, badge, ordem e link sem mexer em template."""
+
+    BADGE_NONE = ""
+    BADGE_NEW = "novo"
+    BADGE_BEST = "mais_vendido"
+    BADGE_SOON = "em_breve"
+    BADGE_HOT = "destaque"
+    BADGE_CHOICES = [
+        (BADGE_NONE, "— sem badge —"),
+        (BADGE_NEW, "Novo"),
+        (BADGE_BEST, "Mais vendido"),
+        (BADGE_SOON, "Em breve"),
+        (BADGE_HOT, "Destaque"),
+    ]
+
+    title = models.CharField(
+        max_length=80,
+        verbose_name="Título do card",
+        help_text="Ex: Totem Triangular",
+    )
+    image = models.ImageField(
+        upload_to="megamenu/totens/",
+        blank=True,
+        null=True,
+        verbose_name="Imagem do card",
+        help_text="Recomendado: PNG transparente, ~600x800px",
+    )
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="megamenu_cards",
+        verbose_name="Produto vinculado",
+        help_text="Se preenchido, o card linka para a página do produto e usa o preço da 1ª variante.",
+    )
+    custom_url = models.CharField(
+        max_length=255,
+        blank=True,
+        verbose_name="URL customizada",
+        help_text="Opcional. Se preenchido, sobrescreve o link do produto.",
+    )
+    badge = models.CharField(
+        max_length=20,
+        choices=BADGE_CHOICES,
+        blank=True,
+        default=BADGE_NONE,
+        verbose_name="Selo / Badge",
+    )
+    order = models.PositiveIntegerField(default=0, verbose_name="Ordem")
+    is_active = models.BooleanField(default=True, verbose_name="Ativo")
+
+    class Meta:
+        verbose_name = "Card Megamenu Totens PDV"
+        verbose_name_plural = "Megamenu Totens PDV"
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def link(self):
+        if self.custom_url:
+            return self.custom_url
+        if self.product_id:
+            return self.product.get_absolute_url()
+        return "#"
+
+    @property
+    def starting_price(self):
+        if not self.product_id:
+            return None
+        v = self.product.variants.filter(is_active=True).order_by("price").first()
+        return v.price if v else None
