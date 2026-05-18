@@ -6,6 +6,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import RedirectView
 
 admin.site.site_header = "NGD - Painel Administrativo"
 admin.site.site_title = "NGD Site Admin"
@@ -13,6 +14,8 @@ admin.site.index_title = "Gerenciamento da Gráfica"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # Redirects legados (links curtos antigos)
+    path("contato/", RedirectView.as_view(url="/institucional/contato/", permanent=True)),
     path("", include(("apps.catalog.urls", "catalog"))),
     path("carrinho/", include(("apps.cart.urls", "cart"))),
     path("pedidos/", include(("apps.orders.urls", "orders"))),
