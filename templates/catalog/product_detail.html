@@ -452,6 +452,8 @@
                                             3 faces de {{ variant.size_label }}. Pronto para uso.
                                         {% elif product.slug == 'totem-eliptico-em-poliondas' %}
                                             2 faces curvas de {{ variant.size_label }}. Vai dobrado, monta em segundos.
+                                        {% elif product.slug == 'totem-replica-em-poliondas' %}
+                                            Recorte de contorno personalizado. Base dobrável inclusa. Preço de referência — confirmamos no orçamento.
                                         {% else %}
                                             Pronto para uso. Ideal para pontos de venda e eventos.
                                         {% endif %}
@@ -1247,6 +1249,267 @@
                             <strong class="text-black">Sem cheiro e sustentável</strong>
                             <p class="text-[13px]">Ideal para eventos internos: impressão livre de solventes químicos e odores fortes.</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if product.slug == 'display-de-chao' %}
+    <!-- FAQ — Perguntas Frequentes (Display de Chão) -->
+    <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
+        <div class="text-center mb-10">
+            <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-black">Perguntas <span class="text-primary italic">Frequentes</span></h2>
+        </div>
+
+        <div class="space-y-3">
+            <!-- 1. O que é -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 1 ? 0 : 1)">
+                    <span class="font-bold text-sm text-black">Para que serve o Display de Chão?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 1 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 1" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        O Display de Chão é um expositor para apresentar seus produtos em
+                        pontos estratégicos do PDV — destacando-os e favorecendo o aumento
+                        das vendas. Funciona como um ponto extra de exposição da marca.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 2. Material -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 2 ? 0 : 2)">
+                    <span class="font-bold text-sm text-black">Qual o material?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 2 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 2" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <strong>Papelão de altíssima qualidade</strong>, impresso digitalmente em
+                        alta resolução. Leve, sustentável e com ótimo custo-benefício para
+                        ações promocionais.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3. Montagem -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 3 ? 0 : 3)">
+                    <span class="font-bold text-sm text-black">Como funciona a montagem?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 3 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 3" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        O display é entregue <strong>dobrado</strong> — isso facilita a montagem e
+                        deixa o frete mais barato. Pode ser produzido com <strong>montagem
+                        automática</strong> (sistema Faster Displays) ou <strong>montagem manual</strong>,
+                        conforme a necessidade da sua ação.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4. Tamanhos -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 4 ? 0 : 4)">
+                    <span class="font-bold text-sm text-black">Quais os tamanhos disponíveis?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 4 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 4" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <p class="mb-3">Trabalhamos com 3 portes (largura × profundidade × altura):</p>
+                        <ul class="grid grid-cols-1 gap-y-1 text-[13px]">
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Compacto — 30×30×120 cm</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Padrão — 40×35×150 cm</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Grande — 50×40×180 cm</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Vantagens NGD -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 5 ? 0 : 5)">
+                    <span class="font-bold text-sm text-black">Quais as vantagens de comprar com a NGD?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 5 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 5" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-3">
+                        <div>
+                            <strong class="text-black">Frete mais barato</strong>
+                            <p class="text-[13px]">Entregue dobrado — ocupa menos espaço e reduz o custo de envio.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Impressão digital de alta resolução</strong>
+                            <p class="text-[13px]">Cores fiéis e acabamento profissional para destacar sua marca.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Checagem de arquivo gratuita</strong>
+                            <p class="text-[13px]">Time de pré-impressão revisa seu arquivo antes de produzir.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Envio para todo o Brasil</strong>
+                            <p class="text-[13px]">Frete calculado pelo CEP. Pix com 5% de desconto.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if product.slug == 'totem-replica-em-poliondas' %}
+    <!-- FAQ — Perguntas Frequentes (Totem Réplica) -->
+    <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
+        <div class="text-center mb-10">
+            <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-black">Perguntas <span class="text-primary italic">Frequentes</span></h2>
+        </div>
+
+        <div class="space-y-3">
+            <!-- 1. O que é -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 1 ? 0 : 1)">
+                    <span class="font-bold text-sm text-black">O que é o Totem Réplica?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 1 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 1" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        É um totem de <strong>recorte especial (faca de contorno)</strong> — o contorno é
+                        cortado para reproduzir fielmente a silhueta de uma pessoa, personagem, mascote
+                        ou produto. Diferente dos totens retos, ele "clona" a imagem que você enviar,
+                        criando presença visual realista no PDV ou em eventos.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 2. Tamanhos -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 2 ? 0 : 2)">
+                    <span class="font-bold text-sm text-black">Quais os tamanhos disponíveis?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 2 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 2" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <p class="mb-3">Trabalhamos com 3 faixas de altura — o tamanho final é definido pela imagem enviada:</p>
+                        <ul class="grid grid-cols-1 gap-y-1 text-[13px]">
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Pequeno — até 1,00 m</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Médio — 1,01 a 1,50 m</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Tamanho Real — 1,51 a 2,00 m</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Material -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 3 ? 0 : 3)">
+                    <span class="font-bold text-sm text-black">Qual o material e a estrutura?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 3 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 3" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <strong>Polipropileno corrugado (poliondas) de 3 mm</strong> — leve, resistente à
+                        umidade e durável. O recorte é feito em mesa de corte digital de alta precisão.
+                        Acompanha <strong>base acoplada na parte de trás</strong>, dobrável e removível —
+                        montado, a base fica escondida e o totem fica em pé sozinho.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4. Impressão -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 4 ? 0 : 4)">
+                    <span class="font-bold text-sm text-black">Como é a impressão e o recorte?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 4 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 4" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <strong>Impressão UV em alta resolução</strong> — cores vivas e sem desbotar.
+                        O recorte segue a linha de contorno do seu arquivo (envie com 1 cm de sangria).
+                        Nosso time de pré-impressão confere o arquivo antes de produzir.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 5. Como funciona o orçamento -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 5 ? 0 : 5)">
+                    <span class="font-bold text-sm text-black">Como funciona o preço deste produto?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 5 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 5" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        Por ser <strong>100% personalizado</strong>, o valor final depende do formato do
+                        recorte e da altura. Os preços por faixa são uma <strong>referência de partida</strong> —
+                        envie sua imagem que confirmamos o orçamento exato antes de produzir.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 6. Onde usar -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 6 ? 0 : 6)">
+                    <span class="font-bold text-sm text-black">Onde posso usar o Totem Réplica?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 6 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 6" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-2">
+                        <p>Versátil para PDV e eventos:</p>
+                        <ul class="grid grid-cols-2 gap-x-4 gap-y-1 text-[13px]">
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Garoto-propaganda no PDV</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Ativação de influenciador</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Mascotes e personagens</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Aniversários e festas</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Casamentos e formaturas</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Feiras e stands</li>
+                        </ul>
                     </div>
                 </div>
             </div>
