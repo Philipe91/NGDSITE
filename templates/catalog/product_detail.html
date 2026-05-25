@@ -458,7 +458,7 @@
                                         {% elif product.slug == 'totem-replica-em-poliondas' %}
                                             Recorte de contorno personalizado. Base dobrável inclusa. Preço de referência — confirmamos no orçamento.
                                         {% elif product.slug == 'lixeira-personalizada-em-poliondas' %}
-                                            Impressão UV nas 4 faces externas. Vai dobrada, monta em segundos.
+                                            Chega plana (desmontada). Monta em segundos pelos vincos — sem ferramentas.
                                         {% else %}
                                             Pronto para uso. Ideal para pontos de venda e eventos.
                                         {% endif %}
@@ -1337,19 +1337,31 @@
             <div class="border border-gray-200 rounded-xl overflow-hidden">
                 <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
                     @click="open = (open === 4 ? 0 : 4)">
-                    <span class="font-bold text-sm text-black">Como vai a peça? Precisa de montagem?</span>
+                    <span class="font-bold text-sm text-black">Como ela chega? Vem montada ou desmontada?</span>
                     <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 4 ? 'rotate-180' : ''"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
                 <div x-show="open === 4" x-collapse style="display: none;">
-                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        Vai <strong>dobrada de fábrica</strong> para baratear o frete e
-                        facilitar o armazenamento. A montagem leva poucos segundos, sem
-                        ferramentas — basta abrir e travar nos vincos. Quando precisar
-                        guardar, dobra de volta e ocupa pouco espaço no estoque.
-                    </p>
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-2">
+                        <p>
+                            A lixeira chega <strong>plana, desmontada</strong>, com os
+                            vincos pré-marcados de fábrica. Isso é proposital: o pacote
+                            fica fino e o <strong>frete sai muito mais barato</strong>
+                            pra qualquer região do Brasil.
+                        </p>
+                        <p>
+                            <strong>Montagem em segundos:</strong> você dobra pelos vincos
+                            já marcados e encaixa as travas — sem cola, sem fita, sem
+                            ferramentas. Qualquer pessoa monta.
+                        </p>
+                        <p>
+                            Quando precisar guardar (depois de um evento, troca de
+                            campanha etc.), é só desmontar de volta e ela volta a ficar
+                            plana, ocupando quase nada no estoque.
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -1419,8 +1431,8 @@
                             <p class="text-[13px]">Poliondas não absorve umidade, não enverga, dura muito mais.</p>
                         </div>
                         <div>
-                            <strong class="text-black">Frete barato</strong>
-                            <p class="text-[13px]">Vai dobrada — ocupa muito menos espaço no envio.</p>
+                            <strong class="text-black">Frete barato (até pra longe)</strong>
+                            <p class="text-[13px]">Chega desmontada e plana — pacote fino, frete muito menor mesmo pra outras regiões.</p>
                         </div>
                         <div>
                             <strong class="text-black">Impressão UV em alta resolução</strong>

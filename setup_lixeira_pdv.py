@@ -15,7 +15,8 @@ p.name = 'Lixeira Personalizada em Poliondas'
 p.short_description = (
     "Lixeira ecológica personalizada em poliondas para PDV, eventos e "
     "ambientes corporativos. Material resistente à umidade, impressão UV "
-    "nas faces externas — vai dobrada, monta em segundos."
+    "nas faces externas. Chega plana (desmontada) para frete econômico — "
+    "monta em segundos pelos vincos."
 )
 
 p.description = (
@@ -28,9 +29,13 @@ p.description = (
     "permitindo branding completo da sua marca, sinalização de descarte "
     "seletivo ou comunicação de campanha. As cores não desbotam com o "
     "tempo e a tinta não tem cheiro químico — ideal para uso indoor.\n\n"
-    "Vem dobrada de fábrica e é montada em poucos segundos, sem "
-    "ferramentas. Quando precisar guardar, dobra de volta e ocupa pouco "
-    "espaço no estoque. Encaixa em sacos plásticos comerciais padrão.\n\n"
+    "Como vai entregue: a peça chega **plana, desmontada**, com os "
+    "vincos pré-marcados de fábrica. Isso reduz drasticamente o volume "
+    "do pacote e baratea o frete para qualquer ponto do Brasil. Quando "
+    "chegar, você dobra pelos vincos e encaixa em segundos — sem cola, "
+    "sem fita, sem ferramentas. Se precisar guardar depois, é só "
+    "desmontar de volta e ela volta a ficar plana no estoque. Encaixa "
+    "em sacos plásticos comerciais padrão.\n\n"
     "Disponível em 3 portes: pequena (30 L), média (50 L) e grande "
     "(80 L) — escolha conforme o fluxo de descarte do seu ambiente."
 )
@@ -38,8 +43,8 @@ p.description = (
 p.meta_title = "Lixeira Personalizada em Poliondas para PDV | NGD"
 p.meta_description = (
     "Lixeira ecológica personalizada em poliondas 3mm com impressão UV "
-    "nas 4 faces. Tamanhos 30L, 50L e 80L. Resistente à umidade, vai "
-    "dobrada. Envio para todo o Brasil."
+    "nas 4 faces. Tamanhos 30L, 50L e 80L. Resistente à umidade. Chega "
+    "plana (desmontada) para frete econômico — monta em segundos."
 )
 p.is_active = True
 p.save()
