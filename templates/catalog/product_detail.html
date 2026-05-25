@@ -457,6 +457,8 @@
                                             2 faces curvas de {{ variant.size_label }}. Vai dobrado, monta em segundos.
                                         {% elif product.slug == 'totem-replica-em-poliondas' %}
                                             Recorte de contorno personalizado. Base dobrável inclusa. Preço de referência — confirmamos no orçamento.
+                                        {% elif product.slug == 'lixeira-personalizada-em-poliondas' %}
+                                            Impressão UV nas 4 faces externas. Vai dobrada, monta em segundos.
                                         {% else %}
                                             Pronto para uso. Ideal para pontos de venda e eventos.
                                         {% endif %}
@@ -1251,6 +1253,186 @@
                         <div>
                             <strong class="text-black">Sem cheiro e sustentável</strong>
                             <p class="text-[13px]">Ideal para eventos internos: impressão livre de solventes químicos e odores fortes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if product.slug == 'lixeira-personalizada-em-poliondas' %}
+    <!-- FAQ — Perguntas Frequentes (Lixeira Personalizada) -->
+    <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
+        <div class="text-center mb-10">
+            <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-black">Perguntas <span class="text-primary italic">Frequentes</span></h2>
+        </div>
+
+        <div class="space-y-3">
+            <!-- 1. Tamanhos -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 1 ? 0 : 1)">
+                    <span class="font-bold text-sm text-black">Quais os tamanhos disponíveis?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 1 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 1" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <p class="mb-3">Trabalhamos com 3 portes (largura × profundidade × altura · capacidade):</p>
+                        <ul class="grid grid-cols-1 gap-y-1 text-[13px]">
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Pequena — 30×30×50 cm · 30 litros</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Média — 35×35×60 cm · 50 litros</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Grande — 40×40×70 cm · 80 litros</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Material -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 2 ? 0 : 2)">
+                    <span class="font-bold text-sm text-black">Qual o material?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 2 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 2" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <strong>Polipropileno corrugado (poliondas) de 3 mm</strong> — o mesmo
+                        material premium dos nossos totens e displays. <strong>Resistente à umidade</strong>,
+                        mais durável que papelão, e mantém o acabamento mesmo em ambientes
+                        de alta circulação. Acabamento fosco natural, sem laminação.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3. Impressão -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 3 ? 0 : 3)">
+                    <span class="font-bold text-sm text-black">Como é a impressão?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 3 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 3" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <strong>Impressão UV em alta resolução nas 4 faces externas</strong> —
+                        cores vivas, pretos profundos, e que <strong>não desbotam</strong>. A
+                        cura a frio elimina o odor químico de tintas convencionais, tornando-a
+                        ideal para uso indoor. Personalização total: branding da marca,
+                        descarte seletivo, comunicação de campanha — você escolhe.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4. Montagem -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 4 ? 0 : 4)">
+                    <span class="font-bold text-sm text-black">Como vai a peça? Precisa de montagem?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 4 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 4" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        Vai <strong>dobrada de fábrica</strong> para baratear o frete e
+                        facilitar o armazenamento. A montagem leva poucos segundos, sem
+                        ferramentas — basta abrir e travar nos vincos. Quando precisar
+                        guardar, dobra de volta e ocupa pouco espaço no estoque.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 5. Saco de lixo -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 5 ? 0 : 5)">
+                    <span class="font-bold text-sm text-black">Encaixa em saco de lixo comum?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 5 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 5" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-1">
+                        <p>Sim. As capacidades casam com sacos comerciais padrão:</p>
+                        <ul class="grid grid-cols-1 gap-y-1 text-[13px] mt-2">
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Pequena (30 L) → saco de 30 L</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Média (50 L) → saco de 50 L</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Grande (80 L) → saco de 100 L (sobra um pouco na boca)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Onde usar -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 6 ? 0 : 6)">
+                    <span class="font-bold text-sm text-black">Onde posso usar?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 6 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 6" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-2">
+                        <p>Ideal para ambientes internos com fluxo de pessoas:</p>
+                        <ul class="grid grid-cols-2 gap-x-4 gap-y-1 text-[13px]">
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Lojas e shoppings</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Eventos e feiras</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Stands corporativos</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Hospitais e clínicas</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Escolas e universidades</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Coleta seletiva</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Praças de alimentação</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Campanhas de marca</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Vantagens -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 7 ? 0 : 7)">
+                    <span class="font-bold text-sm text-black">Quais as vantagens da NGD?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 7 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 7" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-3">
+                        <div>
+                            <strong class="text-black">Resistência superior ao papelão</strong>
+                            <p class="text-[13px]">Poliondas não absorve umidade, não enverga, dura muito mais.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Frete barato</strong>
+                            <p class="text-[13px]">Vai dobrada — ocupa muito menos espaço no envio.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Impressão UV em alta resolução</strong>
+                            <p class="text-[13px]">Cores fiéis nas 4 faces, sem odor químico, ideal pra uso indoor.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Checagem de arquivo gratuita</strong>
+                            <p class="text-[13px]">Nosso time de pré-impressão revisa o seu arquivo antes de produzir.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Envio para todo o Brasil</strong>
+                            <p class="text-[13px]">Frete calculado pelo CEP. Pix com 5% de desconto.</p>
                         </div>
                     </div>
                 </div>
