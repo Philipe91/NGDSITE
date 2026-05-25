@@ -238,12 +238,7 @@
 
                 <a href="{% url 'catalog:product_detail' 'cubo-promocional-em-poliondas' %}"
                     class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Cubo Promocional</a>
-                <a href="{% url 'catalog:product_detail' 'wobbler-de-gondola' %}"
-                    class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Wobbler</a>
-                <a href="{% url 'catalog:product_detail' 'stopper-de-prateleira' %}"
-                    class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Stopper</a>
-                <a href="{% url 'catalog:product_detail' 'faixa-de-gondola-regua' %}"
-                    class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Faixa de Gôndola</a>
+                {# Wobbler, Stopper e Faixa de Gôndola desativados — produtos guardados no banco (is_active=False) #}
                 <a href="{% url 'catalog:product_detail' 'banner-rollup' %}"
                     class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Rollup</a>
                 <a href="{% url 'catalog:product_detail' 'placa-de-campo-poliondas' %}"
@@ -325,8 +320,6 @@
                                 class="hover:text-white hover:translate-x-1 inline-block transition-all">Totem Triedro</a></li>
                         <li><a href="{% url 'catalog:product_detail' 'cubo-promocional-em-poliondas' %}"
                                 class="hover:text-white hover:translate-x-1 inline-block transition-all">Cubo Promocional</a></li>
-                        <li><a href="{% url 'catalog:product_detail' 'wobbler-de-gondola' %}"
-                                class="hover:text-white hover:translate-x-1 inline-block transition-all">Wobbler Gôndola</a></li>
                         <li><a href="{% url 'catalog:product_detail' 'lixeira-personalizada-em-poliondas' %}"
                                 class="hover:text-white hover:translate-x-1 inline-block transition-all">Lixeira PDV</a></li>
                         <li><a href="{% url 'catalog:product_detail' 'banner-rollup' %}"
