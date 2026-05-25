@@ -7,7 +7,7 @@ class Category(models.Model):
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     description = models.TextField(blank=True, verbose_name="Descrição", help_text="Exemplo: Categoria para placas no poliondas")
     image = models.ImageField(upload_to="categories/", blank=True, null=True, verbose_name="Imagem")
-    is_active = models.BooleanField(default=True, verbose_name="Ativo")
+    is_active = models.BooleanField(default=True, verbose_name="Ativo", db_index=True)
     meta_title = models.CharField(max_length=255, blank=True, verbose_name="Meta Title")
     meta_description = models.TextField(blank=True, verbose_name="Meta Description")
 
@@ -33,14 +33,17 @@ class Product(models.Model):
     short_description = models.TextField(blank=True, verbose_name="Descrição Curta", help_text="Exemplo: Placa de sinalização no poliondas")
     description = models.TextField(blank=True, verbose_name="Descrição", help_text="Exemplo: Descrição detalhada do material no poliondas")
     featured_image = models.ImageField(upload_to="products/featured/", blank=True, null=True, verbose_name="Imagem de Destaque")
-    is_active = models.BooleanField(default=True, verbose_name="Ativo")
-    is_featured = models.BooleanField(default=False, verbose_name="Destaque")
+    is_active = models.BooleanField(default=True, verbose_name="Ativo", db_index=True)
+    is_featured = models.BooleanField(default=False, verbose_name="Destaque", db_index=True)
     meta_title = models.CharField(max_length=255, blank=True, verbose_name="Meta Title")
     meta_description = models.TextField(blank=True, verbose_name="Meta Description")
 
     class Meta:
         verbose_name = "Produto"
         verbose_name_plural = "Produtos"
+        indexes = [
+            models.Index(fields=["category", "is_active"], name="catalog_prod_cat_act_idx"),
+        ]
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -64,7 +67,7 @@ class ProductVariant(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Preço")
     template_file = models.FileField(upload_to="products/templates/", blank=True, null=True, verbose_name="Gabarito")
     manual_file = models.FileField(upload_to="products/manuals/", blank=True, null=True, verbose_name="Manual")
-    is_active = models.BooleanField(default=True, verbose_name="Ativo")
+    is_active = models.BooleanField(default=True, verbose_name="Ativo", db_index=True)
 
     class Meta:
         verbose_name = "Variante de Produto"

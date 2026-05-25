@@ -126,6 +126,7 @@
                     <a href="{% url 'catalog:product_detail' prod.slug %}" class="block w-full h-full">
                         {% if prod.featured_image %}
                         <img src="{{ prod.featured_image.url }}" alt="{{ prod.name }}"
+                            loading="lazy" decoding="async" width="400" height="400"
                             class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700">
                         {% else %}
                         <div class="w-full h-full flex flex-col items-center justify-center text-gray-400">
