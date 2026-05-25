@@ -19,6 +19,7 @@
             <div class="aspect-square bg-surface p-6 flex items-center justify-center relative overflow-hidden">
                 {% if product.featured_image %}
                 <img src="{{ product.featured_image.url }}" alt="{{ product.name }}"
+                    loading="lazy" decoding="async" width="400" height="400"
                     class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500">
                 {% else %}
                 <svg class="w-16 h-16 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">

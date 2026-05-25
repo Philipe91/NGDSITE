@@ -12,9 +12,36 @@
     {% if seo.meta_keywords_default %}
     <meta name="keywords" content="{{ seo.meta_keywords_default }}">
     {% endif %}
-    {% if seo.og_image_default %}
-    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ seo.og_image_default.url }}">
-    {% endif %}
+    {% load static %}
+
+    <!-- Canonical -->
+    {% block canonical %}<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">{% endblock %}
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+    <meta property="og:site_name" content="NGD — Núcleo Gráfico Digital">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+    <meta property="og:title" content="{% block og_title %}{{ seo.meta_title_default|default:'NGD — Materiais e Displays Personalizados para Ponto de Venda' }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ seo.meta_description_default|default:'A revolução gráfica em materiais para PDV. Totens, displays, banners e expositores personalizados em poliondas. Impressão UV em alta resolução.' }}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% if seo.og_image_default %}{{ request.scheme }}://{{ request.get_host }}{{ seo.og_image_default.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/LOGO NGD.png' %}{% endif %}{% endblock %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block tw_title %}{{ seo.meta_title_default|default:'NGD — Materiais para PDV' }}{% endblock %}">
+    <meta name="twitter:description" content="{% block tw_description %}{{ seo.meta_description_default|default:'Totens, displays e materiais personalizados em poliondas. Impressão UV.' }}{% endblock %}">
+    <meta name="twitter:image" content="{% block tw_image %}{% if seo.og_image_default %}{{ request.scheme }}://{{ request.get_host }}{{ seo.og_image_default.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/LOGO NGD.png' %}{% endif %}{% endblock %}">
+
+    <!-- Theme color (Chrome mobile, PWA) -->
+    <meta name="theme-color" content="#153e8a">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon-16x16.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/apple-touch-icon.png' %}">
 
     {% if seo.google_analytics_id %}
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -46,7 +73,6 @@
     /></noscript>
     <!-- End Meta Pixel Code -->
     {% endif %}
-    {% load static %}
     <!-- Tailwind via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Alpine.js -->

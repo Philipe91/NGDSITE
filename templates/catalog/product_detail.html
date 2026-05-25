@@ -80,12 +80,14 @@
             {% if images %}
             <div class="flex flex-row md:flex-col gap-4 overflow-auto md:w-24 shrink-0">
                 {% if product.featured_image %}
-                <img src="{{ product.featured_image.url }}"
+                <img src="{{ product.featured_image.url }}" alt="{{ product.name }} — miniatura"
+                    loading="lazy" decoding="async" width="96" height="96"
                     class="thumbnail active w-20 h-20 md:w-24 md:h-24 object-contain rounded-xl border-2 border-black cursor-pointer bg-white p-2"
                     onclick="changeImage(this.src, this)">
                 {% endif %}
                 {% for img in images %}
-                <img src="{{ img.image.url }}" alt="{{ img.alt_text }}"
+                <img src="{{ img.image.url }}" alt="{{ img.alt_text|default:product.name }}"
+                    loading="lazy" decoding="async" width="96" height="96"
                     class="thumbnail w-20 h-20 md:w-24 md:h-24 object-contain rounded-xl border border-gray-200 hover:border-black transition-colors cursor-pointer bg-white p-2"
                     onclick="changeImage(this.src, this)">
                 {% endfor %}
@@ -96,6 +98,7 @@
             <div class="flex-grow flex items-center justify-center bg-white p-4 relative" id="main-image-container">
                 {% if product.featured_image %}
                 <img src="{{ product.featured_image.url }}" alt="{{ product.name }}" id="main-image"
+                    fetchpriority="high" decoding="async" width="600" height="600"
                     class="w-full max-w-lg object-contain mix-blend-multiply">
                 {% else %}
                 <div class="text-gray-300 flex flex-col items-center">
