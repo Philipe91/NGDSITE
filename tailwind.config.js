@@ -39,9 +39,14 @@ module.exports = {
     'bg-purple-600', 'hover:bg-purple-700', 'shadow-purple-600/30',
     'bg-[#0a2553]', 'hover:bg-[#153e8a]', 'shadow-[#0a2553]/30',
     'text-white',
+    // Classes coladas em {% if/else/endif %} (Tailwind JIT às vezes não pega)
+    'bg-[#153e8a]/85', 'bg-gray-700/70', 'bg-gray-200', 'bg-emerald-500',
+    'bg-amber-500', 'bg-[#0070f3]',
+    'opacity-60', 'group-hover/box:opacity-90', 'group-hover/box:scale-[1.03]',
+    'filter', 'grayscale',
     // Badges do megamenu (admin pode trocar)
     { pattern: /^(bg|text|ring)-(emerald|amber|gray|blue|red|green)-(50|100|200|300|500|600|700)$/ },
-    { pattern: /^bg-\[#[0-9a-fA-F]{6}\]/ },  // arbitrary hex (cobre cores dinâmicas)
+    { pattern: /^(bg|text|ring)-(emerald|amber|gray|blue|red|green)-(50|100|200|300|500|600|700)\/\d+$/ },
   ],
   plugins: [],
 }
