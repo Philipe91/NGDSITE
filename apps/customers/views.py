@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.contrib.auth import logout
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils import timezone
@@ -146,3 +147,79 @@ def upload_art(request, item_id):
 
     messages.error(request, 'Nenhum arquivo selecionado.')
     return redirect('customers:order_detail', order_id=item.order.id)
+
+
+@login_required
+def delete_account(request):
+    """
+    Exclusão de conta pelo próprio usuário (LGPD — direito à eliminação).
+    GET: mostra formulário de confirmação
+    POST: valida senha, anonimiza pedidos, envia email, deleta usuário
+    """
+    user = request.user
+
+    if request.method == 'POST':
+        password = request.POST.get('password', '').strip()
+        confirm = request.POST.get('confirm') == 'sim'
+
+        if not confirm:
+            messages.error(request, "Você precisa marcar a caixa de confirmação para prosseguir.")
+            return render(request, 'customers/delete_account.html', {'user_email': user.email})
+
+        if not password or not user.check_password(password):
+            messages.error(request, "Senha incorreta. Por segurança, exigimos a senha atual para excluir a conta.")
+            return render(request, 'customers/delete_account.html', {'user_email': user.email})
+
+        user_email = user.email
+        user_id = user.id
+
+        # Anonimiza pedidos (LGPD permite manter registro fiscal anonimizado)
+        anonymous_email = f"deletado-{user_id}@ngd.invalid"
+        Order.objects.filter(customer_email__iexact=user_email).update(
+            customer_email=anonymous_email,
+            customer_name="Cliente removido (LGPD)",
+            customer_phone="",
+        )
+
+        # Email de confirmação ANTES de apagar o usuário
+        try:
+            send_mail(
+                subject="NGD — Exclusão de conta confirmada",
+                message=(
+                    f"Olá!\n\n"
+                    f"Confirmamos a exclusão da sua conta ({user_email}) no site da NGD.\n\n"
+                    f"Conforme a LGPD, seus dados pessoais foram removidos. "
+                    f"Os registros de pedidos anteriores foram anonimizados para "
+                    f"cumprir obrigações fiscais (a empresa precisa manter histórico "
+                    f"de notas fiscais por até 5 anos), mas não contêm mais seus "
+                    f"dados de contato.\n\n"
+                    f"Se essa exclusão foi um engano ou você quiser voltar a comprar "
+                    f"com a gente, é só criar uma nova conta no site.\n\n"
+                    f"Obrigado por ter sido cliente NGD.\n"
+                    f"— Equipe Núcleo Gráfico Digital"
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user_email],
+                fail_silently=True,
+            )
+        except Exception:
+            pass  # se falhar email, segue a exclusão (o user já decidiu)
+
+        # Logout antes do delete pra invalidar sessão
+        logout(request)
+        try:
+            user.delete()
+        except Exception as e:
+            messages.error(request, f"Erro ao excluir conta: {e}. Entre em contato com o suporte.")
+            return redirect('catalog:home')
+
+        messages.success(
+            request,
+            "Sua conta foi excluída com sucesso. Enviamos um e-mail de confirmação. "
+            "Seus pedidos foram anonimizados conforme a LGPD."
+        )
+        return redirect('catalog:home')
+
+    return render(request, 'customers/delete_account.html', {
+        'user_email': user.email,
+    })

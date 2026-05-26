@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Excluir conta — NGD{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto py-16 px-4">
+
+    <div class="mb-8">
+        <a href="{% url 'customers:dashboard' %}" class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Voltar para o painel
+        </a>
+    </div>
+
+    <!-- Cabeçalho -->
+    <div class="mb-8">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-700 text-[11px] font-bold tracking-[0.18em] uppercase mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+            Ação irreversível
+        </div>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight mb-3">Excluir minha conta</h1>
+        <p class="text-gray-500 text-[15px] leading-relaxed">
+            Em conformidade com a <strong>Lei Geral de Proteção de Dados (LGPD)</strong>, você pode pedir
+            a exclusão dos seus dados pessoais a qualquer momento. Leia com atenção o que acontece.
+        </p>
+    </div>
+
+    <!-- Bloco LGPD explicação -->
+    <div class="rounded-2xl border border-gray-200 bg-white p-6 mb-6 space-y-4">
+        <h2 class="font-bold text-gray-900">O que será apagado</h2>
+        <ul class="space-y-2 text-sm text-gray-600">
+            <li class="flex gap-2"><svg class="w-4 h-4 text-red-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg> Sua conta de acesso ao site (e-mail e senha)</li>
+            <li class="flex gap-2"><svg class="w-4 h-4 text-red-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg> Seu nome, telefone e e-mail nos pedidos antigos</li>
+            <li class="flex gap-2"><svg class="w-4 h-4 text-red-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg> Acesso ao painel de pedidos e arquivos enviados</li>
+        </ul>
+
+        <h2 class="font-bold text-gray-900 pt-3">O que vamos manter (por obrigação legal)</h2>
+        <ul class="space-y-2 text-sm text-gray-600">
+            <li class="flex gap-2"><svg class="w-4 h-4 text-gray-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> O registro de pedidos finalizados, com os dados pessoais <strong>anonimizados</strong> — exigido pela Receita Federal para guarda de notas fiscais (até 5 anos).</li>
+            <li class="flex gap-2"><svg class="w-4 h-4 text-gray-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Esses registros <strong>não contêm mais</strong> seu nome, e-mail ou telefone — apenas o histórico fiscal do que foi vendido.</li>
+        </ul>
+
+        <p class="text-sm text-gray-500 pt-3 border-t border-gray-100">
+            Esta ação <strong>não pode ser desfeita</strong>. Se mais tarde quiser voltar a comprar conosco, será necessário criar uma nova conta.
+        </p>
+    </div>
+
+    <!-- Mensagens -->
+    {% if messages %}
+    <div class="mb-6 space-y-2">
+        {% for message in messages %}
+        <div class="rounded-xl px-4 py-3 text-sm
+                    {% if 'success' in message.tags %}bg-emerald-50 text-emerald-800 border border-emerald-200
+                    {% elif 'error' in message.tags %}bg-red-50 text-red-800 border border-red-200
+                    {% else %}bg-gray-50 text-gray-800 border border-gray-200{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Formulário -->
+    <form method="post" class="rounded-2xl border border-red-200 bg-red-50/40 p-6 space-y-5">
+        {% csrf_token %}
+
+        <div>
+            <label class="block text-xs font-bold uppercase tracking-[0.16em] text-gray-500 mb-1">Conta a ser excluída</label>
+            <div class="rounded-lg bg-white border border-gray-200 px-4 py-3 text-sm font-medium text-gray-900">
+                {{ user_email }}
+            </div>
+        </div>
+
+        <div>
+            <label for="password" class="block text-xs font-bold uppercase tracking-[0.16em] text-gray-500 mb-1">Sua senha (confirmação de segurança)</label>
+            <input type="password" name="password" id="password" required autocomplete="current-password"
+                   class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition">
+            <p class="text-[11px] text-gray-500 mt-1">Exigimos a senha atual pra garantir que é você mesmo solicitando.</p>
+        </div>
+
+        <label class="flex items-start gap-3 cursor-pointer">
+            <input type="checkbox" name="confirm" value="sim" required
+                   class="mt-1 w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-2 focus:ring-red-500">
+            <span class="text-sm text-gray-700">
+                Confirmo que entendi que esta ação é <strong>irreversível</strong> e que meus dados pessoais serão removidos conforme a LGPD.
+            </span>
+        </label>
+
+        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <button type="submit"
+                    class="flex-1 bg-red-600 text-white font-bold uppercase tracking-widest text-[12px] px-6 py-3.5 rounded-xl hover:bg-red-700 transition-colors shadow-md hover:shadow-lg">
+                Excluir minha conta definitivamente
+            </button>
+            <a href="{% url 'customers:dashboard' %}"
+               class="flex-1 text-center bg-white border border-gray-300 text-gray-700 font-semibold px-6 py-3.5 rounded-xl hover:bg-gray-50 transition-colors">
+                Cancelar
+            </a>
+        </div>
+    </form>
+
+    <p class="text-xs text-gray-400 text-center mt-6">
+        Dúvidas? Fale com a gente em
+        <a href="https://wa.me/5561996498102" class="underline hover:text-primary" target="_blank" rel="noopener">WhatsApp</a>
+        ou veja a
+        <a href="{% url 'pages:page_detail' 'privacidade' %}" class="underline hover:text-primary">Política de Privacidade</a>.
+    </p>
+</div>
+{% endblock %}

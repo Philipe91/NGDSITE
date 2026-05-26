@@ -10,4 +10,6 @@ urlpatterns = [
     path('meus-pedidos/', views.my_orders, name='orders'),
     path('pedido/<int:order_id>/', views.order_detail, name='order_detail'),
     path('upload-arte/<int:item_id>/', views.upload_art, name='upload_art'),
+    # LGPD: direito à eliminação dos dados pessoais
+    path('excluir-conta/', views.delete_account, name='delete_account'),
 ]
