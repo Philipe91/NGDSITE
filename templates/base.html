@@ -73,8 +73,8 @@
     /></noscript>
     <!-- End Meta Pixel Code -->
     {% endif %}
-    <!-- Tailwind via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind compilado local (substitui o CDN — perf + sem warning de prod) -->
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}?v=1">
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Inter Font (moderna, usada por Figma, Linear, Vercel, Notion) -->
@@ -83,82 +83,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <!-- Lucide Icons (leve, consistente, moderno) -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        background: "#ffffff",
-                        surface: "#f7f8fc",
-                        border: "#e8eaed",
-                        primary: "#003366",
-                        secondary: "#00509e",
-                        textMain: "#0f172a",
-                        textMuted: "#64748b",
-                        success: "#10b981"
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-                    },
-                    letterSpacing: {
-                        tightest: '-0.04em',
-                        tighter: '-0.02em',
-                        tight: '-0.01em',
-                    }
-                }
-            }
-        }
-    </script>
-    <style type="text/tailwindcss">
-        @layer base {
-            * {
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-                text-rendering: optimizeLegibility;
-            }
-            body {
-                font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-                font-variant-numeric: tabular-nums;
-            }
-        }
-        @layer utilities {
-            .btn-primary {
-                @apply bg-primary text-white px-8 py-3 rounded-xl font-semibold tracking-tight transition-all hover:bg-secondary hover:-translate-y-px hover:shadow-lg flex items-center justify-center gap-2;
-            }
-            .gradient-text {
-                @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
-            }
-            .feature-card {
-                @apply bg-white p-8 rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.06)] border border-gray-100 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:border-primary/20 hover:shadow-[0_8px_30px_rgba(0,51,102,0.10)];
-            }
-            .icon {
-                @apply inline-block shrink-0;
-            }
-        }
-        body {
-            @apply bg-background text-textMain font-sans min-h-screen selection:bg-primary/10 selection:text-primary;
-        }
-        /* Headings mais nítidos */
-        h1, h2, h3, h4, h5, h6 {
-            letter-spacing: -0.02em;
-            font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-        }
-        /* Lucide icons via JS - estilo padrão */
-        [data-lucide] {
-            stroke-width: 1.75;
-        }
-        /* gradient-bg para cabeçalhos globais e barras de ação */
-        .gradient-bg {
-            background: linear-gradient(135deg, #0b224e 0%, #153e8a 50%, #0070f3 100%);
-            background-size: 200% 200%;
-            animation: gradientShift 10s ease infinite;
-        }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-    </style>
     {% block extrahead %}{% endblock %}
 </head>
 

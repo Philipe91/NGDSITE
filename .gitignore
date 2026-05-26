@@ -57,3 +57,8 @@ list_users_temp.py
 # Sistema operacional
 .DS_Store
 Thumbs.db
+
+# Node (build local do Tailwind)
+node_modules/
+package-lock.json
+

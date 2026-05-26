@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Customizações da NGD — migradas do <style> inline do base.html
+   pra ficar tudo num único CSS compilado e minificado
+   ============================================================ */
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-variant-numeric: tabular-nums;
+    @apply bg-background text-textMain font-sans min-h-screen;
+  }
+  body::selection { @apply bg-primary/10 text-primary; }
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+  [data-lucide] {
+    stroke-width: 1.75;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-8 py-3 rounded-xl font-semibold tracking-tight transition-all hover:bg-secondary hover:-translate-y-px hover:shadow-lg flex items-center justify-center gap-2;
+  }
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+  }
+  .feature-card {
+    @apply bg-white p-8 rounded-2xl shadow-[0_2px_20px_rgba(0,0,0,0.06)] border border-gray-100 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:border-primary/20 hover:shadow-[0_8px_30px_rgba(0,51,102,0.10)];
+  }
+  .icon {
+    @apply inline-block shrink-0;
+  }
+}
+
+@layer utilities {
+  /* gradient-bg do header (com animação suave) */
+  .gradient-bg {
+    background: linear-gradient(135deg, #0b224e 0%, #153e8a 50%, #0070f3 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 10s ease infinite;
+  }
+
+  /* gradient-bg-cta (mesmo gradient, classe usada no rodapé) */
+  .gradient-bg-cta {
+    background: linear-gradient(135deg, #0b224e 0%, #153e8a 50%, #0070f3 100%);
+    background-size: 200% 200%;
+    animation: gradientShiftCTA 10s ease infinite;
+  }
+
+  /* utilities sem-scrollbar (chat / slider) */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+@keyframes gradientShiftCTA {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
