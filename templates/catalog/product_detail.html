@@ -459,6 +459,8 @@
                                             Recorte de contorno personalizado. Base dobrável inclusa. Preço de referência — confirmamos no orçamento.
                                         {% elif product.slug == 'lixeira-personalizada-em-poliondas' %}
                                             Chega plana (desmontada). Monta em segundos pelos vincos — sem ferramentas.
+                                        {% elif product.slug == 'placa-de-campo-poliondas' %}
+                                            Placa rígida em poliondas 3mm com impressão UV. Resiste à chuva e ao sol.
                                         {% else %}
                                             Pronto para uso. Ideal para pontos de venda e eventos.
                                         {% endif %}
@@ -1253,6 +1255,171 @@
                         <div>
                             <strong class="text-black">Sem cheiro e sustentável</strong>
                             <p class="text-[13px]">Ideal para eventos internos: impressão livre de solventes químicos e odores fortes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if product.slug == 'placa-de-campo-poliondas' %}
+    <!-- FAQ — Perguntas Frequentes (Placa de Campo) -->
+    <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
+        <div class="text-center mb-10">
+            <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
+            <h2 class="text-3xl md:text-4xl font-bold text-black">Perguntas <span class="text-primary italic">Frequentes</span></h2>
+        </div>
+
+        <div class="space-y-3">
+            <!-- 1. Tamanhos -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 1 ? 0 : 1)">
+                    <span class="font-bold text-sm text-black">Quais os tamanhos disponíveis?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 1 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 1" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <p class="mb-3">A NGD trabalha com 3 tamanhos padrão (largura × altura):</p>
+                        <ul class="grid grid-cols-1 gap-y-1 text-[13px]">
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>30 × 40 cm — sinalização rápida, ofertas próximas ao cliente</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>40 × 60 cm — padrão para entradas, fachadas e eventos</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>80 × 100 cm — leitura à distância, placas externas grandes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Material -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 2 ? 0 : 2)">
+                    <span class="font-bold text-sm text-black">Qual o material e a durabilidade?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 2 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 2" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <strong>Polipropileno corrugado (poliondas) de 3 mm</strong> — o mesmo
+                        material dos nossos totens. <strong>Resistente à chuva</strong>, não
+                        enverga ao sol, é leve e tem custo bem menor que ACM, PVC e madeira.
+                        Para uso externo de média duração (semanas a alguns meses, dependendo
+                        da exposição ao tempo). Para placas permanentes, ACM/MDF rendem mais.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3. Impressão -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 3 ? 0 : 3)">
+                    <span class="font-bold text-sm text-black">Como é a impressão? 1 ou 2 faces?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 3 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 3" x-collapse style="display: none;">
+                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
+                        <strong>Impressão UV em alta resolução</strong>, com tinta que
+                        não desbota ao sol. Disponível em <strong>1 face (4×0)</strong>,
+                        para quando a placa fica encostada na parede ou estrutura, ou
+                        em <strong>2 faces (4×4)</strong>, para visibilidade dos dois
+                        lados (laterais de campo esportivo, pendurada no meio do salão,
+                        placa de "vende-se", etc.).
+                    </p>
+                </div>
+            </div>
+
+            <!-- 4. Fixação -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 4 ? 0 : 4)">
+                    <span class="font-bold text-sm text-black">Como fixo a placa?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 4 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 4" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-2">
+                        <p>A poliondas <strong>é fácil de furar</strong> com furadeira ou até com prego e martelo, então as opções de fixação são bem flexíveis:</p>
+                        <ul class="grid grid-cols-1 gap-y-1 text-[13px]">
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Parafusos com bucha em parede ou poste</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Abraçadeira plástica (zip tie) em grade, gradil ou tubo</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Fitilho ou corda atravessando furos nas extremidades</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Fita dupla-face industrial em superfície lisa</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Pregos em madeira (cerca, tapume de obra)</li>
+                        </ul>
+                        <p class="text-[13px] text-gray-500 pt-1">Não acompanha kit de fixação — você define como vai prender no local.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Onde usar -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 5 ? 0 : 5)">
+                    <span class="font-bold text-sm text-black">Onde posso usar?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 5 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 5" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-2">
+                        <p>Versátil para qualquer sinalização externa ou em campo:</p>
+                        <ul class="grid grid-cols-2 gap-x-4 gap-y-1 text-[13px]">
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Entrada e fachada de loja</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Eventos esportivos (campo, quadra)</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Imobiliárias (vende-se / aluga-se)</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Sinalização de obra</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Feiras agropecuárias</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Praça de alimentação</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Festas e eventos</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Stands em feira</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Vantagens NGD -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 6 ? 0 : 6)">
+                    <span class="font-bold text-sm text-black">Quais as vantagens da NGD?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 6 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 6" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-3">
+                        <div>
+                            <strong class="text-black">Custo bem menor que ACM/PVC/madeira</strong>
+                            <p class="text-[13px]">Poliondas é mais barata e cumpre o papel pra ações de curta e média duração.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Impressão UV de alta resolução</strong>
+                            <p class="text-[13px]">Cores vivas e que aguentam a exposição ao tempo sem desbotar rápido.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Fácil fixação</strong>
+                            <p class="text-[13px]">Fura com qualquer ferramenta — parafuso, abraçadeira, fitilho, prego.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Checagem de arquivo gratuita</strong>
+                            <p class="text-[13px]">Nosso time de pré-impressão revisa o arquivo antes de produzir.</p>
+                        </div>
+                        <div>
+                            <strong class="text-black">Envio para todo o Brasil</strong>
+                            <p class="text-[13px]">Frete calculado pelo CEP. Pix com 5% de desconto.</p>
                         </div>
                     </div>
                 </div>
