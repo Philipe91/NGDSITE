@@ -1264,11 +1264,24 @@
     {% endif %}
 
     {% if product.slug == 'placa-de-campo-poliondas' %}
-    <!-- FAQ — Perguntas Frequentes (Placa de Campo) -->
+    <!-- FAQ — Perguntas Frequentes (Placa de Campo / Sinalização Agrícola) -->
     <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
         <div class="text-center mb-10">
             <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
             <h2 class="text-3xl md:text-4xl font-bold text-black">Perguntas <span class="text-primary italic">Frequentes</span></h2>
+        </div>
+
+        <!-- Selo de indústria -->
+        <div class="mb-6 p-5 rounded-2xl bg-primary/5 border border-primary/15">
+            <div class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <div class="text-sm text-gray-700 leading-relaxed">
+                    <p class="font-bold text-black mb-1">Somos indústria de sinalização agrícola, não gráfica comum.</p>
+                    <p>Faturamos com <strong>CNAE de Fabricação</strong>, cada item sai com seu <strong>código NCM</strong>, e a placa atende a <strong>Lei 10.711/2003</strong> (Lei de Sementes). Para o controle fiscal e contábil do produtor, isso faz toda diferença.</p>
+                </div>
+            </div>
         </div>
 
         <div class="space-y-3">
@@ -1294,46 +1307,54 @@
                 </div>
             </div>
 
-            <!-- 2. Material -->
+            <!-- 2. Espessura: 3 mm ou 4 mm -->
             <div class="border border-gray-200 rounded-xl overflow-hidden">
                 <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
                     @click="open = (open === 2 ? 0 : 2)">
-                    <span class="font-bold text-sm text-black">Qual o material e a durabilidade?</span>
+                    <span class="font-bold text-sm text-black">Qual a espessura? 3 mm ou 4 mm?</span>
                     <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 2 ? 'rotate-180' : ''"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
                 <div x-show="open === 2" x-collapse style="display: none;">
-                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Polipropileno corrugado (poliondas) de 3 mm</strong> — o mesmo
-                        material dos nossos totens. <strong>Resistente à chuva</strong>, não
-                        enverga ao sol, é leve e tem custo bem menor que ACM, PVC e madeira.
-                        Para uso externo de média duração (semanas a alguns meses, dependendo
-                        da exposição ao tempo). Para placas permanentes, ACM/MDF rendem mais.
-                    </p>
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-2">
+                        <p>Trabalhamos com duas espessuras de polipropileno corrugado (poliondas):</p>
+                        <ul class="grid grid-cols-1 gap-y-1 text-[13px]">
+                            <li class="flex gap-2"><span class="text-primary mt-0.5">•</span><span><strong class="text-black">3 mm</strong> — padrão para a maioria das aplicações. Leve, resistente à chuva, vida útil de média duração no campo.</span></li>
+                            <li class="flex gap-2"><span class="text-primary mt-0.5">•</span><span><strong class="text-black">4 mm</strong> — mais rígida e durável, indicada para placas grandes, exposição mais longa ou regiões de vento forte.</span></li>
+                        </ul>
+                        <p class="text-[13px] text-gray-500 pt-1">A escolha vai depender do tamanho da placa e do tempo que ela vai ficar exposta. Em dúvida, fala com a gente que a gente recomenda.</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- 3. Impressão -->
+            <!-- 3. Tecnologia de produção -->
             <div class="border border-gray-200 rounded-xl overflow-hidden">
                 <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
                     @click="open = (open === 3 ? 0 : 3)">
-                    <span class="font-bold text-sm text-black">Como é a impressão? 1 ou 2 faces?</span>
+                    <span class="font-bold text-sm text-black">Como é feita a impressão e o corte?</span>
                     <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 3 ? 'rotate-180' : ''"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
                 </button>
                 <div x-show="open === 3" x-collapse style="display: none;">
-                    <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Impressão UV em alta resolução</strong>, com tinta que
-                        não desbota ao sol. Disponível em <strong>1 face (4×0)</strong>,
-                        para quando a placa fica encostada na parede ou estrutura, ou
-                        em <strong>2 faces (4×4)</strong>, para visibilidade dos dois
-                        lados (laterais de campo esportivo, pendurada no meio do salão,
-                        placa de "vende-se", etc.).
-                    </p>
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-2">
+                        <p>
+                            <strong>Impressão digital UV direta de alta resolução:</strong>
+                            tinta UV aplicada diretamente na placa, com cura na hora. Cores
+                            vivas, sem laminação, resistentes ao sol e à chuva. Disponível
+                            em <strong>1 face (4×0)</strong> ou <strong>2 faces (4×4)</strong>.
+                        </p>
+                        <p>
+                            <strong>Corte oscilante de alta precisão:</strong> faca oscilante
+                            controlada digitalmente — encaixes perfeitos, padronização
+                            garantida mesmo em produção de grandes volumes. Diferente do
+                            corte manual ou estilete, não deixa rebarba e mantém a medida
+                            exata em toda a tiragem.
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -1362,11 +1383,11 @@
                 </div>
             </div>
 
-            <!-- 5. Onde usar -->
+            <!-- 5. Lei de Sementes + NF de indústria -->
             <div class="border border-gray-200 rounded-xl overflow-hidden">
                 <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
                     @click="open = (open === 5 ? 0 : 5)">
-                    <span class="font-bold text-sm text-black">Onde posso usar?</span>
+                    <span class="font-bold text-sm text-black">Atende à Lei 10.711? Sai NF de indústria com NCM?</span>
                     <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 5 ? 'rotate-180' : ''"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -1374,26 +1395,29 @@
                 </button>
                 <div x-show="open === 5" x-collapse style="display: none;">
                     <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-2">
-                        <p>Versátil para qualquer sinalização externa ou em campo:</p>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-1 text-[13px]">
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Entrada e fachada de loja</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Eventos esportivos (campo, quadra)</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Imobiliárias (vende-se / aluga-se)</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Sinalização de obra</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Feiras agropecuárias</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Praça de alimentação</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Festas e eventos</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Stands em feira</li>
-                        </ul>
+                        <p>
+                            <strong>Sim.</strong> A NGD é registrada como indústria
+                            (CNAE de Fabricação), e cada item é faturado com seu
+                            código <strong>NCM próprio</strong>. As placas seguem os
+                            padrões técnicos exigidos pela <strong>Lei 10.711/2003 (Lei
+                            de Sementes)</strong> para sinalização de campos de produção
+                            de sementes.
+                        </p>
+                        <p>
+                            Pra você, isso significa: a placa entra no seu controle
+                            fiscal como bem industrializado (não como serviço de
+                            impressão), facilita a contabilidade da fazenda/empresa, e
+                            cumpre a documentação exigida em fiscalizações de campo.
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <!-- 6. Vantagens NGD -->
+            <!-- 6. Onde usar -->
             <div class="border border-gray-200 rounded-xl overflow-hidden">
                 <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
                     @click="open = (open === 6 ? 0 : 6)">
-                    <span class="font-bold text-sm text-black">Quais as vantagens da NGD?</span>
+                    <span class="font-bold text-sm text-black">Onde posso usar?</span>
                     <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 6 ? 'rotate-180' : ''"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -1401,6 +1425,46 @@
                 </button>
                 <div x-show="open === 6" x-collapse style="display: none;">
                     <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-3">
+                        <div>
+                            <p class="text-[13px] font-bold text-black mb-1">🌾 Agro & campo (especialidade da NGD)</p>
+                            <ul class="grid grid-cols-2 gap-x-4 gap-y-1 text-[13px]">
+                                <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Talhões e quadras de sementes</li>
+                                <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Identificação de variedade/ciclo</li>
+                                <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Demarcação de áreas em fazenda</li>
+                                <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Sinalização em obra agrícola</li>
+                                <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Feiras e exposições agropecuárias</li>
+                                <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Eventos de campo</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-[13px] font-bold text-black mb-1">Outras aplicações</p>
+                            <ul class="grid grid-cols-2 gap-x-4 gap-y-1 text-[13px]">
+                                <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Entrada e fachada de loja</li>
+                                <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Imobiliárias (vende-se / aluga-se)</li>
+                                <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Sinalização de obra civil</li>
+                                <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Eventos esportivos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Vantagens NGD -->
+            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                    @click="open = (open === 7 ? 0 : 7)">
+                    <span class="font-bold text-sm text-black">Quais as vantagens da NGD?</span>
+                    <svg class="w-4 h-4 text-gray-400 shrink-0 transition-transform" :class="open === 7 ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="open === 7" x-collapse style="display: none;">
+                    <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-3">
+                        <div>
+                            <strong class="text-black">Indústria de fato (CNAE + NCM + Lei 10.711)</strong>
+                            <p class="text-[13px]">Não somos gráfica que faturou como "serviço". Saída como bem industrializado, com NF e código NCM corretos.</p>
+                        </div>
                         <div>
                             <strong class="text-black">Custo bem menor que ACM/PVC/madeira</strong>
                             <p class="text-[13px]">Poliondas é mais barata e cumpre o papel pra ações de curta e média duração.</p>
