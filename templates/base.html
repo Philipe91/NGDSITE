@@ -83,6 +83,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <!-- Lucide Icons (leve, consistente, moderno) -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <!-- Schema.org: Organization (todas as páginas) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "NGD — Núcleo Gráfico Digital",
+      "alternateName": "NGD",
+      "url": "{{ request.scheme }}://{{ request.get_host }}",
+      "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'img/LOGO NGD.png' %}",
+      "description": "Indústria de comunicação visual para PDV: totens, displays, expositores, banners e placas de sinalização agrícola personalizados em poliondas.",
+      "sameAs": [
+        "https://www.instagram.com/ngdgrafica"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "areaServed": "BR",
+        "availableLanguage": ["Portuguese"],
+        "url": "https://wa.me/5561996498102"
+      }
+    }
+    </script>
+
+    <!-- Schema.org: WebSite com SearchAction -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "NGD — Núcleo Gráfico Digital",
+      "url": "{{ request.scheme }}://{{ request.get_host }}"
+    }
+    </script>
+
+    {% block schema_extra %}{% endblock %}
     {% block extrahead %}{% endblock %}
 </head>
 

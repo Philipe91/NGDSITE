@@ -7,6 +7,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
+from apps.core.views import health_check
 
 admin.site.site_header = "NGD - Painel Administrativo"
 admin.site.site_title = "NGD Site Admin"
@@ -14,6 +15,8 @@ admin.site.index_title = "Gerenciamento da Gráfica"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # Health check público (monitoramento — UptimeRobot, Cloudflare, etc.)
+    path("health/", health_check, name="health_check"),
     # Redirects legados (links curtos antigos)
     path("contato/", RedirectView.as_view(url="/institucional/contato/", permanent=True)),
     path("", include(("apps.catalog.urls", "catalog"))),

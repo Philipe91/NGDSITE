@@ -132,6 +132,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    # CSP + Permissions-Policy (custom — em DEBUG roda como Report-Only)
+    "apps.core.middleware.SecurityHeadersMiddleware",
 ]
 
 AUTHENTICATION_BACKENDS = [

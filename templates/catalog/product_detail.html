@@ -19,28 +19,74 @@
 {% endblock %}
 
 {% block content %}
-<!-- SEO: Schema.org Product -->
+<!-- SEO: Schema.org Product (Rich Snippets do Google) -->
+{% with v_first=product.variants.all|first v_count=product.variants.count %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org/",
   "@type": "Product",
   "name": "{{ product.name|escapejs }}",
+  "description": "{{ product.short_description|escapejs }}",
   "image": [
     {% if product.featured_image %}
-    "{{ request.scheme }}://{{ request.get_host }}{{ product.featured_image.url }}"
+    "{{ request.scheme }}://{{ request.get_host }}{{ product.featured_image.url }}"{% if images %},{% endif %}
     {% endif %}
+    {% for img in images %}
+    "{{ request.scheme }}://{{ request.get_host }}{{ img.image.url }}"{% if not forloop.last %},{% endif %}
+    {% endfor %}
   ],
-  "description": "{{ product.short_description|escapejs }}",
-  {% if product.variants.first %}
+  "brand": {
+    "@type": "Brand",
+    "name": "NGD"
+  },
+  "manufacturer": {
+    "@type": "Organization",
+    "name": "NGD — Núcleo Gráfico Digital",
+    "url": "{{ request.scheme }}://{{ request.get_host }}"
+  },
+  "category": "{{ product.category.name|escapejs }}",
+  {% if v_first %}
+  "sku": "{{ v_first.sku|escapejs }}",
   "offers": {
     "@type": "AggregateOffer",
     "url": "{{ request.scheme }}://{{ request.get_host }}{{ product.get_absolute_url }}",
     "priceCurrency": "BRL",
-    "lowPrice": "{{ product.variants.first.price|stringformat:'f' }}",
+    "lowPrice": "{{ v_first.price|stringformat:'.2f' }}",
+    "highPrice": "{{ product.variants.last.price|stringformat:'.2f' }}",
+    "offerCount": {{ v_count }},
     "availability": "https://schema.org/InStock",
-    "itemCondition": "https://schema.org/NewCondition"
+    "itemCondition": "https://schema.org/NewCondition",
+    "priceValidUntil": "{% now 'Y' %}-12-31"
   }
   {% endif %}
+}
+</script>
+{% endwith %}
+
+<!-- Schema.org BreadcrumbList (Home → Categoria → Produto) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ request.scheme }}://{{ request.get_host }}/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ product.category.name|escapejs }}",
+      "item": "{{ request.scheme }}://{{ request.get_host }}{{ product.category.get_absolute_url }}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ product.name|escapejs }}"
+    }
+  ]
 }
 </script>
 <style>
