@@ -90,3 +90,55 @@
 .login .logo-box {
     background: transparent !important;
 }
+/* ============================================================
+   Barra de atalhos rápidos (Pedidos / Kanban / Dashboard)
+   ============================================================ */
+.ngd-quicknav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 32px;
+}
+/* Botões sólidos bem destacados sobre o header azul */
+.ngd-qn {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-decoration: none !important;
+    background: #ffffff;
+    color: #002244 !important;
+    border: none;
+    box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.45);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    white-space: nowrap;
+}
+.ngd-qn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px -5px rgba(0, 0, 0, 0.55);
+    background: #f0f6ff;
+    color: #00509e !important;
+}
+.ngd-qn svg { width: 17px; height: 17px; flex-shrink: 0; }
+
+/* "Pedidos" = destaque máximo: fundo verde vibrante, texto branco */
+.ngd-qn-primary {
+    background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 18px -3px rgba(34, 197, 94, 0.55);
+}
+.ngd-qn-primary:hover {
+    background: linear-gradient(135deg, #2dd665, #15803d) !important;
+    color: #ffffff !important;
+}
+
+/* Responsivo: telas pequenas mantêm botões com ícone + label compacto */
+@media (max-width: 767px) {
+    .ngd-quicknav { gap: 7px; margin-left: 12px; flex-wrap: wrap; }
+    .ngd-qn { padding: 8px 13px; font-size: 12px; gap: 6px; }
+    .ngd-qn svg { width: 16px; height: 16px; }
+}

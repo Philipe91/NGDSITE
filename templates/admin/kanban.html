@@ -33,13 +33,13 @@
 {% endblock %}
 
 {% block content %}
-<div id="kanban-wrap" x-data="kanban()" style="padding:0 0 40px; background:#f8fafc; min-height:100vh;">
+<div id="kanban-wrap" x-data="kanban()" style="padding:0 0 40px; background:#f4f7fc; min-height:100vh;">
 
   <!-- ╔═ TOPBAR ══════════════════════════════════════════════╗ -->
   <div style="display:flex; align-items:center; justify-content:space-between; padding:20px 24px 16px; flex-wrap:wrap; gap:12px;">
     <div style="display:flex; align-items:center; gap:12px;">
-      <div style="width:40px;height:40px;background:#e0e7ff;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-        <svg width="22" height="22" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <div style="width:40px;height:40px;background:#eef2ff;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="22" height="22" fill="none" stroke="#519df0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
           <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
           <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
         </svg>
@@ -51,12 +51,12 @@
     </div>
     <div style="display:flex;gap:8px;align-items:center;">
       <a href="{% url 'admin:orders_order_changelist' %}"
-         style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;color:#374151;font-size:12px;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,.04);">
+         style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:4px;color:#374151;font-size:12px;font-weight:600;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,.04);">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
         Voltar para Pedidos
       </a>
       <button @click="window.location.reload()"
-              style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#4f46e5;border:none;border-radius:8px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;">
+              style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#519df0;border:none;border-radius:4px;color:#fff;font-size:12px;font-weight:600;cursor:pointer;">
         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
         Atualizar
       </button>
@@ -64,12 +64,12 @@
   </div>
 
   <!-- ╔═ STATS SUMMARY ════════════════════════════════════════╗ -->
-  <div style="display:flex;gap:10px;padding:0 24px 20px;flex-wrap:wrap;">
+  <div style="display:flex;gap:12px;padding:0 24px 22px;flex-wrap:wrap;">
     <template x-for="col in columns" :key="col.id">
-      <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:8px 14px;box-shadow:0 1px 2px rgba(0,0,0,.04);">
-        <span style="width:8px;height:8px;border-radius:50%;" :style="`background:${col.dot}`"></span>
-        <span style="font-size:12px;font-weight:600;color:#374151;" x-text="col.title"></span>
-        <span style="font-size:12px;font-weight:700;padding:2px 7px;border-radius:999px;background:#f1f5f9;color:#475569;" x-text="getByStatus(col.status).length"></span>
+      <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:10px 16px;box-shadow:0 1px 2px rgba(0,0,0,.02);">
+        <span style="width:10px;height:10px;border-radius:50%;" :style="`background:${col.header}`"></span>
+        <span style="font-size:13px;font-weight:600;color:#334155;" x-text="col.title"></span>
+        <span style="font-size:12px;font-weight:700;min-width:24px;height:24px;padding:0 6px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;background:#f1f5f9;color:#475569;" x-text="getByStatus(col.status).length"></span>
       </div>
     </template>
   </div>
@@ -79,66 +79,68 @@
 
     <template x-for="col in columns" :key="col.id">
       <!-- coluna -->
-      <div style="display:flex;flex-direction:column;border-radius:14px;overflow:hidden;border:1px solid;"
-           :style="`border-color:${col.border}`">
+      <div style="display:flex;flex-direction:column; gap:12px;">
 
         <!-- header da coluna -->
-        <div style="padding:12px 14px;display:flex;align-items:center;justify-content:space-between;"
-             :style="`background:${col.header}`">
-          <div style="display:flex;align-items:center;gap:7px;">
-            <span style="width:8px;height:8px;border-radius:50%;flex-shrink:0;" :style="`background:${col.dot}`"></span>
-            <span style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;" :style="`color:${col.titleColor}`" x-text="col.title"></span>
-          </div>
-          <span style="font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;background:rgba(255,255,255,.7);"
-                :style="`color:${col.titleColor}`"
-                x-text="getByStatus(col.status).length"></span>
+        <div style="padding:28px 16px; display:flex;align-items:center;justify-content:center; position:relative; border-radius:4px; box-shadow:0 1px 2px rgba(0,0,0,.05);"
+             :style="`background:${col.header}; color:${col.titleColor}`">
+          <div style="font-size:15px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;text-align:center;width:100%;" x-text="col.title"></div>
+          <svg style="position:absolute; right:16px;" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
         </div>
+
+        <!-- add issue input (novo pedido) -->
+        <a :href="`/admin/orders/order/add/?status=${col.status}`"
+           style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:4px;color:#94a3b8;font-size:13px;text-decoration:none;box-shadow:0 1px 2px rgba(0,0,0,.02);transition:border-color 0.2s;"
+           onmouseover="this.style.borderColor='#cbd5e1'"
+           onmouseout="this.style.borderColor='#e2e8f0'">
+           <span>Adicionar pedido...</span>
+           <div style="display:flex;gap:6px;align-items:center;">
+             <svg width="14" height="14" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+             <svg width="14" height="14" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+           </div>
+        </a>
 
         <!-- zona sortable -->
         <div class="kanban-col"
              :data-status="col.status"
-             style="padding:10px;display:flex;flex-direction:column;gap:8px;background:#fff;flex:1;">
+             style="display:flex;flex-direction:column;gap:12px;min-height:480px;">
 
           <template x-for="order in getByStatus(col.status)" :key="order.id">
             <!-- card -->
             <div :data-id="order.id"
-                 :class="`c-${order.status}`"
-                 style="background:#fff;border:1px solid #f1f5f9;border-radius:10px;padding:12px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:box-shadow .15s;"
-                 onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,.1)'"
-                 onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,.06)'">
+                 style="background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:16px;cursor:grab;box-shadow:0 1px 3px rgba(0,0,0,.04);display:flex;flex-direction:column;gap:14px;position:relative;"
+                 onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,.08)'"
+                 onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,.04)'">
 
-              <!-- topo: OS# + data -->
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;">
-                <span :class="`b-${order.status}`"
-                      style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;">
+              <!-- topo: OS# colorido + data -->
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:11px;font-weight:800;padding:3px 9px;border-radius:6px;color:#fff;" :style="`background:${col.header}`">
                   OS #<span x-text="order.id"></span>
                 </span>
-                <time style="font-size:10px;color:#94a3b8;font-weight:500;" x-text="fmtDate(order.date)"></time>
+                <time style="font-size:11px;color:#94a3b8;font-weight:500;" x-text="fmtDate(order.date)"></time>
               </div>
 
-              <!-- nome cliente -->
-              <p style="font-size:13px;font-weight:700;color:#0f172a;margin:0 0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"
-                 x-text="order.customer"></p>
+              <!-- nome do cliente -->
+              <span style="font-size:15px;font-weight:700;color:#0f172a;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" x-text="order.customer"></span>
 
               <!-- itens -->
-              <div style="font-size:11px;color:#475569;margin-bottom:10px;display:flex;flex-direction:column;gap:3px;">
+              <div style="font-size:12px;color:#475569;display:flex;flex-direction:column;gap:5px;">
                 <template x-for="item in order.items" :key="item.name">
-                  <div style="display:flex;gap:4px;align-items:flex-start;">
-                    <svg width="10" height="10" style="margin-top:2px;flex-shrink:0;" fill="none" stroke="#94a3b8" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-                    <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><strong x-text="item.qtd"></strong>x <span x-text="item.name"></span></span>
+                  <div style="display:flex;gap:7px;align-items:center;">
+                    <span style="width:6px;height:6px;border-radius:50%;flex-shrink:0;" :style="`background:${col.header}`"></span>
+                    <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><strong x-text="`${item.qtd}x`"></strong> <span x-text="item.name"></span></span>
                   </div>
                 </template>
               </div>
 
-              <!-- rodapé: valor + link -->
-              <div style="display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid #f1f5f9;">
-                <span style="font-size:12px;font-weight:700;color:#0f172a;">
-                  R$ <span x-text="order.total.toFixed(2).replace('.',',')"></span>
-                </span>
+              <!-- rodapé: valor + abrir O.S. -->
+              <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid #f1f5f9;">
+                <span style="font-size:15px;font-weight:800;color:#0f172a;">R$ <span x-text="order.total.toFixed(2).replace('.',',')"></span></span>
                 <a :href="`/admin/orders/order/${order.id}/change/`" target="_blank"
-                   style="display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:600;color:#4f46e5;text-decoration:none;">
+                   style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:#519df0;text-decoration:none;"
+                   onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
                   Abrir O.S.
-                  <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                 </a>
               </div>
             </div>
@@ -146,9 +148,9 @@
 
           <!-- coluna vazia -->
           <template x-if="getByStatus(col.status).length === 0">
-            <div style="border:2px dashed #e2e8f0;border-radius:10px;padding:28px 16px;text-align:center;color:#cbd5e1;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:6px;">
+            <div style="border:2px dashed #e2e8f0;border-radius:4px;padding:28px 16px;text-align:center;color:#cbd5e1;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:6px;">
               <svg width="24" height="24" fill="none" stroke="#cbd5e1" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12h6"/></svg>
-              Sem pedidos
+              Vazio
             </div>
           </template>
 
@@ -160,7 +162,7 @@
 
   <!-- Toast -->
   <div x-show="toast" x-transition.opacity
-       style="position:fixed;bottom:20px;right:20px;background:#0f172a;color:#fff;padding:11px 18px;border-radius:10px;font-size:12px;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,.25);z-index:9999;display:flex;align-items:center;gap:8px;">
+       style="position:fixed;bottom:20px;right:20px;background:#0f172a;color:#fff;padding:11px 18px;border-radius:4px;font-size:12px;font-weight:600;box-shadow:0 4px 16px rgba(0,0,0,.25);z-index:9999;display:flex;align-items:center;gap:8px;">
     <svg width="14" height="14" fill="none" stroke="#4ade80" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
     <span x-text="toastMsg"></span>
   </div>
@@ -173,10 +175,10 @@ function kanban() {
   return {
     toast: false, toastMsg: '',
     columns: [
-      { id:1, title:'Novos / Triagem',  status:'pago',          dot:'#3b82f6', header:'#eff6ff', border:'#bfdbfe', titleColor:'#1e40af' },
-      { id:2, title:'Revisando Arte',   status:'arte_recebida', dot:'#f59e0b', header:'#fffbeb', border:'#fde68a', titleColor:'#92400e' },
-      { id:3, title:'Em Producao',       status:'em_producao',   dot:'#8b5cf6', header:'#f5f3ff', border:'#ddd6fe', titleColor:'#4c1d95' },
-      { id:4, title:'Pronto p/ Envio',  status:'enviado',       dot:'#22c55e', header:'#f0fdf4', border:'#bbf7d0', titleColor:'#14532d' },
+      { id:1, title:'Novos / Triagem',  status:'pago',          header:'#519df0', titleColor:'#ffffff' },
+      { id:2, title:'Revisando Arte',   status:'arte_recebida', header:'#fba94b', titleColor:'#ffffff' },
+      { id:3, title:'Em Producao',       status:'em_producao',   header:'#9e7cf4', titleColor:'#ffffff' },
+      { id:4, title:'Pronto p/ Envio',  status:'enviado',       header:'#5bd07e', titleColor:'#ffffff' },
     ],
     orders: [],
 

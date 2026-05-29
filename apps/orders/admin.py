@@ -64,6 +64,101 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ['customer_name', 'customer_email', 'customer_phone']
     inlines       = [OrderItemInline]
     actions       = ['marcar_revisado', 'desmarcar_revisado', 'enviar_para_kanban', 'print_os']
+    readonly_fields = ['customer_panel', 'created_at', 'updated_at',
+                       'mp_payment_id', 'mp_preference_id', 'subtotal', 'total']
+
+    fieldsets = (
+        ('👤 Ficha do Cliente', {
+            'fields': ('customer_panel',),
+        }),
+        ('Dados de contato', {
+            'fields': (('customer_name',), ('customer_email', 'customer_phone')),
+        }),
+        ('Entrega', {
+            'fields': ('shipping_method', 'shipping_cep', 'shipping_address', 'tracking_code'),
+        }),
+        ('Pagamento & valores', {
+            'fields': (('subtotal', 'shipping_cost', 'total'),
+                       ('mp_payment_id', 'mp_preference_id')),
+        }),
+        ('Status do pedido', {
+            'fields': (('status', 'reviewed'), ('created_at', 'updated_at')),
+        }),
+    )
+
+    # --- Painel-resumo do cliente (tudo num cartão visual) ---
+    def customer_panel(self, obj):
+        if not obj or not obj.pk:
+            return "Salve o pedido para ver a ficha completa."
+
+        # WhatsApp: limpa o telefone pra link wa.me
+        phone_digits = ''.join(c for c in (obj.customer_phone or '') if c.isdigit())
+        wa = f"https://wa.me/55{phone_digits}" if phone_digits else ''
+
+        # itens do pedido
+        itens_html = ''
+        for it in obj.items.all():
+            nome = getattr(getattr(it.variant, 'product', None), 'name', '') or '—'
+            tam = getattr(it.variant, 'size_label', '') or ''
+            itens_html += (
+                f'<tr>'
+                f'<td style="padding:4px 10px 4px 0;">{nome} <span style="color:#64748b;">{tam}</span></td>'
+                f'<td style="padding:4px 10px;text-align:center;color:#475569;">{it.quantity}x</td>'
+                f'<td style="padding:4px 0;text-align:right;font-weight:600;">R$ {it.price}</td>'
+                f'</tr>'
+            )
+        if not itens_html:
+            itens_html = '<tr><td colspan="3" style="color:#94a3b8;padding:6px 0;">Sem itens.</td></tr>'
+
+        cfg = STATUS_CFG.get(obj.status, ('#e5e7eb', '#374151', ''))
+        status_bg, status_fg, status_svg = cfg
+
+        wa_btn = (
+            f'<a href="{wa}" target="_blank" style="display:inline-flex;align-items:center;gap:5px;'
+            f'background:#25D366;color:#fff;padding:6px 13px;border-radius:8px;font-weight:700;'
+            f'font-size:12px;text-decoration:none;margin-top:4px;">WhatsApp: {obj.customer_phone}</a>'
+        ) if wa else f'<span style="color:#94a3b8;">{obj.customer_phone or "sem telefone"}</span>'
+
+        endereco = (obj.shipping_address or '').replace('\n', '<br>') or '<span style="color:#94a3b8;">não informado</span>'
+        cep = obj.shipping_cep or '—'
+
+        return format_html(
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:840px;'
+            'background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:20px;">'
+
+            # Coluna 1: cliente + contato
+            '<div>'
+            '<div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;margin-bottom:6px;">Cliente</div>'
+            '<div style="font-size:18px;font-weight:800;color:#0f172a;margin-bottom:2px;">{}</div>'
+            '<div style="color:#475569;font-size:13px;margin-bottom:8px;">{}</div>'
+            '{}'
+            '<div style="margin-top:14px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;margin-bottom:4px;">Entrega</div>'
+            '<div style="font-size:13px;color:#334155;line-height:1.5;"><strong>CEP:</strong> {}<br>{}</div>'
+            '</div>'
+
+            # Coluna 2: pedido + status + itens
+            '<div>'
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
+            '<div><div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;">Pedido</div>'
+            '<div style="font-size:18px;font-weight:800;color:#0f172a;">#{}</div></div>'
+            '<span style="background:{};color:{};padding:4px 12px;border-radius:999px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;">{}{}</span>'
+            '</div>'
+            '<table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:10px;">{}</table>'
+            '<div style="border-top:1px solid #e2e8f0;padding-top:8px;display:flex;justify-content:space-between;font-size:13px;color:#475569;">'
+            '<span>Frete</span><span>R$ {}</span></div>'
+            '<div style="display:flex;justify-content:space-between;font-size:16px;font-weight:800;color:#0f172a;margin-top:2px;">'
+            '<span>Total</span><span>R$ {}</span></div>'
+            '<div style="margin-top:8px;font-size:12px;color:#94a3b8;">Pedido feito em {}</div>'
+            '</div>'
+
+            '</div>',
+            obj.customer_name, obj.customer_email, format_html(wa_btn),
+            cep, format_html(endereco),
+            obj.id, status_bg, status_fg, format_html(status_svg), obj.get_status_display(),
+            format_html(itens_html), obj.shipping_cost, obj.total,
+            obj.created_at.strftime('%d/%m/%Y às %H:%M') if obj.created_at else '—',
+        )
+    customer_panel.short_description = ''
 
     # --- Badge: Novo / Visto ---
     def review_badge(self, obj):

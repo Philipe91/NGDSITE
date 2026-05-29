@@ -11,9 +11,26 @@
     </h1>
 </div>
 {% endblock %}
+
+{% block nav-global %}
+<div class="ngd-quicknav">
+    <a href="{% url 'admin:orders_order_changelist' %}" class="ngd-qn ngd-qn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Pedidos
+    </a>
+    <a href="{% url 'orders:kanban' %}" class="ngd-qn">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="18" rx="1"/><rect x="9.5" y="3" width="6" height="12" rx="1"/><rect x="16" y="3" width="6" height="8" rx="1"/></svg>
+        Kanban
+    </a>
+    <a href="{% url 'orders:dashboard' %}" class="ngd-qn">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+        Dashboard
+    </a>
+</div>
+{% endblock %}
 {% block extrastyle %}
 {{ block.super }}
-<link rel="stylesheet" type="text/css" href="{% static 'css/custom_admin.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/custom_admin.css' %}?v=4">
 {% endblock %}
 {% block footer %}
 <div id="footer">
