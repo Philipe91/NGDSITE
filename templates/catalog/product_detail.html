@@ -436,6 +436,26 @@
         <!-- COLUNA ESQUERDA: CONFIGURADOR (Passos 1 a 7) -->
         <div class="lg:col-span-8 flex flex-col space-y-16">
 
+            <!-- Barra de selos de confiança -->
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-2.5 pb-6 border-b border-gray-100 -mt-2">
+                <span class="flex items-center gap-1.5 text-xs font-semibold text-gray-600">
+                    <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    Checagem de arquivo grátis
+                </span>
+                <span class="flex items-center gap-1.5 text-xs font-semibold text-gray-600">
+                    <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    Qualidade assegurada
+                </span>
+                <span class="flex items-center gap-1.5 text-xs font-semibold text-gray-600">
+                    <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    Impressão em alta resolução
+                </span>
+                <span class="flex items-center gap-1.5 text-xs font-semibold text-gray-600">
+                    <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    Envio para todo o Brasil
+                </span>
+            </div>
+
             <form action="{% url 'cart:cart_add' %}" method="POST" id="configurator-form">
                 {% csrf_token %}
 
@@ -912,7 +932,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4">
                         {% if product.slug == 'banner-rollup' %}
                         <label class="relative cursor-pointer">
                             <input type="radio" name="acabamento" value="refile_reto" class="peer sr-only" checked
@@ -997,19 +1017,13 @@
                                 <circle cx="12" cy="17" r="1.4" fill="currentColor" stroke="none"></circle>
                             </svg>
                         </div>
-                        <div class="flex-grow flex justify-between items-center">
-                            <div>
-                                <h2 class="text-2xl font-black text-gray-900 tracking-tight">Prazo de Produção</h2>
-                                <span class="text-sm text-gray-400 font-medium">Passo {% if product.slug == 'banner-rollup' %}2 de 4{% else %}4 de 6{% endif %}</span>
-                            </div>
-                            <div class="hidden sm:flex text-xs text-gray-500 gap-4">
-                                <span>✔ DIL Realizado</span>
-                                <span>✔ Qualidade Assegurada</span>
-                            </div>
+                        <div>
+                            <h2 class="text-2xl font-black text-gray-900 tracking-tight">Prazo de Produção</h2>
+                            <span class="text-sm text-gray-400 font-medium">Passo {% if product.slug == 'banner-rollup' %}2 de 4{% else %}4 de 6{% endif %}</span>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 {% if product.slug == 'banner-rollup' or product.slug == 'totem-triangular' %}md:grid-cols-2{% endif %} gap-4">
                         {% if product.slug == 'banner-rollup' or product.slug == 'totem-triangular' %}
                         <!-- Production Time Options (rollup + totem triangular) -->
                         <template x-for="option in [
