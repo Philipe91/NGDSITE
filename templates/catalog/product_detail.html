@@ -501,7 +501,7 @@
                                         {% elif product.slug == 'totem-triedro-em-poliondas' %}
                                             3 faces de {{ variant.size_label }}. Pronto para uso.
                                         {% elif product.slug == 'totem-eliptico-em-poliondas' %}
-                                            2 faces curvas de {{ variant.size_label }}. Vai dobrado, monta em segundos.
+                                            2 faces de {{ variant.size_label }}. Impressão 4×4 cores em Papel Duplex Matte 350g.
                                         {% elif product.slug == 'totem-replica-em-poliondas' %}
                                             Recorte de contorno personalizado. Base dobrável inclusa. Preço de referência — confirmamos no orçamento.
                                         {% elif product.slug == 'lixeira-personalizada-em-poliondas' %}
@@ -828,6 +828,37 @@
                                 </div>
                             </div>
                         </label>
+                        {% elif product.slug == 'totem-eliptico-em-poliondas' %}
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="material" value="papel_duplex" class="peer sr-only" checked
+                                x-model="material">
+                            <div class="border-2 rounded-xl p-5 flex items-center gap-4 transition-colors"
+                                :class="material === 'papel_duplex' ? 'border-primary bg-primary/5' : 'border-gray-200'">
+                                <div class="w-5 h-5 border-2 rounded-full flex items-center justify-center shrink-0 transition-colors"
+                                    :class="material === 'papel_duplex' ? 'border-primary' : 'border-gray-300'">
+                                    <div class="w-2.5 h-2.5 bg-primary rounded-full transition-opacity"
+                                        :class="material === 'papel_duplex' ? 'opacity-100' : 'opacity-0'"></div>
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="font-bold text-black text-sm mb-1">Papel Duplex Matte 350g</h3>
+                                    <div class="text-[11px] font-bold text-primary uppercase tracking-wider mb-2">
+                                        Material padrão</div>
+                                    <p class="text-xs text-gray-500">Cartão rígido com acabamento fosco premium.
+                                        Cores fiéis e ótima estrutura para o totem.</p>
+                                </div>
+                                <!-- Foto real da matéria-prima (papel duplex) -->
+                                <div class="hidden sm:flex flex-col items-center shrink-0">
+                                    <span class="text-[9px] font-bold tracking-[0.18em] text-gray-400 uppercase mb-1">Duplex 350g</span>
+                                    <div class="shadow-sm rounded overflow-hidden border border-gray-200">
+                                        <img src="{% static 'img/materia-prima/papel-duplex.jpg' %}"
+                                             alt="Papel Duplex Matte 350g"
+                                             loading="lazy" decoding="async"
+                                             width="96" height="64"
+                                             class="w-24 h-16 object-cover block">
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
                         {% else %}
                         <label class="relative cursor-pointer">
                             <input type="radio" name="material" value="poliondas" class="peer sr-only" checked
@@ -902,6 +933,28 @@
                                 </div>
                                 <p class="text-xs text-gray-500 pl-9 mt-auto">Refile reto + montagem em estrutura de
                                     alumínio.</p>
+                            </div>
+                        </label>
+                        {% elif product.slug == 'totem-eliptico-em-poliondas' %}
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="acabamento" value="corte_reto" class="peer sr-only" checked
+                                x-model="acabamento">
+                            <div class="h-full border-2 rounded-xl p-5 flex flex-col transition-colors"
+                                :class="acabamento === 'corte_reto' ? 'border-primary bg-primary/5' : 'border-gray-200'">
+                                <div class="flex items-start gap-4 mb-4">
+                                    <div class="w-5 h-5 border-2 rounded-full flex items-center justify-center shrink-0 mt-0.5 transition-colors"
+                                        :class="acabamento === 'corte_reto' ? 'border-primary' : 'border-gray-300'">
+                                        <div class="w-2.5 h-2.5 bg-primary rounded-full transition-opacity"
+                                            :class="acabamento === 'corte_reto' ? 'opacity-100' : 'opacity-0'"></div>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-black text-sm mb-1">Corte Reto</h3>
+                                        <div class="text-[11px] text-gray-400 uppercase tracking-wider">Acabamento
+                                            padrão</div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 pl-9 mt-auto">Corte reto de precisão + acabamento
+                                    fosco premium (matte).</p>
                             </div>
                         </label>
                         {% else %}
@@ -2049,10 +2102,10 @@
                 </button>
                 <div x-show="open === 2" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Polipropileno corrugado (poliondas) de 3 mm</strong> — leve, resistente à
-                        umidade e muito mais durável que papelão. Vem cortado e vincado em formato curvo
-                        (elíptico), sem laminação (acabamento fosco natural). Fica em pé sozinho, sem
-                        suporte adicional.
+                        <strong>Papel Duplex Matte 350g</strong> — cartão rígido de alta gramatura
+                        com acabamento fosco (matte) premium. Reproduz cores fiéis e dá ótima
+                        estrutura ao formato elíptico, com visual sofisticado e moderno. Acabamento
+                        em <strong>corte reto</strong> de precisão.
                     </p>
                 </div>
             </div>
@@ -2069,9 +2122,9 @@
                 </button>
                 <div x-show="open === 3" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Impressão UV em alta resolução</strong> nas 2 faces — cores vivas, pretos
-                        profundos e sem desbotar. A cura a frio não agride a poliondas e elimina o cheiro
-                        químico de tintas convencionais.
+                        <strong>Impressão 4×4 cores</strong> em alta resolução — colorido na frente e no
+                        verso, com cores vivas e pretos profundos. As 2 faces podem ter artes
+                        diferentes pra aproveitar a comunicação dos dois lados.
                     </p>
                 </div>
             </div>
@@ -2088,9 +2141,9 @@
                 </button>
                 <div x-show="open === 4" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Montagem semi-automática.</strong> Sai daqui dobrado para facilitar o
-                        transporte e armazenamento. Na hora de usar, é só desdobrar e posicionar no
-                        chão — o formato curvo se sustenta sozinho. Sem parafusos ou ferramentas.
+                        <strong>Montagem simples e intuitiva.</strong> A peça é dobrada nos vincos pra
+                        formar o totem em pé — sem cola, sem parafusos, sem ferramentas. Em poucos
+                        segundos está pronto pra posicionar no chão.
                     </p>
                 </div>
             </div>
@@ -2137,12 +2190,12 @@
                             <p class="text-[13px]">Visual sofisticado que se destaca dos totens retos comuns.</p>
                         </div>
                         <div>
-                            <strong class="text-black">Dobrável para transporte</strong>
-                            <p class="text-[13px]">Vai dobrado para chegar intacto e ocupa menos espaço no armazenamento.</p>
+                            <strong class="text-black">Papel Duplex Matte 350g</strong>
+                            <p class="text-[13px]">Cartão rígido com acabamento fosco premium — estrutura firme e cores fiéis.</p>
                         </div>
                         <div>
-                            <strong class="text-black">Impressão UV de alta definição</strong>
-                            <p class="text-[13px]">Cores vivas, durabilidade superior e sem odor químico.</p>
+                            <strong class="text-black">Impressão 4×4 cores</strong>
+                            <p class="text-[13px]">Colorido na frente e no verso, em alta resolução.</p>
                         </div>
                         <div>
                             <strong class="text-black">Checagem de arquivo gratuita</strong>
@@ -2317,7 +2370,7 @@
             Mais <span class="text-black border-b-4 border-primary pb-1">Vantagens!</span></h2>
         <p class="text-gray-500 uppercase tracking-widest text-sm mb-2 font-light">Comodidade e Tecnologia de Ponta</p>
         <p class="text-gray-400 text-sm">Oferecemos um know-how com um time pronto para ajudá-lo em todas as etapas do
-            seu projeto gráfico, do no poliondas até os acabamentos finais.</p>
+            seu projeto gráfico, do arquivo de arte até os acabamentos finais.</p>
     </div>
 </div>
 {% endblock %}
@@ -2354,8 +2407,8 @@
                 discountMultiplier: 1,
                     expressFee: 0,
                         productionDays: {% if product.slug == 'banner-rollup' or product.slug == 'totem-triangular' %} 7{% else %} 'normal'{% endif %},
-        material: '{% if product.slug == "banner-rollup" %}lona380{% else %}poliondas{% endif %}',
-            acabamento: '{% if product.slug == "banner-rollup" %}refile_reto{% else %}corte_vinco{% endif %}',
+        material: '{% if product.slug == "banner-rollup" %}lona380{% elif product.slug == "totem-eliptico-em-poliondas" %}papel_duplex{% else %}poliondas{% endif %}',
+            acabamento: '{% if product.slug == "banner-rollup" %}refile_reto{% elif product.slug == "totem-eliptico-em-poliondas" %}corte_reto{% else %}corte_vinco{% endif %}',
 
                 init() {
             this.updateSelectedVariant();
