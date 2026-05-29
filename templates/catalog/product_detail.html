@@ -42,7 +42,7 @@
   },
   "manufacturer": {
     "@type": "Organization",
-    "name": "NGD — Núcleo Gráfico Digital",
+    "name": "NGD, Núcleo Gráfico Digital",
     "url": "{{ request.scheme }}://{{ request.get_host }}"
   },
   "category": "{{ product.category.name|escapejs }}",
@@ -127,7 +127,7 @@
             {% if images %}
             <div class="flex flex-row md:flex-col gap-4 overflow-auto md:w-24 shrink-0">
                 {% if product.featured_image %}
-                <img src="{{ product.featured_image.url }}" alt="{{ product.name }} — miniatura"
+                <img src="{{ product.featured_image.url }}" alt="{{ product.name }}, miniatura"
                     loading="lazy" decoding="async" width="96" height="96"
                     class="thumbnail active w-20 h-20 md:w-24 md:h-24 object-contain rounded-xl border-2 border-black cursor-pointer bg-white p-2"
                     onclick="changeImage(this.src, this)">
@@ -284,7 +284,7 @@
                             <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Impressão</span>
                         </div>
                         <p class="text-[13px] text-gray-800 font-semibold leading-snug">
-                            UV de alta definição, cura a frio — cores vivas, sem encanoar
+                            UV de alta definição, cura a frio, cores vivas, sem encanoar
                         </p>
                     </div>
 
@@ -365,7 +365,7 @@
                             <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Acabamento</span>
                         </div>
                         <p class="text-[13px] text-gray-800 font-semibold leading-snug">
-                            Corte, vinco e dobra — pronto para uso, sem suporte
+                            Corte, vinco e dobra, pronto para uso, sem suporte
                         </p>
                     </div>
                 </div>
@@ -407,7 +407,7 @@
                             <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Formato</span>
                         </div>
                         <p class="text-[13px] text-gray-800 font-semibold leading-snug">
-                            Cubo 360° — comunicação visível em todos os ângulos
+                            Cubo 360°, comunicação visível em todos os ângulos
                         </p>
                     </div>
 
@@ -420,7 +420,7 @@
                             <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">Acabamento</span>
                         </div>
                         <p class="text-[13px] text-gray-800 font-semibold leading-snug">
-                            Corte, vinco e dobra — pronto para uso
+                            Corte, vinco e dobra, pronto para uso
                         </p>
                     </div>
                 </div>
@@ -523,9 +523,9 @@
                                         {% elif product.slug == 'totem-eliptico-em-poliondas' %}
                                             2 faces de {{ variant.size_label }}. Impressão 4×4 cores em Papel Duplex Matte 350g.
                                         {% elif product.slug == 'totem-replica-em-poliondas' %}
-                                            Recorte de contorno personalizado. Base dobrável inclusa. Preço de referência — confirmamos no orçamento.
+                                            Recorte de contorno personalizado. Base dobrável inclusa. Preço de referência, confirmamos no orçamento.
                                         {% elif product.slug == 'lixeira-personalizada-em-poliondas' %}
-                                            Chega plana (desmontada). Monta em segundos pelos vincos — sem ferramentas.
+                                            Chega plana (desmontada). Monta em segundos pelos vincos, sem ferramentas.
                                         {% elif product.slug == 'placa-de-campo-poliondas' %}
                                             Placa rígida em poliondas 3mm com impressão UV. Resiste à chuva e ao sol.
                                         {% else %}
@@ -807,7 +807,7 @@
                 </div>
 
                 {% if product.slug != 'banner-rollup' %}
-                <!-- Passo 2: Material (oculto no rollup — material é fixo: lona 380g) -->
+                <!-- Passo 2: Material (oculto no rollup, material é fixo: lona 380g) -->
                 <div class="step-section mt-16">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-12 h-12 rounded-[14px] bg-gradient-to-br from-[#153e8a] to-[#0070f3] shadow-[0_10px_20px_-5px_rgba(21,62,138,0.5)] flex items-center justify-center shrink-0">
@@ -902,7 +902,7 @@
                                     <span class="text-[9px] font-bold tracking-[0.18em] text-gray-400 uppercase mb-1">Poliondas</span>
                                     <div class="shadow-sm rounded overflow-hidden border border-gray-200">
                                         <img src="{% static 'img/materia-prima/plastionda.jpg' %}"
-                                             alt="Poliondas — Polipropileno Corrugado Alveolar"
+                                             alt="Poliondas, Polipropileno Corrugado Alveolar"
                                              loading="lazy" decoding="async"
                                              width="96" height="64"
                                              class="w-24 h-16 object-cover block">
@@ -916,7 +916,7 @@
                 {% endif %}
 
                 {% if product.slug != 'banner-rollup' %}
-                <!-- Passo 3: Acabamento (oculto no rollup — acabamento é fixo: refile reto + montagem) -->
+                <!-- Passo 3: Acabamento (oculto no rollup, acabamento é fixo: refile reto + montagem) -->
                 <div class="step-section mt-16">
                     <div class="flex items-center gap-4 mb-6">
                         <div class="w-12 h-12 rounded-[14px] bg-gradient-to-br from-[#153e8a] to-[#0070f3] shadow-[0_10px_20px_-5px_rgba(21,62,138,0.5)] flex items-center justify-center shrink-0">
@@ -1279,7 +1279,7 @@
     </div>
 
     {% if product.slug == 'banner-rollup' %}
-    <!-- FAQ — Perguntas Frequentes (Roll Up) -->
+    <!-- FAQ, Perguntas Frequentes (Roll Up) -->
     <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
         <div class="text-center mb-10">
             <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
@@ -1323,7 +1323,7 @@
                 </button>
                 <div x-show="open === 2" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        Lona PVC <strong>380g fosca</strong> — material leve e resistente, com 500 fios. A estrutura usa
+                        Lona PVC <strong>380g fosca</strong>, material leve e resistente, com 500 fios. A estrutura usa
                         base discreta de alumínio, estável e fácil de transportar.
                     </p>
                 </div>
@@ -1341,7 +1341,7 @@
                 </button>
                 <div x-show="open === 3" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Tecnologia UV de Alta Definição</strong> — diferente dos banners comuns que curvam nas
+                        <strong>Tecnologia UV de Alta Definição</strong>, diferente dos banners comuns que curvam nas
                         laterais e perdem o brilho com o tempo, o Roll Up da NGD usa o que há de mais moderno em
                         impressão UV, com cura a frio que não agride a lona.
                     </p>
@@ -1362,7 +1362,7 @@
                     <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-3">
                         <div>
                             <strong class="text-black">Acabamento impecável (sem "encanoar")</strong>
-                            <p class="text-[13px]">Tecnologia de cura a frio que não agride a lona — banner perfeitamente plano, sem dobras nas bordas.</p>
+                            <p class="text-[13px]">Tecnologia de cura a frio que não agride a lona, banner perfeitamente plano, sem dobras nas bordas.</p>
                         </div>
                         <div>
                             <strong class="text-black">Cores vivas e reais</strong>
@@ -1370,7 +1370,7 @@
                         </div>
                         <div>
                             <strong class="text-black">Durabilidade superior</strong>
-                            <p class="text-[13px]">Tinta UV altamente resistente a riscos e que não desbota — mantém a aparência de novo por muito mais tempo.</p>
+                            <p class="text-[13px]">Tinta UV altamente resistente a riscos e que não desbota, mantém a aparência de novo por muito mais tempo.</p>
                         </div>
                         <div>
                             <strong class="text-black">Sem cheiro e sustentável</strong>
@@ -1384,7 +1384,7 @@
     {% endif %}
 
     {% if product.slug == 'placa-de-campo-poliondas' %}
-    <!-- FAQ — Perguntas Frequentes (Placa de Campo / Sinalização Agrícola) -->
+    <!-- FAQ, Perguntas Frequentes (Placa de Campo / Sinalização Agrícola) -->
     <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
         <div class="text-center mb-10">
             <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
@@ -1419,9 +1419,9 @@
                     <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
                         <p class="mb-3">A NGD trabalha com 3 tamanhos padrão (largura × altura):</p>
                         <ul class="grid grid-cols-1 gap-y-1 text-[13px]">
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>30 × 40 cm — sinalização rápida, ofertas próximas ao cliente</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>40 × 60 cm — padrão para entradas, fachadas e eventos</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>80 × 100 cm — leitura à distância, placas externas grandes</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>30 × 40 cm, sinalização rápida, ofertas próximas ao cliente</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>40 × 60 cm, padrão para entradas, fachadas e eventos</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>80 × 100 cm, leitura à distância, placas externas grandes</li>
                         </ul>
                     </div>
                 </div>
@@ -1441,8 +1441,8 @@
                     <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-2">
                         <p>Trabalhamos com duas espessuras de polipropileno corrugado (poliondas):</p>
                         <ul class="grid grid-cols-1 gap-y-1 text-[13px]">
-                            <li class="flex gap-2"><span class="text-primary mt-0.5">•</span><span><strong class="text-black">3 mm</strong> — padrão para a maioria das aplicações. Leve, resistente à chuva, vida útil de média duração no campo.</span></li>
-                            <li class="flex gap-2"><span class="text-primary mt-0.5">•</span><span><strong class="text-black">4 mm</strong> — mais rígida e durável, indicada para placas grandes, exposição mais longa ou regiões de vento forte.</span></li>
+                            <li class="flex gap-2"><span class="text-primary mt-0.5">•</span><span><strong class="text-black">3 mm</strong>, padrão para a maioria das aplicações. Leve, resistente à chuva, vida útil de média duração no campo.</span></li>
+                            <li class="flex gap-2"><span class="text-primary mt-0.5">•</span><span><strong class="text-black">4 mm</strong>, mais rígida e durável, indicada para placas grandes, exposição mais longa ou regiões de vento forte.</span></li>
                         </ul>
                         <p class="text-[13px] text-gray-500 pt-1">A escolha vai depender do tamanho da placa e do tempo que ela vai ficar exposta. Em dúvida, fala com a gente que a gente recomenda.</p>
                     </div>
@@ -1469,7 +1469,7 @@
                         </p>
                         <p>
                             <strong>Corte oscilante de alta precisão:</strong> faca oscilante
-                            controlada digitalmente — encaixes perfeitos, padronização
+                            controlada digitalmente, encaixes perfeitos, padronização
                             garantida mesmo em produção de grandes volumes. Diferente do
                             corte manual ou estilete, não deixa rebarba e mantém a medida
                             exata em toda a tiragem.
@@ -1498,7 +1498,7 @@
                             <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Fita dupla-face industrial em superfície lisa</li>
                             <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Pregos em madeira (cerca, tapume de obra)</li>
                         </ul>
-                        <p class="text-[13px] text-gray-500 pt-1">Não acompanha kit de fixação — você define como vai prender no local.</p>
+                        <p class="text-[13px] text-gray-500 pt-1">Não acompanha kit de fixação, você define como vai prender no local.</p>
                     </div>
                 </div>
             </div>
@@ -1595,7 +1595,7 @@
                         </div>
                         <div>
                             <strong class="text-black">Fácil fixação</strong>
-                            <p class="text-[13px]">Fura com qualquer ferramenta — parafuso, abraçadeira, fitilho, prego.</p>
+                            <p class="text-[13px]">Fura com qualquer ferramenta, parafuso, abraçadeira, fitilho, prego.</p>
                         </div>
                         <div>
                             <strong class="text-black">Checagem de arquivo gratuita</strong>
@@ -1613,7 +1613,7 @@
     {% endif %}
 
     {% if product.slug == 'lixeira-personalizada-em-poliondas' %}
-    <!-- FAQ — Perguntas Frequentes (Lixeira Personalizada) -->
+    <!-- FAQ, Perguntas Frequentes (Lixeira Personalizada) -->
     <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
         <div class="text-center mb-10">
             <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
@@ -1635,9 +1635,9 @@
                     <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
                         <p class="mb-3">Trabalhamos com 3 portes (largura × profundidade × altura · capacidade):</p>
                         <ul class="grid grid-cols-1 gap-y-1 text-[13px]">
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Pequena — 30×30×50 cm · 30 litros</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Média — 35×35×60 cm · 50 litros</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Grande — 40×40×70 cm · 80 litros</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Pequena, 30×30×50 cm · 30 litros</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Média, 35×35×60 cm · 50 litros</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Grande, 40×40×70 cm · 80 litros</li>
                         </ul>
                     </div>
                 </div>
@@ -1655,7 +1655,7 @@
                 </button>
                 <div x-show="open === 2" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Polipropileno corrugado (poliondas) de 3 mm</strong> — o mesmo
+                        <strong>Polipropileno corrugado (poliondas) de 3 mm</strong>, o mesmo
                         material premium dos nossos totens e displays. <strong>Resistente à umidade</strong>,
                         mais durável que papelão, e mantém o acabamento mesmo em ambientes
                         de alta circulação. Acabamento fosco natural, sem laminação.
@@ -1675,11 +1675,10 @@
                 </button>
                 <div x-show="open === 3" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Impressão UV em alta resolução nas 4 faces externas</strong> —
-                        cores vivas, pretos profundos, e que <strong>não desbotam</strong>. A
+                        <strong>Impressão UV em alta resolução nas 4 faces externas</strong>, cores vivas, pretos profundos, e que <strong>não desbotam</strong>. A
                         cura a frio elimina o odor químico de tintas convencionais, tornando-a
                         ideal para uso indoor. Personalização total: branding da marca,
-                        descarte seletivo, comunicação de campanha — você escolhe.
+                        descarte seletivo, comunicação de campanha, você escolhe.
                     </p>
                 </div>
             </div>
@@ -1704,7 +1703,7 @@
                         </p>
                         <p>
                             <strong>Montagem em segundos:</strong> você dobra pelos vincos
-                            já marcados e encaixa as travas — sem cola, sem fita, sem
+                            já marcados e encaixa as travas, sem cola, sem fita, sem
                             ferramentas. Qualquer pessoa monta.
                         </p>
                         <p>
@@ -1783,7 +1782,7 @@
                         </div>
                         <div>
                             <strong class="text-black">Frete barato (até pra longe)</strong>
-                            <p class="text-[13px]">Chega desmontada e plana — pacote fino, frete muito menor mesmo pra outras regiões.</p>
+                            <p class="text-[13px]">Chega desmontada e plana, pacote fino, frete muito menor mesmo pra outras regiões.</p>
                         </div>
                         <div>
                             <strong class="text-black">Impressão UV em alta resolução</strong>
@@ -1805,7 +1804,7 @@
     {% endif %}
 
     {% if product.slug == 'display-de-chao' %}
-    <!-- FAQ — Perguntas Frequentes (Display de Chão) -->
+    <!-- FAQ, Perguntas Frequentes (Display de Chão) -->
     <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
         <div class="text-center mb-10">
             <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
@@ -1826,7 +1825,7 @@
                 <div x-show="open === 1" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
                         É a peça de exposição que coloca seu produto onde o cliente
-                        <strong>não tem como ignorar</strong> — pontos estratégicos do
+                        <strong>não tem como ignorar</strong>, pontos estratégicos do
                         PDV que viram vitrines criativas e empurram as vendas para cima.
                         Funciona como um ponto extra de venda dentro da própria loja,
                         sem precisar de prateleira.
@@ -1866,7 +1865,7 @@
                 <div x-show="open === 3" x-collapse style="display: none;">
                     <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-2">
                         <p>
-                            O display sai daqui <strong>dobrado e planificado</strong> — o
+                            O display sai daqui <strong>dobrado e planificado</strong>, o
                             pacote fica fino, o frete fica bem mais barato e o
                             armazenamento ocupa pouco espaço. Você só monta na hora de usar.
                         </p>
@@ -1893,9 +1892,9 @@
                     <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
                         <p class="mb-3">Trabalhamos com 3 portes (largura × profundidade × altura):</p>
                         <ul class="grid grid-cols-1 gap-y-1 text-[13px]">
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Compacto — 30×30×120 cm</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Padrão — 40×35×150 cm</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Grande — 50×40×180 cm</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Compacto, 30×30×120 cm</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Padrão, 40×35×150 cm</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Grande, 50×40×180 cm</li>
                         </ul>
                     </div>
                 </div>
@@ -1915,7 +1914,7 @@
                     <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed space-y-3">
                         <div>
                             <strong class="text-black">Frete mais barato</strong>
-                            <p class="text-[13px]">Entregue dobrado — ocupa menos espaço e reduz o custo de envio.</p>
+                            <p class="text-[13px]">Entregue dobrado, ocupa menos espaço e reduz o custo de envio.</p>
                         </div>
                         <div>
                             <strong class="text-black">Impressão digital de alta resolução</strong>
@@ -1937,7 +1936,7 @@
     {% endif %}
 
     {% if product.slug == 'totem-replica-em-poliondas' %}
-    <!-- FAQ — Perguntas Frequentes (Totem Réplica) -->
+    <!-- FAQ, Perguntas Frequentes (Totem Réplica) -->
     <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
         <div class="text-center mb-10">
             <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
@@ -1957,7 +1956,7 @@
                 </button>
                 <div x-show="open === 1" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        É um totem de <strong>recorte especial (faca de contorno)</strong> — o contorno é
+                        É um totem de <strong>recorte especial (faca de contorno)</strong>, o contorno é
                         cortado para reproduzir fielmente a silhueta de uma pessoa, personagem, mascote
                         ou produto. Diferente dos totens retos, ele "clona" a imagem que você enviar,
                         criando presença visual realista no PDV ou em eventos.
@@ -1977,11 +1976,11 @@
                 </button>
                 <div x-show="open === 2" x-collapse style="display: none;">
                     <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <p class="mb-3">Trabalhamos com 3 faixas de altura — o tamanho final é definido pela imagem enviada:</p>
+                        <p class="mb-3">Trabalhamos com 3 faixas de altura, o tamanho final é definido pela imagem enviada:</p>
                         <ul class="grid grid-cols-1 gap-y-1 text-[13px]">
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Pequeno — até 1,00 m</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Médio — 1,01 a 1,50 m</li>
-                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Tamanho Real — 1,51 a 2,00 m</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Pequeno, até 1,00 m</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Médio, 1,01 a 1,50 m</li>
+                            <li class="flex items-center gap-2"><span class="w-1 h-1 bg-primary rounded-full"></span>Tamanho Real, 1,51 a 2,00 m</li>
                         </ul>
                     </div>
                 </div>
@@ -1999,10 +1998,9 @@
                 </button>
                 <div x-show="open === 3" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Polipropileno corrugado (poliondas) de 3 mm</strong> — leve, resistente à
+                        <strong>Polipropileno corrugado (poliondas) de 3 mm</strong>, leve, resistente à
                         umidade e durável. O recorte é feito em mesa de corte digital de alta precisão.
-                        Acompanha <strong>base acoplada na parte de trás</strong>, dobrável e removível —
-                        montado, a base fica escondida e o totem fica em pé sozinho.
+                        Acompanha <strong>base acoplada na parte de trás</strong>, dobrável e removível, montado, a base fica escondida e o totem fica em pé sozinho.
                     </p>
                 </div>
             </div>
@@ -2019,7 +2017,7 @@
                 </button>
                 <div x-show="open === 4" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Impressão UV em alta resolução</strong> — cores vivas e sem desbotar.
+                        <strong>Impressão UV em alta resolução</strong>, cores vivas e sem desbotar.
                         O recorte segue a linha de contorno do seu arquivo (envie com 1 cm de sangria).
                         Nosso time de pré-impressão confere o arquivo antes de produzir.
                     </p>
@@ -2039,8 +2037,7 @@
                 <div x-show="open === 5" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
                         Por ser <strong>100% personalizado</strong>, o valor final depende do formato do
-                        recorte e da altura. Os preços por faixa são uma <strong>referência de partida</strong> —
-                        envie sua imagem que confirmamos o orçamento exato antes de produzir.
+                        recorte e da altura. Os preços por faixa são uma <strong>referência de partida</strong>, envie sua imagem que confirmamos o orçamento exato antes de produzir.
                     </p>
                 </div>
             </div>
@@ -2074,7 +2071,7 @@
     {% endif %}
 
     {% if product.slug == 'totem-eliptico-em-poliondas' %}
-    <!-- FAQ — Perguntas Frequentes (Totem Elíptico) -->
+    <!-- FAQ, Perguntas Frequentes (Totem Elíptico) -->
     <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
         <div class="text-center mb-10">
             <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
@@ -2116,7 +2113,7 @@
                 </button>
                 <div x-show="open === 2" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Papel Duplex Matte 350g</strong> — cartão rígido de alta gramatura
+                        <strong>Papel Duplex Matte 350g</strong>, cartão rígido de alta gramatura
                         com acabamento fosco (matte) premium. Reproduz cores fiéis e dá ótima
                         estrutura ao formato elíptico, com visual sofisticado e moderno. Acabamento
                         em <strong>corte reto</strong> de precisão.
@@ -2136,7 +2133,7 @@
                 </button>
                 <div x-show="open === 3" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Impressão 4×4 cores</strong> em alta resolução — colorido na frente e no
+                        <strong>Impressão 4×4 cores</strong> em alta resolução, colorido na frente e no
                         verso, com cores vivas e pretos profundos. As 2 faces podem ter artes
                         diferentes pra aproveitar a comunicação dos dois lados.
                     </p>
@@ -2156,7 +2153,7 @@
                 <div x-show="open === 4" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
                         <strong>Montagem simples e intuitiva.</strong> A peça é dobrada nos vincos pra
-                        formar o totem em pé — sem cola, sem parafusos, sem ferramentas. Em poucos
+                        formar o totem em pé, sem cola, sem parafusos, sem ferramentas. Em poucos
                         segundos está pronto pra posicionar no chão.
                     </p>
                 </div>
@@ -2205,7 +2202,7 @@
                         </div>
                         <div>
                             <strong class="text-black">Papel Duplex Matte 350g</strong>
-                            <p class="text-[13px]">Cartão rígido com acabamento fosco premium — estrutura firme e cores fiéis.</p>
+                            <p class="text-[13px]">Cartão rígido com acabamento fosco premium, estrutura firme e cores fiéis.</p>
                         </div>
                         <div>
                             <strong class="text-black">Impressão 4×4 cores</strong>
@@ -2227,7 +2224,7 @@
     {% endif %}
 
     {% if product.slug == 'totem-triedro-em-poliondas' %}
-    <!-- FAQ — Perguntas Frequentes (Totem Triedro) -->
+    <!-- FAQ, Perguntas Frequentes (Totem Triedro) -->
     <div class="mt-20 border-t border-gray-100 pt-16 pb-4 max-w-4xl mx-auto px-4" x-data="{ open: 0 }">
         <div class="text-center mb-10">
             <p class="text-gray-500 uppercase tracking-widest text-xs mb-3 font-light">Tire suas dúvidas</p>
@@ -2269,7 +2266,7 @@
                 </button>
                 <div x-show="open === 2" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Polipropileno corrugado (poliondas) de 3 mm</strong> — leve, resistente à umidade
+                        <strong>Polipropileno corrugado (poliondas) de 3 mm</strong>, leve, resistente à umidade
                         e muito mais durável que o papelão. Vem cortado, vincado e dobrado, sem laminação
                         (acabamento fosco natural). Fica em pé sozinho, sem precisar de suporte.
                     </p>
@@ -2288,7 +2285,7 @@
                 </button>
                 <div x-show="open === 3" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
-                        <strong>Impressão UV em alta resolução</strong> nas 3 faces — cores vivas, pretos profundos
+                        <strong>Impressão UV em alta resolução</strong> nas 3 faces, cores vivas, pretos profundos
                         e sem desbotar com o tempo. A cura a frio não agride a poliondas e elimina o cheiro
                         químico de tintas convencionais.
                     </p>
@@ -2308,7 +2305,7 @@
                 <div x-show="open === 4" x-collapse style="display: none;">
                     <p class="px-5 pb-5 text-sm text-gray-600 leading-relaxed">
                         <strong>Pronto para uso.</strong> Já sai daqui cortado, vincado e dobrado em formato
-                        triangular — é só posicionar no chão que o totem fica em pé sozinho. Não precisa de
+                        triangular, é só posicionar no chão que o totem fica em pé sozinho. Não precisa de
                         suporte, parafusos ou ferramentas.
                     </p>
                 </div>
@@ -2357,7 +2354,7 @@
                         </div>
                         <div>
                             <strong class="text-black">Sem montagem complicada</strong>
-                            <p class="text-[13px]">Já chega cortado e vincado — é só posicionar e usar.</p>
+                            <p class="text-[13px]">Já chega cortado e vincado, é só posicionar e usar.</p>
                         </div>
                         <div>
                             <strong class="text-black">Impressão UV de alta definição</strong>

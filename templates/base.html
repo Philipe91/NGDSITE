@@ -18,11 +18,11 @@
     {% block canonical %}<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">{% endblock %}
 
     <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
-    <meta property="og:site_name" content="NGD — Núcleo Gráfico Digital">
+    <meta property="og:site_name" content="NGD, Núcleo Gráfico Digital">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
     <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-    <meta property="og:title" content="{% block og_title %}{{ seo.meta_title_default|default:'NGD — Materiais e Displays Personalizados para Ponto de Venda' }}{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{{ seo.meta_title_default|default:'NGD, Materiais e Displays Personalizados para Ponto de Venda' }}{% endblock %}">
     <meta property="og:description" content="{% block og_description %}{{ seo.meta_description_default|default:'A revolução gráfica em materiais para PDV. Totens, displays, banners e expositores personalizados em poliondas. Impressão UV em alta resolução.' }}{% endblock %}">
     <meta property="og:image" content="{% block og_image %}{% if seo.og_image_default %}{{ request.scheme }}://{{ request.get_host }}{{ seo.og_image_default.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/LOGO NGD.png' %}{% endif %}{% endblock %}">
     <meta property="og:image:width" content="1200">
@@ -30,7 +30,7 @@
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{% block tw_title %}{{ seo.meta_title_default|default:'NGD — Materiais para PDV' }}{% endblock %}">
+    <meta name="twitter:title" content="{% block tw_title %}{{ seo.meta_title_default|default:'NGD, Materiais para PDV' }}{% endblock %}">
     <meta name="twitter:description" content="{% block tw_description %}{{ seo.meta_description_default|default:'Totens, displays e materiais personalizados em poliondas. Impressão UV.' }}{% endblock %}">
     <meta name="twitter:image" content="{% block tw_image %}{% if seo.og_image_default %}{{ request.scheme }}://{{ request.get_host }}{{ seo.og_image_default.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/LOGO NGD.png' %}{% endif %}{% endblock %}">
 
@@ -73,7 +73,7 @@
     /></noscript>
     <!-- End Meta Pixel Code -->
     {% endif %}
-    <!-- Tailwind compilado local (substitui o CDN — perf + sem warning de prod) -->
+    <!-- Tailwind compilado local (substitui o CDN, perf + sem warning de prod) -->
     <link rel="stylesheet" href="{% static 'css/tailwind.css' %}?v=2">
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -88,7 +88,7 @@
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "NGD — Núcleo Gráfico Digital",
+      "name": "NGD, Núcleo Gráfico Digital",
       "alternateName": "NGD",
       "url": "{{ request.scheme }}://{{ request.get_host }}",
       "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'img/LOGO NGD.png' %}",
@@ -111,7 +111,7 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "NGD — Núcleo Gráfico Digital",
+      "name": "NGD, Núcleo Gráfico Digital",
       "url": "{{ request.scheme }}://{{ request.get_host }}"
     }
     </script>
@@ -133,7 +133,7 @@
             <!-- Center Nav -->
             <nav
                 class="hidden lg:flex items-center gap-6 text-[13px] font-bold tracking-wide text-white/90 uppercase">
-                <!-- Megamenu Totens PDV — FULLWIDTH (teste, estilo Magento "boxeffect") -->
+                <!-- Megamenu Totens PDV, FULLWIDTH (teste, estilo Magento "boxeffect") -->
                 <div x-data="{ open: false, hideT: null,
                                show() { clearTimeout(this.hideT); this.open = true; },
                                hide() { this.hideT = setTimeout(() => this.open = false, 120); } }">
@@ -222,7 +222,7 @@
 
                 <a href="{% url 'catalog:product_detail' 'cubo-promocional-em-poliondas' %}"
                     class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Cubo Promocional</a>
-                {# Wobbler, Stopper e Faixa de Gôndola desativados — produtos guardados no banco (is_active=False) #}
+                {# Wobbler, Stopper e Faixa de Gôndola desativados, produtos guardados no banco (is_active=False) #}
                 <a href="{% url 'catalog:product_detail' 'banner-rollup' %}"
                     class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Rollup</a>
                 <a href="{% url 'catalog:product_detail' 'placa-de-campo-poliondas' %}"
