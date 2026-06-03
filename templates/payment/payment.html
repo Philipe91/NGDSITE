@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Pagamento — Pedido #{{ order.id }} | NGD{% endblock %}
+{% block title %}Pagamento, Pedido #{{ order.id }} | NGD{% endblock %}
 
 {% block content %}
 <div class="container mx-auto px-4 lg:px-8 py-12 animate-in fade-in slide-in-from-bottom-5 duration-700">
@@ -88,7 +88,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                 </svg>
-                PAGAR AGORA — R$ {{ order.total }}
+                PAGAR AGORA, R$ {{ order.total }}
             </a>
 
             <div class="flex items-center justify-center gap-4 mt-6">

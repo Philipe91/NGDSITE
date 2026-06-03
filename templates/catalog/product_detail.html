@@ -495,10 +495,7 @@
                                     <h3 class="font-bold text-black text-sm mb-1 leading-tight">
                                         {{ product.name }} {{ variant.size_label }}
                                     </h3>
-                                    <div class="text-[11px] text-gray-400 line-through mb-1">
-                                        de R$ {{ variant.price|add:"30.00"|floatformat:"2" }}
-                                    </div>
-                                    <div class="text-[13px] font-bold text-black mb-3">
+                                    <div class="text-[13px] font-bold text-black mb-3 mt-1">
                                         A partir de R$ {{ variant.price|floatformat:"2" }}
                                     </div>
                                     <p class="text-xs text-gray-500 leading-relaxed {% if product.slug == 'cubo-promocional-em-poliondas' %}max-w-[120px]{% else %}max-w-[200px]{% endif %}">
@@ -872,6 +869,37 @@
                                     <div class="shadow-sm rounded overflow-hidden border border-gray-200">
                                         <img src="{% static 'img/materia-prima/papel-duplex.jpg' %}"
                                              alt="Papel Duplex Matte 350g"
+                                             loading="lazy" decoding="async"
+                                             width="96" height="64"
+                                             class="w-24 h-16 object-cover block">
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                        {% elif product.slug == 'display-de-chao' %}
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="material" value="papelao" class="peer sr-only" checked
+                                x-model="material">
+                            <div class="border-2 rounded-xl p-5 flex items-center gap-4 transition-colors"
+                                :class="material === 'papelao' ? 'border-primary bg-primary/5' : 'border-gray-200'">
+                                <div class="w-5 h-5 border-2 rounded-full flex items-center justify-center shrink-0 transition-colors"
+                                    :class="material === 'papelao' ? 'border-primary' : 'border-gray-300'">
+                                    <div class="w-2.5 h-2.5 bg-primary rounded-full transition-opacity"
+                                        :class="material === 'papelao' ? 'opacity-100' : 'opacity-0'"></div>
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="font-bold text-black text-sm mb-1">Papelão Microondulado</h3>
+                                    <div class="text-[11px] font-bold text-primary uppercase tracking-wider mb-2">
+                                        Material padrão</div>
+                                    <p class="text-xs text-gray-500">Papelão de alta gramatura, leve e resistente.
+                                        Vai planificado, monta em segundos.</p>
+                                </div>
+                                <!-- Foto real da matéria-prima (papelão) -->
+                                <div class="hidden sm:flex flex-col items-center shrink-0">
+                                    <span class="text-[9px] font-bold tracking-[0.18em] text-gray-400 uppercase mb-1">Papelão</span>
+                                    <div class="shadow-sm rounded overflow-hidden border border-gray-200">
+                                        <img src="{% static 'img/materia-prima/papelao.jpg' %}"
+                                             alt="Papelão Microondulado"
                                              loading="lazy" decoding="async"
                                              width="96" height="64"
                                              class="w-24 h-16 object-cover block">
@@ -2418,7 +2446,7 @@
                 discountMultiplier: 1,
                     expressFee: 0,
                         productionDays: {% if product.slug == 'banner-rollup' or product.slug == 'totem-triangular' %} 7{% else %} 'normal'{% endif %},
-        material: '{% if product.slug == "banner-rollup" %}lona380{% elif product.slug == "totem-eliptico-em-poliondas" %}papel_duplex{% else %}poliondas{% endif %}',
+        material: '{% if product.slug == "banner-rollup" %}lona380{% elif product.slug == "totem-eliptico-em-poliondas" %}papel_duplex{% elif product.slug == "display-de-chao" %}papelao{% else %}poliondas{% endif %}',
             acabamento: '{% if product.slug == "banner-rollup" %}refile_reto{% elif product.slug == "totem-eliptico-em-poliondas" %}corte_reto{% else %}corte_vinco{% endif %}',
 
                 init() {

@@ -224,7 +224,7 @@ function kanban() {
       .then(r => r.json())
       .then(d => {
         if (d.success) {
-          const msgs = { pago:'Triagem', arte_recebida:'Arte Aprovada — cliente notificado', em_producao:'Em Producao — cliente notificado', enviado:'Enviado — cliente notificado' };
+          const msgs = { pago:'Triagem', arte_recebida:'Arte Aprovada, cliente notificado', em_producao:'Em Producao, cliente notificado', enviado:'Enviado, cliente notificado' };
           this.showToast(`OS #${id} movida para ${msgs[ns] || ns}`);
         } else {
           this.orders.find(o=>o.id==id).status = prev;

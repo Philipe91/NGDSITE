@@ -154,7 +154,7 @@
                     <span x-show="selectedFrete === 'retirada'">Grátis (Retirada)</span>
                     <span x-show="selectedFrete !== 'retirada'"
                         x-text="'R$ ' + shippingCost.toFixed(2).replace('.', ',')"></span>
-                    <span x-show="selectedFrete === '' && freteOptions.length === 0" class="text-gray-400">—</span>
+                    <span x-show="selectedFrete === '' && freteOptions.length === 0" class="text-gray-400">, </span>
                 </div>
 
                 <!-- Total -->
