@@ -53,7 +53,33 @@
             </div>
 
             <div class="mt-8">
-                <form class="space-y-4" method="POST" action="{% url 'account_signup' %}">
+                <form class="space-y-4" method="POST" action="{% url 'account_signup' %}"
+                      x-data="{
+                          tipo: '{{ form.tipo_pessoa.value|default:'PF' }}',
+                          doc: '{{ form.cpf_cnpj.value|default:'' }}',
+                          tel: '{{ form.telefone.value|default:'' }}',
+                          maskDoc() {
+                              let v = this.doc.replace(/\D/g,'');
+                              if (this.tipo === 'PJ') {
+                                  v = v.slice(0,14)
+                                       .replace(/^(\d{2})(\d)/,'$1.$2')
+                                       .replace(/^(\d{2})\.(\d{3})(\d)/,'$1.$2.$3')
+                                       .replace(/\.(\d{3})(\d)/,'.$1/$2')
+                                       .replace(/(\d{4})(\d)/,'$1-$2');
+                              } else {
+                                  v = v.slice(0,11)
+                                       .replace(/(\d{3})(\d)/,'$1.$2')
+                                       .replace(/(\d{3})(\d)/,'$1.$2')
+                                       .replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+                              }
+                              this.doc = v;
+                          },
+                          maskTel() {
+                              let v = this.tel.replace(/\D/g,'').slice(0,11);
+                              v = v.replace(/^(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2');
+                              this.tel = v;
+                          }
+                      }">
                     {% csrf_token %}
 
                     {% if form.non_field_errors %}
@@ -63,31 +89,101 @@
                     </div>
                     {% endif %}
 
+                    <!-- Toggle Pessoa Física / Jurídica -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">Tipo de cadastro</label>
+                        <div class="grid grid-cols-2 gap-2 p-1 bg-gray-100 rounded-xl">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="tipo_pessoa" value="PF" x-model="tipo" @change="doc=''" class="sr-only">
+                                <div class="text-center py-2.5 rounded-lg text-sm font-bold transition-all"
+                                     :class="tipo === 'PF' ? 'bg-white text-primary shadow-sm' : 'text-gray-500'">
+                                    Pessoa Física
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="tipo_pessoa" value="PJ" x-model="tipo" @change="doc=''" class="sr-only">
+                                <div class="text-center py-2.5 rounded-lg text-sm font-bold transition-all"
+                                     :class="tipo === 'PJ' ? 'bg-white text-primary shadow-sm' : 'text-gray-500'">
+                                    Pessoa Jurídica
+                                </div>
+                            </label>
+                        </div>
+                        {% if form.tipo_pessoa.errors %}
+                            <p class="mt-1 text-xs text-red-600 font-medium">{{ form.tipo_pessoa.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Nome / Razão social -->
+                    <div>
+                        <label for="id_nome_razao" class="block text-sm font-semibold text-gray-700 mb-1">
+                            <span x-show="tipo === 'PF'">Nome completo</span>
+                            <span x-show="tipo === 'PJ'" style="display:none;">Razão social</span>
+                        </label>
+                        <input id="id_nome_razao" name="nome_razao" type="text" required autocomplete="name"
+                            value="{{ form.nome_razao.value|default:'' }}"
+                            :placeholder="tipo === 'PF' ? 'Seu nome completo' : 'Razão social da empresa'"
+                            class="input-modern block w-full px-4 py-3 rounded-xl sm:text-sm text-gray-900 focus:outline-none">
+                        {% if form.nome_razao.errors %}
+                            <p class="mt-1 text-xs text-red-600 font-medium">{{ form.nome_razao.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- CPF / CNPJ -->
+                    <div>
+                        <label for="id_cpf_cnpj" class="block text-sm font-semibold text-gray-700 mb-1">
+                            <span x-show="tipo === 'PF'">CPF</span>
+                            <span x-show="tipo === 'PJ'" style="display:none;">CNPJ</span>
+                            <span class="text-gray-400 font-normal">(para nota fiscal)</span>
+                        </label>
+                        <input id="id_cpf_cnpj" name="cpf_cnpj" type="text" required inputmode="numeric"
+                            x-model="doc" @input="maskDoc()"
+                            :placeholder="tipo === 'PF' ? '000.000.000-00' : '00.000.000/0000-00'"
+                            class="input-modern block w-full px-4 py-3 rounded-xl sm:text-sm text-gray-900 focus:outline-none">
+                        {% if form.cpf_cnpj.errors %}
+                            <p class="mt-1 text-xs text-red-600 font-medium">{{ form.cpf_cnpj.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Telefone / WhatsApp -->
+                    <div>
+                        <label for="id_telefone" class="block text-sm font-semibold text-gray-700 mb-1">Telefone / WhatsApp</label>
+                        <input id="id_telefone" name="telefone" type="text" required inputmode="numeric" autocomplete="tel"
+                            x-model="tel" @input="maskTel()" placeholder="(00) 00000-0000"
+                            class="input-modern block w-full px-4 py-3 rounded-xl sm:text-sm text-gray-900 focus:outline-none">
+                        {% if form.telefone.errors %}
+                            <p class="mt-1 text-xs text-red-600 font-medium">{{ form.telefone.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- E-mail -->
                     <div>
                         <label for="id_email" class="block text-sm font-semibold text-gray-700 mb-1">E-mail</label>
                         <input id="id_email" name="email" type="email" autocomplete="email" required placeholder="seu@email.com"
+                            value="{{ form.email.value|default:'' }}"
                             class="input-modern block w-full px-4 py-3 rounded-xl sm:text-sm text-gray-900 focus:outline-none">
                         {% if form.email.errors %}
                             <p class="mt-1 text-xs text-red-600 font-medium">{{ form.email.errors.0 }}</p>
                         {% endif %}
                     </div>
 
-                    <div>
-                        <label for="id_password1" class="block text-sm font-semibold text-gray-700 mb-1">Senha</label>
-                        <input id="id_password1" name="password1" type="password" required placeholder="Crie uma senha forte"
-                            class="input-modern block w-full px-4 py-3 rounded-xl sm:text-sm text-gray-900 focus:outline-none">
-                        {% if form.password1.errors %}
-                            <p class="mt-1 text-xs text-red-600 font-medium">{{ form.password1.errors.0 }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <label for="id_password2" class="block text-sm font-semibold text-gray-700 mb-1">Confirme a Senha</label>
-                        <input id="id_password2" name="password2" type="password" required placeholder="Repita a senha"
-                            class="input-modern block w-full px-4 py-3 rounded-xl sm:text-sm text-gray-900 focus:outline-none">
-                        {% if form.password2.errors %}
-                            <p class="mt-1 text-xs text-red-600 font-medium">{{ form.password2.errors.0 }}</p>
-                        {% endif %}
+                    <!-- Senhas -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="id_password1" class="block text-sm font-semibold text-gray-700 mb-1">Senha</label>
+                            <input id="id_password1" name="password1" type="password" required placeholder="Senha forte"
+                                class="input-modern block w-full px-4 py-3 rounded-xl sm:text-sm text-gray-900 focus:outline-none">
+                            {% if form.password1.errors %}
+                                <p class="mt-1 text-xs text-red-600 font-medium">{{ form.password1.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <label for="id_password2" class="block text-sm font-semibold text-gray-700 mb-1">Confirmar</label>
+                            <input id="id_password2" name="password2" type="password" required placeholder="Repita"
+                                class="input-modern block w-full px-4 py-3 rounded-xl sm:text-sm text-gray-900 focus:outline-none">
+                            {% if form.password2.errors %}
+                                <p class="mt-1 text-xs text-red-600 font-medium">{{ form.password2.errors.0 }}</p>
+                            {% endif %}
+                        </div>
                     </div>
 
                     <div class="pt-2">
@@ -96,11 +192,12 @@
                             Finalizar Cadastro
                         </button>
                     </div>
-                </form>
 
-                <div class="mt-8 hidden">
-                    <!-- Botões sociais (ex: Google) ocultos até configuração de API -->
-                </div>
+                    <p class="text-[11px] text-gray-400 text-center leading-relaxed">
+                        Seus dados são usados para emissão de nota fiscal e contato sobre o pedido.
+                        Veja nossa <a href="{% url 'pages:page_detail' 'privacidade' %}" class="underline hover:text-primary">Política de Privacidade</a>.
+                    </p>
+                </form>
             </div>
         </div>
     </div>

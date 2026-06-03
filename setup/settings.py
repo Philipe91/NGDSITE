@@ -355,6 +355,8 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_EMAIL_VERIFICATION = "none" # "none", "optional", "mandatory"
+# Form de cadastro customizado: PF/PJ + nome/razão + CPF/CNPJ + telefone (p/ NF)
+ACCOUNT_SIGNUP_FORM_CLASS = "apps.customers.forms.CustomSignupForm"
 LOGIN_REDIRECT_URL = "/cliente/painel/"
 LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_ON_GET = True
