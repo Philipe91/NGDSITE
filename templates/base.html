@@ -74,7 +74,7 @@
     <!-- End Meta Pixel Code -->
     {% endif %}
     <!-- Tailwind compilado local (substitui o CDN, perf + sem warning de prod) -->
-    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}?v=2">
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}?v={{ CSS_VERSION }}">
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Inter Font (moderna, usada por Figma, Linear, Vercel, Notion) -->
@@ -132,7 +132,7 @@
 
             <!-- Center Nav -->
             <nav
-                class="hidden lg:flex items-center gap-6 text-[13px] font-bold tracking-wide text-white/90 uppercase">
+                class="hidden lg:flex items-center gap-4 xl:gap-6 text-[12px] xl:text-[13px] font-bold tracking-wide text-white/90 uppercase whitespace-nowrap">
                 <!-- Megamenu Totens PDV, FULLWIDTH (teste, estilo Magento "boxeffect") -->
                 <div x-data="{ open: false, hideT: null,
                                show() { clearTimeout(this.hideT); this.open = true; },
@@ -199,7 +199,7 @@
                                                         transition-all duration-200
                                                         {% if c.badge == 'em_breve' %}bg-gray-700/70{% else %}bg-[#153e8a]/85{% endif %}">
                                                 <span class="text-white text-[13px] font-medium uppercase tracking-wide">
-                                                    {% if c.badge == 'em_breve' %}Em breve{% else %}Comprar{% endif %}
+                                                    {% if c.badge == 'em_breve' %}Em breve{% elif PORTFOLIO_MODE %}Ver detalhes{% else %}Comprar{% endif %}
                                                 </span>
                                             </div>
                                         </div>
@@ -231,6 +231,10 @@
                     class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Lixeira PDV</a>
                 <a href="{% url 'catalog:product_detail' 'display-de-chao' %}"
                     class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Display de Chão</a>
+                <a href="{% url 'catalog:product_detail' 'display-recortado-mao-gigante' %}"
+                    class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Display de Mão</a>
+                <a href="{% url 'pages:page_detail' 'sobre-nos' %}"
+                    class="hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all py-8">Quem Somos</a>
             </nav>
 
             <!-- Right Icons -->
@@ -238,6 +242,14 @@
                 <button class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/10 hover:text-white transition-all" title="Buscar">
                     <i data-lucide="search" class="w-[18px] h-[18px]"></i>
                 </button>
+                {% if PORTFOLIO_MODE %}
+                <a href="https://wa.me/{{ WHATSAPP_NUMBER }}?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20NGD%20e%20gostaria%20de%20um%20or%C3%A7amento."
+                   target="_blank" rel="noopener"
+                   class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/10 hover:text-white transition-all"
+                   title="Pedir Orçamento">
+                    <i data-lucide="message-square" class="w-[18px] h-[18px]"></i>
+                </a>
+                {% else %}
                 <a href="{% url 'customers:dashboard' %}"
                    class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/10 hover:text-white transition-all"
                    title="Minha Conta">
@@ -251,6 +263,7 @@
                     </span>
                     {% endif %}
                 </a>
+                {% endif %}
             </div>
 
         </div>

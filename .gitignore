@@ -62,3 +62,9 @@ Thumbs.db
 node_modules/
 package-lock.json
 
+
+# Materiais de origem pesados (catalogos em PDF e fotos brutas dos produtos).
+# As imagens tratadas vao para media/, que ja fica fora do Git.
+*.pdf
+imagens-catalogo/
+maogigante/

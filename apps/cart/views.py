@@ -35,6 +35,12 @@ def cart_add(request):
         return redirect(request.META.get('HTTP_REFERER', '/'))
 
     variant = get_object_or_404(ProductVariant, id=variant_id, is_active=True)
+
+    # Produto sob orçamento não tem preço fechado: não pode entrar no carrinho
+    if variant.product.is_quote_only:
+        messages.error(request, "Este produto é feito sob medida. Peça o orçamento pelo WhatsApp.")
+        return redirect(variant.product.get_absolute_url())
+
     cart.add(variant=variant, quantity=quantity, update_quantity=True, prazo=prazo)
     
     # Base price calculation

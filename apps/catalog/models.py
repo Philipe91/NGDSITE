@@ -35,6 +35,11 @@ class Product(models.Model):
     featured_image = models.ImageField(upload_to="products/featured/", blank=True, null=True, verbose_name="Imagem de Destaque")
     is_active = models.BooleanField(default=True, verbose_name="Ativo", db_index=True)
     is_featured = models.BooleanField(default=False, verbose_name="Destaque", db_index=True)
+    is_quote_only = models.BooleanField(
+        default=False,
+        verbose_name="Somente orçamento",
+        help_text="Produto sem venda online: esconde preço e carrinho e mostra o botão de orçamento pelo WhatsApp.",
+    )
     meta_title = models.CharField(max_length=255, blank=True, verbose_name="Meta Title")
     meta_description = models.TextField(blank=True, verbose_name="Meta Description")
 
@@ -55,6 +60,18 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('catalog:product_detail', kwargs={'slug': self.slug})
+
+    @property
+    def whatsapp_texto(self):
+        return (
+            "Olá! Vim pelo site da NGD e gostaria de um orçamento.\n\n"
+            f"Produto: {self.name}"
+        )
+
+    @property
+    def modelos_ativos(self):
+        """Modelos de linha exibidos na página (ex: os expositores de chão)."""
+        return self.model_options.filter(is_active=True)
 
 class ProductVariant(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="variants", verbose_name="Produto")
@@ -89,6 +106,43 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"Imagem de {self.product.name}"
+
+
+class ProductModelOption(models.Model):
+    """Modelo de linha exibido na página do produto (ex: os expositores de chão).
+
+    Serve para produtos que têm variações estruturais, e não apenas de tamanho:
+    cada linha vira um card com foto, descrição e botão de orçamento.
+    """
+
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="model_options", verbose_name="Produto"
+    )
+    name = models.CharField(max_length=120, verbose_name="Nome do modelo", help_text="Ex: com rodízios")
+    description = models.TextField(blank=True, verbose_name="Descrição")
+    spec = models.CharField(
+        max_length=180, blank=True, verbose_name="Material e acabamento",
+        help_text="Ex: Poliondas 4 mm · quatro níveis · saia frontal ampla",
+    )
+    image = models.ImageField(upload_to="products/modelos/", blank=True, null=True, verbose_name="Foto")
+    sort_order = models.IntegerField(default=0, verbose_name="Ordem de Exibição")
+    is_active = models.BooleanField(default=True, verbose_name="Ativo", db_index=True)
+
+    class Meta:
+        verbose_name = "Modelo do Produto"
+        verbose_name_plural = "Modelos do Produto"
+        ordering = ["sort_order", "id"]
+
+    def __str__(self):
+        return f"{self.product.name} - {self.name}"
+
+    @property
+    def whatsapp_texto(self):
+        return (
+            "Olá! Vim pelo site da NGD e gostaria de um orçamento.\n\n"
+            f"Produto: {self.product.name}\n"
+            f"Modelo: {self.name}"
+        )
 
 
 class MegaMenuTotensCard(models.Model):

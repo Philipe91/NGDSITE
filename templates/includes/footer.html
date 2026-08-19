@@ -23,10 +23,17 @@
                 <ul class="space-y-2 text-sm text-gray-500">
                     <li><a href="{% url 'catalog:category_list' %}"
                             class="hover:text-primary transition-colors">Produtos</a></li>
+                    {% if not PORTFOLIO_MODE %}
                     <li><a href="{% url 'customers:dashboard' %}" class="hover:text-primary transition-colors">Minha
                             Conta</a></li>
                     <li><a href="{% url 'customers:orders' %}" class="hover:text-primary transition-colors">Meus
                             Pedidos</a></li>
+                    {% else %}
+                    <li><a href="{% url 'pages:contact' %}" class="hover:text-primary transition-colors">Fale
+                            Conosco</a></li>
+                    <li><a href="https://wa.me/{{ WHATSAPP_NUMBER }}" target="_blank" rel="noopener"
+                            class="hover:text-primary transition-colors">Pedir Orçamento</a></li>
+                    {% endif %}
                 </ul>
             </div>
             <div>

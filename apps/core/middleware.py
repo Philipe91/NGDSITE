@@ -1,6 +1,7 @@
 """Middleware customizado de segurança — adiciona headers que o Django
 não configura por padrão (CSP, Permissions-Policy)."""
 from django.conf import settings
+from django.shortcuts import redirect
 
 
 # Origens permitidas — derivadas do que o site realmente usa hoje (base.html)
@@ -63,6 +64,31 @@ PERMISSIONS_POLICY = (
     "accelerometer=(), "
     "gyroscope=()"
 )
+
+
+# Prefixos do fluxo de venda — desligados enquanto PORTFOLIO_MODE estiver ligado
+ROTAS_DE_VENDA = ("/carrinho/", "/pedidos/", "/pagamento/", "/cliente/", "/accounts/")
+
+
+class PortfolioModeMiddleware:
+    """Tira o fluxo de venda do ar quando PORTFOLIO_MODE está ligado.
+
+    As URLs continuam registradas (para que `{% url %}` e `reverse()` não
+    quebrem, e para voltar à loja completa depois é só desligar a flag), mas
+    quem acessar essas rotas é mandado de volta para a home.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if (
+            settings.PORTFOLIO_MODE
+            and request.path.startswith(ROTAS_DE_VENDA)
+            and not request.path.startswith("/admin/")
+        ):
+            return redirect("/")
+        return self.get_response(request)
 
 
 class SecurityHeadersMiddleware:

@@ -58,6 +58,17 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 1000
 ART_UPLOAD_MAX_BYTES = int(os.getenv("ART_UPLOAD_MAX_BYTES", str(50 * 1024 * 1024)))
 
 # =============================================================================
+# MODO PORTFÓLIO
+# =============================================================================
+# Quando ligado, o site vira vitrine: carrinho, checkout e pagamento saem do ar
+# e o CTA passa a ser "Pedir orçamento" via WhatsApp.
+# Desligue (PORTFOLIO_MODE=False no .env) para voltar à loja com venda online.
+PORTFOLIO_MODE = os.getenv("PORTFOLIO_MODE", "False") == "True"
+
+# Número usado nos links de orçamento (formato internacional, só dígitos)
+WHATSAPP_NUMBER = os.getenv("WHATSAPP_NUMBER", "5561996498102")
+
+# =============================================================================
 # SEGURANÇA EM PRODUÇÃO (ativada quando DEBUG=False)
 # =============================================================================
 if not DEBUG:
@@ -132,6 +143,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    # Tira carrinho/checkout/pagamento do ar quando PORTFOLIO_MODE=True
+    "apps.core.middleware.PortfolioModeMiddleware",
     # CSP + Permissions-Policy (custom — em DEBUG roda como Report-Only)
     "apps.core.middleware.SecurityHeadersMiddleware",
 ]
@@ -163,6 +176,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "apps.core.context_processors.site_mode",
                 "apps.cart.context_processors.cart_processor",
                 "apps.catalog.context_processors.totens_processor",
                 "apps.seo.context_processors.seo_settings",

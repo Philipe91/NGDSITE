@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.db import models
 from image_uploader_widget.widgets import ImageUploaderWidget
-from .models import Category, Product, ProductVariant, ProductImage, MegaMenuTotensCard
+from .models import Category, Product, ProductVariant, ProductImage, ProductModelOption, MegaMenuTotensCard
 
 
 class ProductImageInlineForm(forms.ModelForm):
@@ -62,6 +62,12 @@ class ProductImageInline(OrderedImageUploaderInline):
     extra = 0
     order_field = "sort_order"
 
+class ProductModelOptionInline(admin.StackedInline):
+    model = ProductModelOption
+    extra = 0
+    fields = (('name', 'sort_order', 'is_active'), 'spec', 'description', 'image')
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     class Media:
@@ -81,14 +87,14 @@ class ProductAdmin(admin.ModelAdmin):
     }
     fieldsets = (
         (None, {
-            'fields': ('category', 'name', 'slug', 'short_description', 'description', 'featured_image', 'is_active', 'is_featured')
+            'fields': ('category', 'name', 'slug', 'short_description', 'description', 'featured_image', 'is_active', 'is_featured', 'is_quote_only')
         }),
         ('SEO', {
             'fields': ('meta_title', 'meta_description'),
             'classes': ('collapse',),
         }),
     )
-    inlines = [ProductVariantInline, ProductImageInline]
+    inlines = [ProductVariantInline, ProductModelOptionInline, ProductImageInline]
 
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):

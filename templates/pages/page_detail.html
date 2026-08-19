@@ -1,17 +1,123 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Conteúdo - NGD Site{% endblock %}
 
 {% block content %}
+{% if page.slug != 'sobre-nos' %}
 <div class="bg-surface border-b border-gray-100 py-10">
     <div class="container mx-auto px-4 lg:px-8">
         <h1 class="text-3xl lg:text-4xl font-bold text-gray-900">{{ page.title }}</h1>
     </div>
 </div>
+{% endif %}
 
+{% if page.slug == 'sobre-nos' %}
+<!-- Quem Somos: mesmo layout da pagina 02 do catalogo impresso -->
+<section class="relative overflow-hidden bg-gradient-to-br from-white via-[#f6f9fd] to-[#eef4fb]">
+    <div class="absolute inset-y-0 right-0 w-2/3 bg-gradient-to-l from-[#e8f0fa]/60 to-transparent pointer-events-none"></div>
+
+    <div class="container mx-auto px-4 lg:px-8 py-14 lg:py-20 relative z-10">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-10 lg:gap-14 items-stretch max-w-6xl mx-auto">
+
+            <!-- Coluna de texto -->
+            <div class="relative">
+                <h1 class="leading-[0.95] mb-6">
+                    <span class="block text-4xl lg:text-5xl font-extrabold tracking-tight text-[#0b1220]">QUEM</span>
+                    <span class="block text-4xl lg:text-5xl font-semibold tracking-tight text-primary">SOMOS</span>
+                </h1>
+                <div class="w-24 h-1 bg-[#3b82f6] rounded-full mb-8"></div>
+
+                <div class="relative -ml-4 lg:-ml-8 pl-4 lg:pl-8 pr-6 py-6 rounded-r-[2rem] bg-white/70 backdrop-blur-sm">
+                    <div class="text-gray-600 italic leading-[1.8] text-[14px] lg:text-[15px] space-y-4">
+                        {{ page.content|safe }}
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-6 mt-10">
+                    <div>
+                        <p class="text-2xl lg:text-3xl font-extrabold text-primary leading-none">20</p>
+                        <p class="text-[11px] text-gray-500 mt-2 leading-snug">anos de experiência</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl lg:text-3xl font-extrabold text-primary leading-none">Indústria</p>
+                        <p class="text-[11px] text-gray-500 mt-2 leading-snug">produção própria com<br>documentação fiscal</p>
+                    </div>
+                    <div>
+                        <p class="text-2xl lg:text-3xl font-extrabold text-primary leading-none">100%</p>
+                        <p class="text-[11px] text-gray-500 mt-2 leading-snug">fabricação própria</p>
+                    </div>
+                </div>
+
+                <a href="https://wa.me/{{ WHATSAPP_NUMBER }}?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20NGD%20e%20gostaria%20de%20um%20or%C3%A7amento."
+                   target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2 mt-10 bg-[#0b2d6b] hover:bg-[#153e8a] text-white text-[11px] font-bold uppercase tracking-[0.2em] px-8 py-4 rounded-xl transition-colors shadow-lg shadow-[#0b2d6b]/20">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 12h6m-6 4h4m1-12H6a2 2 0 00-2 2v14l4-3h10a2 2 0 002-2V6a2 2 0 00-2-2z"></path>
+                    </svg>
+                    Fale com um especialista
+                </a>
+            </div>
+
+            <!-- Foto da fabrica -->
+            <div class="w-full max-w-[340px] md:max-w-[380px] lg:max-w-[460px] md:ml-auto md:h-full rounded-[2rem] overflow-hidden shadow-[0_35px_70px_-15px_rgba(11,34,78,0.35)]">
+                <img src="{% static 'img/institucional/fachada-ngd.jpg' %}"
+                     alt="Fábrica da NGD Núcleo Gráfico Digital"
+                     loading="lazy" decoding="async" width="1024" height="1280"
+                     class="w-full h-full aspect-[4/3] md:aspect-auto object-cover object-top">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Onde estamos -->
+<section class="bg-white py-20">
+    <div class="container mx-auto px-4 lg:px-8">
+        <div class="max-w-6xl mx-auto bg-[#0b1220] rounded-[2rem] p-10 lg:p-12">
+            <h2 class="text-white font-bold text-2xl mb-8">Onde estamos</h2>
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300 mb-3">Endereço</p>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        SOF Norte, Quadra 01, Conjunto B, Lote 10<br>
+                        Brasília/DF, CEP 70.634-120
+                    </p>
+                    <a href="https://maps.app.goo.gl/75hGFf19XRjbS2Y77"
+                       target="_blank" rel="noopener"
+                       class="inline-flex items-center gap-2 mt-4 text-[11px] uppercase tracking-widest font-bold text-white border border-white/20 rounded-xl px-4 py-3 hover:bg-white/10 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        Ver no mapa
+                    </a>
+                </div>
+
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300 mb-3">Falar com a gente</p>
+                    <a href="https://wa.me/{{ WHATSAPP_NUMBER }}?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20NGD%20e%20gostaria%20de%20um%20or%C3%A7amento."
+                       target="_blank" rel="noopener"
+                       class="block text-white text-sm font-bold hover:text-blue-300 transition-colors">WhatsApp (61) 99649-8102</a>
+                    <p class="text-gray-400 text-sm mt-2">Telefone (61) 3344-9925</p>
+                </div>
+
+                <div>
+                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300 mb-3">E-mail</p>
+                    <a href="mailto:ngd@nucleografico.com.br"
+                       class="block text-white text-sm font-bold hover:text-blue-300 transition-colors break-all">ngd@nucleografico.com.br</a>
+                    <p class="text-gray-400 text-sm mt-2">www.nucleografico.com.br</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
 <div class="container mx-auto px-4 lg:px-8 py-16">
     <div class="prose prose-blue max-w-4xl mx-auto text-gray-600 leading-loose">
         {{ page.content|safe }}
     </div>
 </div>
+{% endif %}
 {% endblock %}
