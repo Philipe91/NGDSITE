@@ -40,7 +40,7 @@
                 {% endif %}
 
                 {% with variant=product.variants.all|first %}
-                {% if variant %}
+                {% if variant and not product.is_quote_only %}
                 <div class="mt-2 mb-3">
                     <div class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">A partir de</div>
                     <span class="text-xl font-bold text-black group-hover:text-primary transition-colors">R$ {{ variant.price|floatformat:"2" }}</span>
