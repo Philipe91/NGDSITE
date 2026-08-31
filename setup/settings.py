@@ -316,6 +316,24 @@ if SUPABASE_S3_ENDPOINT and SUPABASE_S3_ACCESS_KEY_ID and SUPABASE_S3_SECRET_ACC
     MEDIA_URL = _supabase_publico + "/"
 
 # =============================================================================
+# MONTAGEM EM SUBCAMINHO (ex.: nucleografico.com.br/loja)
+# =============================================================================
+# Vazio = servido na raiz, como em dev. Preenchido, o Django passa a gerar
+# todo link, redirect e action de formulario ja com o prefixo — {% url %} e
+# reverse() respeitam isso sozinhos.
+#
+# Duas coisas o Django NAO prefixa automaticamente, entao sao feitas aqui:
+#   - STATIC_URL
+#   - MEDIA_URL, mas so quando as imagens ainda sao locais; com o Supabase
+#     ligado ela ja e uma URL absoluta e nao deve ser tocada.
+FORCE_SCRIPT_NAME = os.getenv("FORCE_SCRIPT_NAME", "").strip().rstrip("/") or None
+
+if FORCE_SCRIPT_NAME:
+    STATIC_URL = f"{FORCE_SCRIPT_NAME}{STATIC_URL}"
+    if MEDIA_URL.startswith("/"):
+        MEDIA_URL = f"{FORCE_SCRIPT_NAME}{MEDIA_URL}"
+
+# =============================================================================
 # CACHE — local em dev, Redis em prod se REDIS_URL estiver definido
 # =============================================================================
 _redis_url = os.getenv("REDIS_URL", "").strip()

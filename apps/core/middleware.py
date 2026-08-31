@@ -87,7 +87,7 @@ class PortfolioModeMiddleware:
             and request.path.startswith(ROTAS_DE_VENDA)
             and not request.path.startswith("/admin/")
         ):
-            return redirect("/")
+            return redirect("catalog:home")
         return self.get_response(request)
 
 

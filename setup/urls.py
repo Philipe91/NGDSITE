@@ -18,7 +18,7 @@ urlpatterns = [
     # Health check público (monitoramento — UptimeRobot, Cloudflare, etc.)
     path("health/", health_check, name="health_check"),
     # Redirects legados (links curtos antigos)
-    path("contato/", RedirectView.as_view(url="/institucional/contato/", permanent=True)),
+    path("contato/", RedirectView.as_view(pattern_name="pages:contact", permanent=True)),
     path("", include(("apps.catalog.urls", "catalog"))),
     path("carrinho/", include(("apps.cart.urls", "cart"))),
     path("pedidos/", include(("apps.orders.urls", "orders"))),
