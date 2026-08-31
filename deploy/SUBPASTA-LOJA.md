@@ -457,3 +457,93 @@ cuidados que importam:
 **Consequência:** como `auth.user` não subiu, **não existe superusuário em
 produção**. Criar um com `createsuperuser` apontando para o `.env.production`
 antes de precisar do admin.
+
+### 7.10 Armadilha nº 10 — o service worker do PWA engole o /loja
+
+**A pior do dia, porque era invisível para o `curl`.**
+
+Depois do primeiro deploy no domínio, todos os testes por linha de comando
+davam 200: `/loja/`, `/loja`, categorias, CSS, e os 10 redirects de SEO
+intactos. No navegador, porém, aparecia a mensagem *"o serviço que você procura
+não existe"* — que é do **React do site institucional**, não do Django.
+
+**Causa:** o site é um PWA. O `vite.config.ts` tinha
+
+```js
+navigateFallback: "index.html",
+navigateFallbackDenylist: [/^\/api/, /^\/supabase/],
+```
+
+O service worker intercepta **toda navegação** e serve o `index.html` do cache.
+Como `/loja` não estava na lista de exceções, o pedido nunca chegava ao Firebase
+— logo, nunca chegava ao Cloud Run. O React recebia uma rota que não conhece e
+mostrava o "não encontrado" dele.
+
+**Correção:** acrescentar `/^\/loja/` ao `navigateFallbackDenylist`, rebuildar e
+republicar. Confirmar no arquivo publicado:
+
+```
+curl -s https://nucleografico.com.br/sw.js | grep -o "denylist:\[[^]]*\]"
+→ denylist:[/^\/api/,/^\/supabase/,/^\/loja/]
+```
+
+**Duas lições:**
+
+1. **`curl` não executa service worker.** Qualquer verificação de site com PWA
+   feita só por linha de comando tem esse ponto cego. Testar em **janela
+   anônima**, que não tem SW instalado e mostra o que um visitante novo vê.
+2. Depois de corrigir, quem já visitou o site continua com o **SW antigo
+   instalado** até ele se atualizar. `registerType: "autoUpdate"` resolve
+   sozinho, mas costuma exigir uma visita a mais ou `Ctrl+Shift+R`.
+
+---
+
+## 8. Estado no fim de 31/08/2026
+
+**No ar e funcionando:** https://nucleografico.com.br/loja/
+
+Site institucional intacto (mesmo título e tamanho de antes), os 10 redirects de
+SEO respondendo 301, e a loja servindo `/loja/`, `/loja` sem barra, categorias,
+produtos e CSS.
+
+### 8.1 Três arquivos alterados e NÃO COMMITADOS
+
+Em `C:/projetos/nucleografico/Github`, branch `fix/seo-canonical-apex`:
+
+| Arquivo | O que é | Já publicado? |
+|---|---|---|
+| `firebase.json` | os 14 inserts do rewrite `/loja` | **sim** |
+| `vite.config.ts` | `/loja` na denylist do service worker | **sim** |
+| `public/sitemap.xml` | trabalho do dono (posts do blog) | **não**, e foi mantido fora de propósito |
+
+**Risco:** os dois primeiros estão publicados mas não versionados. Um
+`git checkout` ou troca de branch os desfaz, e o próximo `firebase deploy`
+quebraria o `/loja` silenciosamente. **Commitar assim que revisar.**
+
+O `sitemap.xml` foi preservado com `git stash` nos dois deploys, por pedido
+explícito do dono ("não mexa no lance do blog"), e devolvido intacto depois.
+
+### 8.2 O que fazer amanhã
+
+1. **Commitar** o `firebase.json` e o `vite.config.ts` (ver 8.1).
+2. **Criar o superusuário** de produção — não existe nenhum, porque os 4
+   usuários de teste foram deixados de fora de propósito:
+   `createsuperuser` apontando para o `.env.production`.
+3. **Conferir a loja no navegador** com calma: layout, imagens, menus, e se o
+   carrinho está mesmo escondido (`PORTFOLIO_MODE=True`).
+4. **Rotações de credencial** do `PRODUCAO.md` (Mercado Pago, Gmail, Telegram,
+   senha do Postgres local) e a troca da senha do `django_catalogo`.
+5. Só depois: subir a **versão que vende** (NGDSITE), cujo bucket `loja` já está
+   migrado e cujo código já tem o bloco de storage.
+
+### 8.3 Padrão de erro que se repetiu (para não repetir amanhã)
+
+Três vezes no mesmo dia o erro foi **deduzir em vez de verificar**: o endpoint do
+S3 (o painel mostra uma forma, o projeto precisa de outra), o host do pooler
+(`aws-1`, não `aws-0`) e a URL de download do `gcloud` (faltava `/downloads/`).
+Nos três casos o custo foi baixo porque houve teste antes de aplicar — mas os
+três eram evitáveis lendo a fonte em vez de supor.
+
+E duas vezes uma dificuldade foi declarada "bloqueio" cedo demais (acesso ao
+Google Cloud, host do pooler) quando era só falta de insistir. As duas caíram
+assim que houve mais uma tentativa.
