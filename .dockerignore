@@ -1,0 +1,45 @@
+# O que NÃO entra na imagem do Cloud Run.
+# Mantém o build rápido e evita mandar segredo ou arquivo pesado para a nuvem.
+
+# Segredos — em produção as variáveis vêm do próprio Cloud Run
+.env
+*.pem
+*.key
+
+# Ambiente e cache locais
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+node_modules/
+
+# Controle de versão e editores
+.git/
+.gitignore
+.vscode/
+.idea/
+.claude/
+
+# Uploads locais: em produção as imagens ficam no Supabase Storage.
+# Se forem junto, incham a imagem e somem no próximo deploy de qualquer jeito.
+media/
+
+# Gerado no build pelo collectstatic
+staticfiles/
+
+# Backups e dumps
+*.sql
+backup_*/
+*.sqlite3
+
+# Documentação e material de apoio
+*.md
+deploy/
+*.pdf
+
+# Scripts pontuais de manutenção, não precisam rodar no contêiner
+apply_v*.py
+fix_*.py
+copy_*.py

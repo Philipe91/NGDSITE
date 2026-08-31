@@ -202,6 +202,32 @@ DATABASES = {
     }
 }
 
+# Ajustes para banco gerenciado (Supabase). Todos opcionais: sem as variáveis
+# no .env, o banco local continua funcionando exatamente como antes.
+#
+# DB_SCHEMA  — isola as tabelas do catálogo num schema só dele. Use quando o
+#              banco for compartilhado com o site oficial, para que as
+#              migrations do Django nunca alcancem as tabelas de lá.
+# DB_SSLMODE — o Supabase exige conexão criptografada ("require").
+# DB_POOLER  — ligue quando o HOST for o pooler em modo transação (porta 6543),
+#              que é o indicado para Cloud Run. Nesse modo a conexão não pode
+#              ser reaproveitada nem usar cursor no servidor; sem isso o site
+#              quebra de forma intermitente e difícil de diagnosticar.
+DB_SCHEMA = os.getenv("DB_SCHEMA", "").strip()
+DB_SSLMODE = os.getenv("DB_SSLMODE", "").strip()
+
+_db_options = {}
+if DB_SSLMODE:
+    _db_options["sslmode"] = DB_SSLMODE
+if DB_SCHEMA:
+    _db_options["options"] = f"-c search_path={DB_SCHEMA},public"
+if _db_options:
+    DATABASES["default"]["OPTIONS"] = _db_options
+
+if os.getenv("DB_POOLER", "False") == "True":
+    DATABASES["default"]["CONN_MAX_AGE"] = 0
+    DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True
+
 # =============================================================================
 # VALIDAÇÃO DE SENHA
 # =============================================================================
@@ -247,6 +273,45 @@ STORAGES = {
 # =============================================================================
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+# Uploads no Supabase Storage — mesmo padrão do site oficial.
+#
+# O nucleografico.com.br guarda tudo que é enviado pelo painel em buckets
+# públicos do Supabase (blog, carousel, client-logos, contact-attachments,
+# resumes), com as pastas organizadas dentro do bucket e sobrescrita ligada.
+# O catálogo segue exatamente esse padrão, só que num bucket próprio, para não
+# se misturar com as imagens que já estão no ar.
+#
+# Enquanto as variáveis abaixo não existirem no .env, nada muda: os uploads
+# continuam em MEDIA_ROOT, como hoje.
+SUPABASE_S3_ENDPOINT = os.getenv("SUPABASE_S3_ENDPOINT", "").strip().rstrip("/")
+SUPABASE_S3_ACCESS_KEY_ID = os.getenv("SUPABASE_S3_ACCESS_KEY_ID", "").strip()
+SUPABASE_S3_SECRET_ACCESS_KEY = os.getenv("SUPABASE_S3_SECRET_ACCESS_KEY", "").strip()
+SUPABASE_S3_REGION = os.getenv("SUPABASE_S3_REGION", "sa-east-1").strip()
+SUPABASE_STORAGE_BUCKET = os.getenv("SUPABASE_STORAGE_BUCKET", "catalogo").strip()
+
+if SUPABASE_S3_ENDPOINT and SUPABASE_S3_ACCESS_KEY_ID and SUPABASE_S3_SECRET_ACCESS_KEY:
+    # https://<projeto>.supabase.co/storage/v1/s3 -> https://<projeto>.supabase.co
+    _supabase_host = SUPABASE_S3_ENDPOINT.split("/storage/v1")[0]
+    # Mesma URL pública que o getPublicUrl() do site gera
+    _supabase_publico = f"{_supabase_host}/storage/v1/object/public/{SUPABASE_STORAGE_BUCKET}"
+
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "bucket_name": SUPABASE_STORAGE_BUCKET,
+            "endpoint_url": SUPABASE_S3_ENDPOINT,
+            "access_key": SUPABASE_S3_ACCESS_KEY_ID,
+            "secret_key": SUPABASE_S3_SECRET_ACCESS_KEY,
+            "region_name": SUPABASE_S3_REGION,
+            # Bucket público: URL limpa, sem assinatura na query
+            "querystring_auth": False,
+            "custom_domain": _supabase_publico.split("://", 1)[-1],
+            # Equivale ao upsert: true usado no painel do site
+            "file_overwrite": True,
+        },
+    }
+    MEDIA_URL = _supabase_publico + "/"
 
 # =============================================================================
 # CACHE — local em dev, Redis em prod se REDIS_URL estiver definido
@@ -374,3 +439,15 @@ ACCOUNT_SIGNUP_FORM_CLASS = "apps.customers.forms.CustomSignupForm"
 LOGIN_REDIRECT_URL = "/cliente/painel/"
 LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_ON_GET = True
+
+# Prefixo opcional de URL: permite servir o site inteiro sob uma subpasta do
+# dominio oficial (ex.: nucleografico.com.br/loja) sem tocar em template nenhum.
+# Basta definir SCRIPT_NAME=/loja no .env; links, canonical, static e media
+# passam a sair com o prefixo. Vazio = site na raiz, comportamento de hoje.
+SCRIPT_NAME = os.getenv("SCRIPT_NAME", "").strip().rstrip("/")
+if SCRIPT_NAME:
+    FORCE_SCRIPT_NAME = SCRIPT_NAME
+    STATIC_URL = SCRIPT_NAME + STATIC_URL
+    # Com o Supabase ligado, MEDIA_URL já é uma URL absoluta e não leva prefixo
+    if MEDIA_URL.startswith("/"):
+        MEDIA_URL = SCRIPT_NAME + MEDIA_URL

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ product.name }} | NGD Site{% endblock %}
+{% block title %}{% if product.meta_title %}{{ product.meta_title }}{% else %}{{ product.name }} | NGD, Núcleo Gráfico Digital{% endif %}{% endblock %}
 
 {% block meta_title %}
 {% if product.meta_title %}
@@ -45,8 +45,8 @@
     "name": "NGD, Núcleo Gráfico Digital",
     "url": "{{ request.scheme }}://{{ request.get_host }}"
   },
-  "category": "{{ product.category.name|escapejs }}",
-  {% if v_first %}
+  "category": "{{ product.category.name|escapejs }}"
+  {% if v_first and not product.is_quote_only and not PORTFOLIO_MODE %},
   "sku": "{{ v_first.sku|escapejs }}",
   "offers": {
     "@type": "AggregateOffer",

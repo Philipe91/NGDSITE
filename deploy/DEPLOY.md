@@ -2,6 +2,11 @@
 
 Resumo rápido para colocar o site no ar com segurança e desempenho profissionais.
 
+> **Indo para uma subpasta do site oficial?** Este guia cobre o cenário de VPS
+> com domínio próprio. Para servir o catálogo em `nucleografico.com.br/loja`
+> via Firebase Hosting + Cloud Run, sem tocar no site que já está no ar, veja
+> [SUBPASTA-LOJA.md](SUBPASTA-LOJA.md).
+
 ## 1. Antes do deploy — checklist obrigatório
 
 - [ ] Gerar `SECRET_KEY` nova (não use a do `.env` de dev):

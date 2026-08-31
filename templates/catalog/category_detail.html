@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}{{ category.name }} - NGD Site{% endblock %}
+{% block title %}{{ category.name }} | NGD, Núcleo Gráfico Digital{% endblock %}
+{% block meta_title %}{{ category.name }} | NGD, Núcleo Gráfico Digital{% endblock %}
+{% block meta_description %}{% if category.description %}{{ category.description|striptags|truncatechars:160 }}{% else %}{{ category.name }} personalizados em poliondas com impressão UV e fábrica própria. Veja o catálogo NGD e peça seu orçamento.{% endif %}{% endblock %}
+{% block og_title %}{{ category.name }} | NGD, Núcleo Gráfico Digital{% endblock %}
 {% block content %}
 <div class="bg-surface border-b border-gray-100 py-12">
     <div class="container mx-auto px-4 lg:px-8">

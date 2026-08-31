@@ -116,6 +116,37 @@
     }
     </script>
 
+    <!-- Schema.org: LocalBusiness (endereco real, para busca local e Maps) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}{% url 'catalog:home' %}#ngd",
+      "name": "NGD, Núcleo Gráfico Digital",
+      "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'img/LOGO NGD.png' %}",
+      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'catalog:home' %}",
+      "telephone": "+556133449925",
+      "email": "ngd@nucleografico.com.br",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "SOF Norte, Quadra 01, Conjunto B, Lote 10",
+        "addressLocality": "Brasília",
+        "addressRegion": "DF",
+        "postalCode": "70634-120",
+        "addressCountry": "BR"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Brasil"
+      },
+      "hasMap": "https://maps.app.goo.gl/75hGFf19XRjbS2Y77",
+      "sameAs": [
+        "https://www.instagram.com/ngdgrafica",
+        "https://maps.app.goo.gl/75hGFf19XRjbS2Y77"
+      ]
+    }
+    </script>
+
     {% block schema_extra %}{% endblock %}
     {% block extrahead %}{% endblock %}
 </head>

@@ -7,8 +7,9 @@ Uso:
 import multiprocessing
 import os
 
-# Bind
-bind = os.getenv("GUNICORN_BIND", "0.0.0.0:8000")
+# Bind. O Cloud Run injeta a porta em PORT e espera o processo escutando nela;
+# fora dele, cai no padrão de sempre.
+bind = os.getenv("GUNICORN_BIND", "0.0.0.0:" + os.getenv("PORT", "8000"))
 
 # Workers — regra clássica: 2 * CPU + 1.
 # Use threads quando há I/O (DB/HTTP externo) — caso do checkout/frete/MP.

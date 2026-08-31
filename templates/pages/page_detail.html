@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Conteúdo - NGD Site{% endblock %}
+{% block title %}{% if page.meta_title %}{{ page.meta_title }}{% else %}{{ page.title }} | NGD, Núcleo Gráfico Digital{% endif %}{% endblock %}
+{% block meta_title %}{% if page.meta_title %}{{ page.meta_title }}{% else %}{{ page.title }} | NGD, Núcleo Gráfico Digital{% endif %}{% endblock %}
+{% block meta_description %}{% if page.meta_description %}{{ page.meta_description }}{% else %}{{ page.content|striptags|truncatechars:160 }}{% endif %}{% endblock %}
+{% block og_title %}{% if page.meta_title %}{{ page.meta_title }}{% else %}{{ page.title }} | NGD{% endif %}{% endblock %}
+{% block og_description %}{% if page.meta_description %}{{ page.meta_description }}{% else %}{{ page.content|striptags|truncatechars:160 }}{% endif %}{% endblock %}
 
 {% block content %}
 {% if page.slug != 'sobre-nos' %}
