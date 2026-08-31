@@ -287,7 +287,9 @@ MEDIA_ROOT = BASE_DIR / "media"
 SUPABASE_S3_ENDPOINT = os.getenv("SUPABASE_S3_ENDPOINT", "").strip().rstrip("/")
 SUPABASE_S3_ACCESS_KEY_ID = os.getenv("SUPABASE_S3_ACCESS_KEY_ID", "").strip()
 SUPABASE_S3_SECRET_ACCESS_KEY = os.getenv("SUPABASE_S3_SECRET_ACCESS_KEY", "").strip()
-SUPABASE_S3_REGION = os.getenv("SUPABASE_S3_REGION", "sa-east-1").strip()
+# Região real do projeto eisqwuikemthtebpdqbj, verificada em 31/08/2026 pela
+# faixa de IP da AWS. Não é sa-east-1: com a região errada o upload falha.
+SUPABASE_S3_REGION = os.getenv("SUPABASE_S3_REGION", "us-west-2").strip()
 SUPABASE_STORAGE_BUCKET = os.getenv("SUPABASE_STORAGE_BUCKET", "catalogo").strip()
 
 if SUPABASE_S3_ENDPOINT and SUPABASE_S3_ACCESS_KEY_ID and SUPABASE_S3_SECRET_ACCESS_KEY:

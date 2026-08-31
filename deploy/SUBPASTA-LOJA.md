@@ -138,7 +138,8 @@ DB_POOLER=True
 
 # Storage (Project Settings > Storage > S3 Connection)
 SUPABASE_S3_ENDPOINT=https://eisqwuikemthtebpdqbj.supabase.co/storage/v1/s3
-SUPABASE_S3_REGION=sa-east-1
+# us-west-2, NAO sa-east-1: com a regiao errada o upload falha
+SUPABASE_S3_REGION=us-west-2
 SUPABASE_S3_ACCESS_KEY_ID=<access key>
 SUPABASE_S3_SECRET_ACCESS_KEY=<secret key>
 SUPABASE_STORAGE_BUCKET=catalogo
