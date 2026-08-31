@@ -1,0 +1,29 @@
+# Nao enviar para o Cloud Build. Sem isso o upload sobe 1,1 GB
+# (venv 808M + media 148M + .git 97M) em vez de alguns MB.
+
+.git/
+.gitignore
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+
+# As imagens vivem no Supabase Storage, nao no container.
+media/
+
+# Segredos: as variaveis vao pelo --env-vars-file, nunca na imagem.
+.env
+.env.*
+
+# Restos de desenvolvimento
+*.bak-tmp
+*.sqlite3
+db.sqlite3
+node_modules/
+apply_v*.py
+update_*.py
+fix_template*.py
+copy_*.py
+gen_*.py
+*.md
+deploy/
