@@ -120,7 +120,7 @@ o *secret access key*. Me mande os dois.
    o `.env` para o pooler
 3. Rodo `checar_supabase` e só sigo com os **três verdes** — em especial o
    segundo, que confirma que o catálogo não lê as tabelas do site
-4. Rodo `migrar_media_supabase` (210 arquivos, ~148 MB, sem `--incluir-uploads`)
+4. Rodo `migrar_media_supabase` (210 arquivos, ~140 MB, sem `--incluir-uploads`)
 5. Subo o servidor e confiro home, três páginas de produto e Quem Somos
 
 Paro aí. Cloud Run e rewrite do Firebase são etapas seguintes, com aprovação à

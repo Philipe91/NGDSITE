@@ -131,7 +131,7 @@ Este comando existe justamente para isto. Ele verifica três coisas:
     python manage.py migrar_media_supabase --simular
     python manage.py migrar_media_supabase
 
-São 211 arquivos, cerca de 140 MB. O comando **não envia** `media/uploads/` por
+São 210 arquivos, cerca de 140 MB. O comando **não envia** `media/uploads/` por
 padrão: são arquivos enviados por clientes e o bucket é público. Não use
 `--incluir-uploads`.
 
