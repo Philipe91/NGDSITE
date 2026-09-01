@@ -32,7 +32,13 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from PIL import Image, ImageFile
 
-from apps.catalog.models import Product, ProductImage, ProductModelOption
+from apps.catalog.models import (
+    Category,
+    MegaMenuTotensCard,
+    Product,
+    ProductImage,
+    ProductModelOption,
+)
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -137,10 +143,20 @@ class Command(BaseCommand):
     def _listar(self):
         """Imagens que ainda não são WebP, com o nome de destino já definido."""
         alvos = []
+        # Todo campo de imagem que aparece nas páginas entra aqui.
+        #
+        # Fica de fora de propósito:
+        # - SEOSettings.og_image_default, e qualquer imagem usada em og:image.
+        #   WhatsApp e LinkedIn têm suporte irregular a WebP na prévia de link;
+        #   converter troca uma prévia que funciona por uma que pode não abrir.
+        # - template_file, manual_file e art_file, que são PDF e arquivo de arte
+        #   do cliente, não imagem de página.
         fontes = (
             (Product, "featured_image"),
             (ProductImage, "image"),
             (ProductModelOption, "image"),
+            (Category, "image"),
+            (MegaMenuTotensCard, "image"),
         )
         for modelo, campo in fontes:
             for obj in modelo.objects.all().order_by("id"):
@@ -192,6 +208,8 @@ class Command(BaseCommand):
             "Product": Product,
             "ProductImage": ProductImage,
             "ProductModelOption": ProductModelOption,
+            "Category": Category,
+            "MegaMenuTotensCard": MegaMenuTotensCard,
         }[nome_modelo]
         modelo.objects.filter(pk=pk).update(**{campo: valor})
 
