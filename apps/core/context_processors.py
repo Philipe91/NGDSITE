@@ -27,4 +27,8 @@ def site_mode(request):
         "PORTFOLIO_MODE": settings.PORTFOLIO_MODE,
         "WHATSAPP_NUMBER": settings.WHATSAPP_NUMBER,
         "CSS_VERSION": _versao_do_css(),
+        # Base de toda URL absoluta (canonical, og:url, dados estruturados).
+        # Vem da configuração, nunca do host da requisição: atrás do Firebase
+        # o Django enxerga o host interno do Cloud Run. Ver settings.py.
+        "CANONICAL_BASE": settings.CANONICAL_BASE,
     }

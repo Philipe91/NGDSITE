@@ -97,6 +97,16 @@ if not DEBUG:
             "ALLOWED_HOSTS não configurado para produção. Defina ALLOWED_HOSTS no .env."
         )
 
+    # SITE_URL alimenta canonical, og:url, sitemap e os links de e-mail. Deixá-lo
+    # em localhost não quebra nada de forma visível: o site funciona e o Google
+    # engole endereços errados por semanas. Por isso falha aqui, e alto.
+    if "localhost" in os.getenv("SITE_URL", "http://localhost:8000"):
+        raise RuntimeError(
+            "SITE_URL não configurado para produção. Defina SITE_URL no .env "
+            "com o endereço público (ex.: https://nucleografico.com.br). "
+            "É ele que monta canonical, og:url e sitemap."
+        )
+
 
 # =============================================================================
 # APPS INSTALADOS
@@ -429,6 +439,28 @@ STORE_ADDRESS = os.getenv("STORE_ADDRESS", "Av. Principal, 1000 - Centro (confir
 # URL BASE DO SITE (para callbacks do MP)
 # =============================================================================
 SITE_URL = os.getenv("SITE_URL", "http://localhost:8000")
+
+# Endereço público e definitivo do site, sem barra no fim.
+#
+# Por que não usar o host da requisição: atrás do Firebase Hosting o Django
+# recebe o host interno do Cloud Run (ngd-loja-....run.app), não o domínio que
+# o visitante digitou. Montar canonical, og:url e sitemap a partir dele faz o
+# Google entender que a loja mora no run.app — jogando fora a autoridade do
+# domínio, que é a razão inteira de servir em subpasta.
+#
+# Daí CANONICAL_BASE sair de uma configuração, não do que chega na porta.
+#
+# É só o endereço base, SEM caminho: o prefixo da subpasta já vem em
+# request.path por causa de FORCE_SCRIPT_NAME. Se SITE_URL vier como
+# ".../loja", manter o caminho aqui geraria canonical com /loja/loja/.
+from urllib.parse import urlsplit as _urlsplit  # noqa: E402
+
+_endereco = _urlsplit(SITE_URL.strip())
+CANONICAL_BASE = (
+    f"{_endereco.scheme}://{_endereco.netloc}"
+    if _endereco.scheme and _endereco.netloc
+    else SITE_URL.rstrip("/")
+)
 
 # =============================================================================
 # E-MAIL

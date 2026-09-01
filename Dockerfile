@@ -33,6 +33,7 @@ COPY . .
 RUN SECRET_KEY=build-only-nao-usada-em-runtime \
     DEBUG=False \
     ALLOWED_HOSTS=build.invalid \
+    SITE_URL=https://build.invalid \
     python manage.py collectstatic --noinput
 
 # O Cloud Run injeta a porta em PORT; gunicorn.conf.py já lê essa variável.

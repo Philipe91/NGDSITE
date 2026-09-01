@@ -150,15 +150,13 @@
                         <h4
                             class="text-lg font-bold mb-2 text-black group-hover:text-primary transition-colors leading-tight">
                             {{ prod.name }}</h4>
-                        <div class="flex justify-center text-primary mb-4 gap-1">
-                            <span class="text-xs">★★★★★</span> <span
-                                class="text-[10px] text-gray-400 font-medium ml-1">4.9/5</span>
-                        </div>
                     </a>
 
                     <div class="mt-auto pt-4">
                         {% if PORTFOLIO_MODE %}
-                        <p class="text-xs text-gray-500 leading-relaxed line-clamp-2">{{ prod.short_description }}</p>
+                        <!-- min-h de duas linhas: sem isso o card de descrição curta
+                             sobe o botão e a grade fica desalinhada -->
+                        <p class="text-xs text-gray-500 leading-relaxed line-clamp-2 min-h-[2.5rem]">{{ prod.short_description }}</p>
                         <a href="{% url 'catalog:product_detail' prod.slug %}"
                             class="inline-flex items-center justify-center gap-2 mt-5 px-6 py-3 rounded-xl bg-primary text-white text-[11px] font-bold uppercase tracking-widest hover:bg-[#153e8a] transition-colors">
                             Saiba mais
@@ -520,7 +518,7 @@
         
         <div class="shrink-0 flex flex-col sm:flex-row gap-4">
             {% if PORTFOLIO_MODE %}
-            <a href="https://wa.me/{{ WHATSAPP_NUMBER }}?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20NGD%20e%20gostaria%20de%20um%20or%C3%A7amento."
+            <a href="https://wa.me/{{ WHATSAPP_NUMBER }}?text=Ol%C3%A1!%20Vim%20pela%20loja%20do%20site%20da%20NGD%20e%20gostaria%20de%20um%20or%C3%A7amento."
                 target="_blank" rel="noopener"
                 class="bg-white text-[#0b224e] font-extrabold uppercase tracking-wide px-8 py-5 rounded-xl hover:scale-105 hover:shadow-2xl hover:shadow-white/20 transition-all duration-300 text-sm text-center">
                 Pedir Orçamento

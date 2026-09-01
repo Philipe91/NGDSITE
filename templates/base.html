@@ -12,19 +12,20 @@
     {% if seo.meta_keywords_default %}
     <meta name="keywords" content="{{ seo.meta_keywords_default }}">
     {% endif %}
-    {% load static %}
+    {% load static %}{% load urls_absolutas %}
+{% static 'img/LOGO NGD.png' as logo_ngd %}
 
     <!-- Canonical -->
-    {% block canonical %}<link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">{% endblock %}
+    {% block canonical %}<link rel="canonical" href="{{ CANONICAL_BASE }}{{ request.path }}">{% endblock %}
 
     <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
     <meta property="og:site_name" content="NGD, Núcleo Gráfico Digital">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+    <meta property="og:url" content="{{ CANONICAL_BASE }}{{ request.path }}">
     <meta property="og:title" content="{% block og_title %}{{ seo.meta_title_default|default:'NGD, Materiais e Displays Personalizados para Ponto de Venda' }}{% endblock %}">
     <meta property="og:description" content="{% block og_description %}{{ seo.meta_description_default|default:'A revolução gráfica em materiais para PDV. Totens, displays, banners e expositores personalizados em poliondas. Impressão UV em alta resolução.' }}{% endblock %}">
-    <meta property="og:image" content="{% block og_image %}{% if seo.og_image_default %}{{ request.scheme }}://{{ request.get_host }}{{ seo.og_image_default.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/LOGO NGD.png' %}{% endif %}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% if seo.og_image_default %}{{ seo.og_image_default.url|absoluta }}{% else %}{{ logo_ngd|absoluta }}{% endif %}{% endblock %}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
@@ -32,7 +33,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{% block tw_title %}{{ seo.meta_title_default|default:'NGD, Materiais para PDV' }}{% endblock %}">
     <meta name="twitter:description" content="{% block tw_description %}{{ seo.meta_description_default|default:'Totens, displays e materiais personalizados em poliondas. Impressão UV.' }}{% endblock %}">
-    <meta name="twitter:image" content="{% block tw_image %}{% if seo.og_image_default %}{{ request.scheme }}://{{ request.get_host }}{{ seo.og_image_default.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/LOGO NGD.png' %}{% endif %}{% endblock %}">
+    <meta name="twitter:image" content="{% block tw_image %}{% if seo.og_image_default %}{{ seo.og_image_default.url|absoluta }}{% else %}{{ logo_ngd|absoluta }}{% endif %}{% endblock %}">
 
     <!-- Theme color (Chrome mobile, PWA) -->
     <meta name="theme-color" content="#153e8a">
@@ -90,8 +91,8 @@
       "@type": "Organization",
       "name": "NGD, Núcleo Gráfico Digital",
       "alternateName": "NGD",
-      "url": "{{ request.scheme }}://{{ request.get_host }}",
-      "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'img/LOGO NGD.png' %}",
+      "url": "{{ CANONICAL_BASE }}",
+      "logo": "{{ logo_ngd|absoluta }}",
       "description": "Indústria de comunicação visual para PDV: totens, displays, expositores, banners e placas de sinalização agrícola personalizados em poliondas.",
       "sameAs": [
         "https://www.instagram.com/ngdgrafica"
@@ -112,7 +113,7 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "NGD, Núcleo Gráfico Digital",
-      "url": "{{ request.scheme }}://{{ request.get_host }}"
+      "url": "{{ CANONICAL_BASE }}"
     }
     </script>
 
@@ -121,10 +122,10 @@
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
-      "@id": "{{ request.scheme }}://{{ request.get_host }}{% url 'catalog:home' %}#ngd",
+      "@id": "{{ CANONICAL_BASE }}{% url 'catalog:home' %}#ngd",
       "name": "NGD, Núcleo Gráfico Digital",
-      "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'img/LOGO NGD.png' %}",
-      "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'catalog:home' %}",
+      "image": "{{ logo_ngd|absoluta }}",
+      "url": "{{ CANONICAL_BASE }}{% url 'catalog:home' %}",
       "telephone": "+556133449925",
       "email": "ngd@nucleografico.com.br",
       "address": {
@@ -274,7 +275,7 @@
                     <i data-lucide="search" class="w-[18px] h-[18px]"></i>
                 </button>
                 {% if PORTFOLIO_MODE %}
-                <a href="https://wa.me/{{ WHATSAPP_NUMBER }}?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20NGD%20e%20gostaria%20de%20um%20or%C3%A7amento."
+                <a href="https://wa.me/{{ WHATSAPP_NUMBER }}?text=Ol%C3%A1!%20Vim%20pela%20loja%20do%20site%20da%20NGD%20e%20gostaria%20de%20um%20or%C3%A7amento."
                    target="_blank" rel="noopener"
                    class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-white/10 hover:text-white transition-all"
                    title="Pedir Orçamento">
@@ -474,17 +475,21 @@
                 <!-- Balão de mensagem -->
                 <div class="relative bg-white rounded-2xl rounded-tl-sm shadow-[0_1px_2px_rgba(0,0,0,0.10)] px-4 py-3 text-[13.5px] text-gray-800 leading-relaxed">
                     <p class="font-medium">Olá! Tudo bem?</p>
+                    {% if PORTFOLIO_MODE %}
+                    <p class="mt-2">Gostaria de solicitar um orçamento?</p>
+                    {% else %}
                     <p class="mt-2">Está com alguma dúvida para fazer seu pedido pelo site?</p>
+                    {% endif %}
                 </div>
 
                 <!-- Botão CTA -->
-                <a href="https://wa.me/5561996498102?text=Olá!%20Vim%20pelo%20site%20da%20NGD%20e%20preciso%20de%20atendimento."
+                <a href="{% if PORTFOLIO_MODE %}https://wa.me/5561996498102?text=Olá!%20Vim%20pela%20loja%20do%20site%20da%20NGD%20e%20quero%20um%20orçamento.{% else %}https://wa.me/5561996498102?text=Olá!%20Vim%20pela%20loja%20do%20site%20da%20NGD%20e%20preciso%20de%20atendimento.{% endif %}"
                    target="_blank" rel="noopener noreferrer"
                    class="relative mt-5 flex items-center justify-center gap-2.5 w-full bg-[#0a5378] hover:bg-[#0d6691] text-white font-bold text-[14px] py-3.5 rounded-full shadow-[0_6px_18px_-4px_rgba(10,83,120,0.55)] transition-colors">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                     </svg>
-                    Começar Atendimento
+                    {% if PORTFOLIO_MODE %}Pedir Orçamento{% else %}Começar Atendimento{% endif %}
                 </a>
             </div>
         </div>

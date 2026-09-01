@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load urls_absolutas %}
 
 {% block title %}{% if product.meta_title %}{{ product.meta_title }}{% else %}{{ product.name }} | NGD, Núcleo Gráfico Digital{% endif %}{% endblock %}
 
@@ -30,10 +31,10 @@
   "description": "{{ product.short_description|escapejs }}",
   "image": [
     {% if product.featured_image %}
-    "{{ request.scheme }}://{{ request.get_host }}{{ product.featured_image.url }}"{% if images %},{% endif %}
+    "{{ product.featured_image.url|absoluta }}"{% if images %},{% endif %}
     {% endif %}
     {% for img in images %}
-    "{{ request.scheme }}://{{ request.get_host }}{{ img.image.url }}"{% if not forloop.last %},{% endif %}
+    "{{ img.image.url|absoluta }}"{% if not forloop.last %},{% endif %}
     {% endfor %}
   ],
   "brand": {
@@ -43,14 +44,14 @@
   "manufacturer": {
     "@type": "Organization",
     "name": "NGD, Núcleo Gráfico Digital",
-    "url": "{{ request.scheme }}://{{ request.get_host }}"
+    "url": "{{ CANONICAL_BASE }}"
   },
   "category": "{{ product.category.name|escapejs }}"
   {% if v_first and not product.is_quote_only and not PORTFOLIO_MODE %},
   "sku": "{{ v_first.sku|escapejs }}",
   "offers": {
     "@type": "AggregateOffer",
-    "url": "{{ request.scheme }}://{{ request.get_host }}{{ product.get_absolute_url }}",
+    "url": "{{ CANONICAL_BASE }}{{ product.get_absolute_url }}",
     "priceCurrency": "BRL",
     "lowPrice": "{{ v_first.price|stringformat:'.2f' }}",
     "highPrice": "{{ product.variants.last.price|stringformat:'.2f' }}",
@@ -74,13 +75,13 @@
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "{{ request.scheme }}://{{ request.get_host }}/"
+      "item": "{{ CANONICAL_BASE }}/"
     },
     {
       "@type": "ListItem",
       "position": 2,
       "name": "{{ product.category.name|escapejs }}",
-      "item": "{{ request.scheme }}://{{ request.get_host }}{{ product.category.get_absolute_url }}"
+      "item": "{{ CANONICAL_BASE }}{{ product.category.get_absolute_url }}"
     },
     {
       "@type": "ListItem",
@@ -191,34 +192,6 @@
                 </h1>
 
                 <div class="flex flex-wrap items-center gap-4 text-sm mt-4">
-                    <div class="flex items-center gap-1 text-primary">
-                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-                            </path>
-                        </svg>
-                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-                            </path>
-                        </svg>
-                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-                            </path>
-                        </svg>
-                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-                            </path>
-                        </svg>
-                        <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
-                            </path>
-                        </svg>
-                    </div>
-                    <span class="text-gray-500 font-medium mr-4">4.9 (Google Reviews)</span>
 
                     <div class="flex gap-2">
                         {% if PORTFOLIO_MODE %}
@@ -2691,7 +2664,7 @@
         // Modo portfólio: leva a configuração escolhida direto para o WhatsApp
         get whatsappQuoteUrl() {
             const texto = [
-                'Olá! Vim pelo site da NGD e gostaria de um orçamento.',
+                'Olá! Vim pela loja do site da NGD e gostaria de um orçamento.',
                 '',
                 'Produto: {{ product.name|escapejs }}',
                 'Formato: ' + (this.selectedVariant ? this.selectedVariant.label : 'a definir'),

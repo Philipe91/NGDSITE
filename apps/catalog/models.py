@@ -40,6 +40,15 @@ class Product(models.Model):
         verbose_name="Somente orçamento",
         help_text="Produto sem venda online: esconde preço e carrinho e mostra o botão de orçamento pelo WhatsApp.",
     )
+    spec_curta = models.CharField(
+        max_length=80,
+        blank=True,
+        verbose_name="Ficha rápida",
+        help_text=(
+            "Material e formato, em poucas palavras, para o card do catálogo. "
+            "Ex.: Poliondas 3mm · 3 faces. Deixe vazio para não mostrar nada."
+        ),
+    )
     meta_title = models.CharField(max_length=255, blank=True, verbose_name="Meta Title")
     meta_description = models.TextField(blank=True, verbose_name="Meta Description")
 
@@ -64,7 +73,7 @@ class Product(models.Model):
     @property
     def whatsapp_texto(self):
         return (
-            "Olá! Vim pelo site da NGD e gostaria de um orçamento.\n\n"
+            "Olá! Vim pela loja do site da NGD e gostaria de um orçamento.\n\n"
             f"Produto: {self.name}"
         )
 
@@ -139,7 +148,7 @@ class ProductModelOption(models.Model):
     @property
     def whatsapp_texto(self):
         return (
-            "Olá! Vim pelo site da NGD e gostaria de um orçamento.\n\n"
+            "Olá! Vim pela loja do site da NGD e gostaria de um orçamento.\n\n"
             f"Produto: {self.product.name}\n"
             f"Modelo: {self.name}"
         )

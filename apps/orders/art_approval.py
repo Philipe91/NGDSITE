@@ -97,8 +97,11 @@ def send_art_approval_email_view(request, item_id):
     item  = get_object_or_404(OrderItem, id=item_id)
     order = item.order
 
-    token_url = request.build_absolute_uri(
-        reverse('orders:art_approval', kwargs={'token': item.art_approval_token})
+    # Domínio da configuração, não o da requisição: atrás do Firebase o Django
+    # recebe o host interno do Cloud Run, e o cliente receberia um link
+    # ...run.app no e-mail. Ver CANONICAL_BASE em settings.py.
+    token_url = settings.CANONICAL_BASE + reverse(
+        'orders:art_approval', kwargs={'token': item.art_approval_token}
     )
 
     subject = f"NGD – Aprovação de Arte: Pedido #{order.id}"
