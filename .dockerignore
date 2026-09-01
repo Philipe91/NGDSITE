@@ -1,8 +1,13 @@
 # O que NÃO entra na imagem do Cloud Run.
 # Mantém o build rápido e evita mandar segredo ou arquivo pesado para a nuvem.
 
-# Segredos — em produção as variáveis vêm do próprio Cloud Run
+# Segredos — em produção as variáveis vêm do próprio Cloud Run.
+# O padrão ".env" NÃO cobre ".env.production": sem a linha abaixo, a chave
+# secreta, a senha do banco e as chaves do Supabase iriam dentro da imagem.
+# O Django só carrega ".env" (load_dotenv em settings.py), então nenhum
+# desses arquivos faz falta no contêiner.
 .env
+.env.*
 *.pem
 *.key
 
