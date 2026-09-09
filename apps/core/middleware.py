@@ -76,16 +76,23 @@ class PortfolioModeMiddleware:
     As URLs continuam registradas (para que `{% url %}` e `reverse()` não
     quebrem, e para voltar à loja completa depois é só desligar a flag), mas
     quem acessar essas rotas é mandado de volta para a home.
+
+    A comparação usa `path_info`, e não `path`. Em produção o serviço roda sob
+    `FORCE_SCRIPT_NAME=/loja`, e nesse caso `request.path` vem com o prefixo
+    ("/loja/carrinho/"), que nunca casa com os prefixos de `ROTAS_DE_VENDA`.
+    O `path_info` é o caminho já sem o script name ("/carrinho/"), então é o
+    único que funciona tanto local quanto atrás do prefixo.
     """
 
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
+        caminho = request.path_info
         if (
             settings.PORTFOLIO_MODE
-            and request.path.startswith(ROTAS_DE_VENDA)
-            and not request.path.startswith("/admin/")
+            and caminho.startswith(ROTAS_DE_VENDA)
+            and not caminho.startswith("/admin/")
         ):
             return redirect("catalog:home")
         return self.get_response(request)
