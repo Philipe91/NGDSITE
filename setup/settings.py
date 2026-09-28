@@ -68,6 +68,13 @@ PORTFOLIO_MODE = os.getenv("PORTFOLIO_MODE", "False") == "True"
 # Número usado nos links de orçamento (formato internacional, só dígitos)
 WHATSAPP_NUMBER = os.getenv("WHATSAPP_NUMBER", "5561996498102")
 
+# Números que dividem o atendimento: o navegador de cada visitante sorteia um
+# deles e fica com ele (script no fim do base.html). Separados por vírgula;
+# com um só, todo mundo vai para ele.
+WHATSAPP_NUMBERS = [
+    n.strip() for n in os.getenv("WHATSAPP_NUMBERS", "5561996498102,5561996498279").split(",") if n.strip()
+] or [WHATSAPP_NUMBER]
+
 # =============================================================================
 # SEGURANÇA EM PRODUÇÃO (ativada quando DEBUG=False)
 # =============================================================================

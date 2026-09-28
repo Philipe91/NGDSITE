@@ -26,6 +26,7 @@ def site_mode(request):
     return {
         "PORTFOLIO_MODE": settings.PORTFOLIO_MODE,
         "WHATSAPP_NUMBER": settings.WHATSAPP_NUMBER,
+        "WHATSAPP_NUMBERS": settings.WHATSAPP_NUMBERS,
         "CSS_VERSION": _versao_do_css(),
         # Base de toda URL absoluta (canonical, og:url, dados estruturados).
         # Vem da configuração, nunca do host da requisição: atrás do Firebase

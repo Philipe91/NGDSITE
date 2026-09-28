@@ -566,6 +566,41 @@
     </div>
 
     {% block extrascripts %}{% endblock %}
+
+    <!-- Divide o atendimento do WhatsApp: cada visitante é sorteado para um dos
+         números e fica com ele nas próximas visitas (localStorage). Feito no
+         navegador porque o Firebase Hosting não repassa cookies ao Cloud Run. -->
+    {{ WHATSAPP_NUMBERS|json_script:"ngd-whatsapp-numeros" }}
+    <script>
+    (function () {
+        var numeros = JSON.parse(document.getElementById('ngd-whatsapp-numeros').textContent);
+        var escolhido = numeros[0];
+        if (numeros.length > 1) {
+            var salvo = null;
+            try { salvo = localStorage.getItem('ngd_whatsapp_number'); } catch (e) {}
+            if (numeros.indexOf(salvo) !== -1) {
+                escolhido = salvo;
+            } else {
+                escolhido = numeros[Math.floor(Math.random() * numeros.length)];
+                try { localStorage.setItem('ngd_whatsapp_number', escolhido); } catch (e) {}
+            }
+        }
+        window.NGD_WHATSAPP = escolhido;
+
+        function ajustar(link) {
+            var href = link.getAttribute('href') || '';
+            var novo = href.replace(/wa\.me\/\d+/, 'wa.me/' + escolhido);
+            if (novo !== href) link.setAttribute('href', novo);
+        }
+        document.querySelectorAll('a[href*="wa.me/"]').forEach(ajustar);
+        // Links que o Alpine cria depois do carregamento são ajustados no clique
+        document.addEventListener('click', function (e) {
+            var link = e.target.closest && e.target.closest('a[href*="wa.me/"]');
+            if (link) ajustar(link);
+        }, true);
+    })();
+    </script>
+
     <!-- Ativa os ícones Lucide em toda a página -->
     <script>if(typeof lucide !== 'undefined') lucide.createIcons();</script>
 </body>

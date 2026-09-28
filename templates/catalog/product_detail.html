@@ -2670,7 +2670,7 @@
                 'Formato: ' + (this.selectedVariant ? this.selectedVariant.label : 'a definir'),
                 'Quantidade: ' + (parseInt(this.quantity) || 1) + ' un.'
             ].join('\n');
-            return 'https://wa.me/{{ WHATSAPP_NUMBER }}?text=' + encodeURIComponent(texto);
+            return 'https://wa.me/' + (window.NGD_WHATSAPP || '{{ WHATSAPP_NUMBER }}') + '?text=' + encodeURIComponent(texto);
         }
     };
     }
