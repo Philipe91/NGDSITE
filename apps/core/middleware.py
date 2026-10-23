@@ -36,6 +36,9 @@ CSP_DIRECTIVES = {
         "'self'",
         "https://www.google-analytics.com",
         "https://www.facebook.com",
+        # GA4 direto (23/10/2026): envio dos eventos (region1.google-analytics.com etc.)
+        "https://*.google-analytics.com",
+        "https://www.googletagmanager.com",
     ],
     "frame-src": ["'self'"],
     "frame-ancestors": ["'none'"],    # bloqueia ser embed em iframe (anti-clickjacking)
