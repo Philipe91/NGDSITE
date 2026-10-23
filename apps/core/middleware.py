@@ -38,6 +38,8 @@ CSP_DIRECTIVES = {
         "https://www.facebook.com",
         # GA4 direto (23/10/2026): envio dos eventos (region1.google-analytics.com etc.)
         "https://*.google-analytics.com",
+        "https://analytics.google.com",     # onde o gtag.js manda o /g/collect hoje
+        "https://*.analytics.google.com",
         "https://www.googletagmanager.com",
     ],
     "frame-src": ["'self'"],
