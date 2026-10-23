@@ -612,17 +612,67 @@
     })();
     </script>
 
-    <!-- GA4: cliques no WhatsApp e no "Pedir orçamento". Registrado depois do sorteio acima
+    <!-- Cliques no WhatsApp: GA4 (clique_whatsapp_loja / clique_orcamento_loja) e o painel
+         Logs WhatsApp do site (tabela whatsapp_clicks). Registrado depois do sorteio acima
          (mesma fase de captura), então lê o número já ajustado. Não cancela nem atrasa o
-         link: o envio vai por beacon. -->
+         link: GA4 por beacon, Supabase por fetch keepalive sem esperar a resposta. -->
+    {% if SUPABASE_PUBLIC_KEY %}{{ SUPABASE_PUBLIC_KEY|json_script:"ngd-supabase-chave" }}{% endif %}
     <script>
     (function () {
         var meta = document.querySelector('meta[name="ngd-produto"]');
         var produto = meta ? meta.content : '';
+        var chaveEl = document.getElementById('ngd-supabase-chave');
+        var chave = chaveEl ? JSON.parse(chaveEl.textContent) : '';
+
+        // Mesma regra do site (useWhatsAppLink): a marca do anúncio é lida na chegada e
+        // guardada na aba, porque some ao trocar de página.
+        function chegouPorAnuncio() {
+            var p = new URLSearchParams(location.search);
+            if (p.has('gclid') || p.has('gbraid') || p.has('wbraid')) return true;
+            return (p.get('utm_source') || '').toLowerCase() === 'google' && /^(cpc|ppc|paid)/i.test(p.get('utm_medium') || '');
+        }
+        if (chegouPorAnuncio()) { try { sessionStorage.setItem('ngd_origem', 'anuncio'); } catch (e) {} }
+        function origem() {
+            if (chegouPorAnuncio()) return 'anuncio';
+            try { if (sessionStorage.getItem('ngd_origem') === 'anuncio') return 'anuncio'; } catch (e) {}
+            return 'organico';
+        }
+
+        function gravarClique(link, numero) {
+            if (!chave || !numero) return;
+            try {
+                var texto = null;
+                try { texto = new URL(link.href).searchParams.get('text'); } catch (e) {}
+                fetch('https://eisqwuikemthtebpdqbj.supabase.co/rest/v1/whatsapp_clicks', {
+                    method: 'POST',
+                    keepalive: true,
+                    headers: {
+                        'apikey': chave,
+                        'Authorization': 'Bearer ' + chave,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({
+                        phone_number: numero,
+                        page_url: location.href,
+                        page_title: produto || document.title,
+                        message: texto,
+                        referrer: document.referrer || null,
+                        user_agent: navigator.userAgent,
+                        origem: origem()
+                    })
+                }).catch(function (err) { console.error('Falha ao gravar clique no WhatsApp:', err); });
+            } catch (err) {
+                console.error('Falha ao gravar clique no WhatsApp:', err);
+            }
+        }
+
         document.addEventListener('click', function (e) {
             var link = e.target.closest && e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
-            if (!link || typeof gtag !== 'function') return;
+            if (!link) return;
             var m = (link.href || '').match(/(?:wa\.me\/|phone=)(\d+)/);
+            gravarClique(link, m ? m[1] : '');
+            if (typeof gtag !== 'function') return;
             gtag('event', 'clique_whatsapp_loja', {
                 pagina: location.pathname, produto: produto,
                 numero: m ? m[1].slice(-4) : '', transport_type: 'beacon'

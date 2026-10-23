@@ -75,6 +75,11 @@ WHATSAPP_NUMBERS = [
     n.strip() for n in os.getenv("WHATSAPP_NUMBERS", "5561996498102,5561996498279").split(",") if n.strip()
 ] or [WHATSAPP_NUMBER]
 
+# Chave pública (anon) do Supabase do site, para gravar os cliques no WhatsApp na
+# tabela whatsapp_clicks (painel Logs WhatsApp). É a mesma que o site usa no
+# navegador; vem só da variável de ambiente do Cloud Run. Vazia = não grava.
+SUPABASE_PUBLIC_KEY = os.getenv("SUPABASE_PUBLIC_KEY", "").strip()
+
 # =============================================================================
 # SEGURANÇA EM PRODUÇÃO (ativada quando DEBUG=False)
 # =============================================================================

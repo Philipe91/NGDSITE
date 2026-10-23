@@ -41,6 +41,8 @@ CSP_DIRECTIVES = {
         "https://analytics.google.com",     # onde o gtag.js manda o /g/collect hoje
         "https://*.analytics.google.com",
         "https://www.googletagmanager.com",
+        # Cliques no WhatsApp gravados no painel Logs WhatsApp do site (23/10/2026)
+        "https://eisqwuikemthtebpdqbj.supabase.co",
     ],
     "frame-src": ["'self'"],
     "frame-ancestors": ["'none'"],    # bloqueia ser embed em iframe (anti-clickjacking)
